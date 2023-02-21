@@ -21,7 +21,7 @@ app.use("/mpd/api", authRouts);
 app.use("/mpd/api/private", privateRouts);
 
 const userListGetRoutes = require("./routes/AuthGetRoutes/AuthGetUsersRoutes.js");
-const hodatacollectionRouters = require("./routes/boqSystemApiCallRoutes.js");
+const hodatacollectionRouters = require("./routes/mobitelProjectsDatabaseRoutes.js");
 const mobitelProjectsDatabases = require("./routes/mobitelProjectsDatabaseRoutes.js");
 
 // Error Handler Middleware
@@ -32,7 +32,7 @@ app.use("/mpd/api", hodatacollectionRouters);
 app.use("/mpd/api", mobitelProjectsDatabases);
 
 // Boq System with api calling
-require("./routes/boqSystemApiCallRoutes.js");
+require("./routes/mobitelProjectsDatabaseRoutes.js");
 
 require("dotenv").config({ path: "./.env" });
 

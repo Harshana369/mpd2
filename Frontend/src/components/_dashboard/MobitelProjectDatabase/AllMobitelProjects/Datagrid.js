@@ -50,6 +50,12 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   // ---------------------------------------------------------
 
+  const fetchData = async () => {
+    const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
+    console.log(res.data.success[0].mobitelDatabasePropertys);
+    setState(res.data.success[0].mobitelDatabasePropertys);
+  };
+
   const getRowsFromCurrentPage = ({ apiRef }) =>
     gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
 
@@ -71,7 +77,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       align: 'left',
       width: 200,
       editable: true,
-      hide: true
+      hide: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Site_Id',
@@ -80,7 +87,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Site_Name',
@@ -89,7 +97,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Handover',
@@ -98,7 +107,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Project',
@@ -107,7 +117,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Scope',
@@ -116,7 +127,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Site_Engineer',
@@ -125,7 +137,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Sub_Contractor',
@@ -134,7 +147,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Task_Category',
@@ -143,7 +157,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Task_Assigned',
@@ -152,7 +167,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Task_Commenced',
@@ -161,7 +177,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Task_Completed',
@@ -170,7 +187,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Commission',
@@ -179,7 +197,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Submit_PAT',
@@ -188,7 +207,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
 
     {
@@ -198,7 +218,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Submit_SAR',
@@ -207,7 +228,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'SAR_Pass',
@@ -216,7 +238,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'On_air',
@@ -225,7 +248,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'BOQ_Submit',
@@ -234,7 +258,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'BOQ_Approve',
@@ -243,7 +268,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'PR_Raise',
@@ -252,7 +278,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Material_Return',
@@ -261,7 +288,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'PO_issue',
@@ -270,7 +298,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Submit_Invoice',
@@ -279,7 +308,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Approve_Invoice',
@@ -288,7 +318,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'Payment',
@@ -297,7 +328,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     },
     {
       field: 'PO_closure',
@@ -306,7 +338,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerAlign: 'left',
       align: 'left',
       width: 180,
-      editable: true
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
     }
   ];
 
@@ -382,6 +415,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   };
 
   React.useEffect(() => {
+    fetchData();
     getData();
   }, []);
 
@@ -409,6 +443,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       <DataGrid
         apiRef={apiRef}
         rows={state}
+        getRowId={(row) => row.Task_Ref}
         columns={Columns}
         components={{ Toolbar: CustomToolbar }}
         pageSize={pageSize}
@@ -417,7 +452,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
         pagination
         density="compact"
         disableSelectionOnClick
-        getRowId={(row) => row._id}
+        // getRowId={(row) => row._id}
         checkboxSelection
         editMode="row"
         sx={{
