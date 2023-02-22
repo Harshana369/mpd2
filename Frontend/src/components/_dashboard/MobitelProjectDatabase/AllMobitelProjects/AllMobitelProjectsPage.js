@@ -25,10 +25,10 @@ export default function AllMobitelProjectsPage() {
   const [dropdownValue, setDropdownValue] = useState('All Site Engineers');
   const [projectNameDropdownValue, setProjectNameDropdownValue] = useState('All Mobitel Projects');
 
-  useEffect(() => {
-    fetchProjectNames();
-    fetchSiteEngineerNames();
-  }, []);
+  // useEffect(() => {
+  //   fetchProjectNames();
+  //   fetchSiteEngineerNames();
+  // }, []);
 
   const handleChangeSiteEngineers = (event) => {
     setDropdownValue(event.target.value);

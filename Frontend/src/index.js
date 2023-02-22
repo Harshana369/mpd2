@@ -16,7 +16,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <HelmetProvider>
-    <BrowserRouter>
+    <BrowserRouter basename="/mpd">
       <Provider store={store}>
         <App />
       </Provider>

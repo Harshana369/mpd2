@@ -7,7 +7,7 @@ const retrieveData = async () => {
   const A = [];
   const B = [];
   try {
-    const resp = await axios.get("http://localhost:3500/boq/getall");
+    const resp = await axios.get("http://35.78.68.113:27017/boq/getall");
     const A = resp.data.success[0].mobitelDatabasePropertys;
     const data = await Posts.findOne();
 
