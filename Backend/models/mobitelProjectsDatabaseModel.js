@@ -1,19 +1,34 @@
 const mongoose = require("mongoose");
 
-const reqString = {
-  type: String,
-  required: true,
-};
+const subSchemaheaderproperties = new mongoose.Schema({
+  field: String,
+  headerName: String,
+  headerClassName: {
+    type: String,
+    default: "super-app-theme--header",
+  },
 
-const reqDate = {
-  type: Date,
-  require: true,
-};
-
-// const subSchemaheaderproperties = new mongoose.Schema({
-//   title: reqString,
-//   field: reqString,
-// });
+  align: {
+    type: String,
+    default: "left",
+  },
+  width: {
+    type: Number,
+    default: 200,
+  },
+  editable: {
+    type: Boolean,
+    default: true,
+  },
+  hide: {
+    type: Boolean,
+    default: true,
+  },
+  cellClassName: {
+    type: String,
+    default: "super-app-theme--cell",
+  },
+});
 
 const subSchemaproperties = new mongoose.Schema(
   {
@@ -95,7 +110,7 @@ const subSchemaproperties = new mongoose.Schema(
 );
 
 const dataSchema = new mongoose.Schema({
-  // headerproperties: [subSchemaheaderproperties],
+  headerproperties: [subSchemaheaderproperties],
   mobitelDatabasePropertys: [subSchemaproperties],
 });
 

@@ -49,7 +49,7 @@ export default function ImplementationPendingTasks({ implementations }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Implementation
+        PR Pending
       </Typography>
     </RootStyle>
   );

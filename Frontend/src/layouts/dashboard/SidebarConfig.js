@@ -4,6 +4,7 @@ import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 import peopleFill from '@iconify/icons-eva/people-fill';
 import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
+import AnimationIcon from '@mui/icons-material/Animation';
 import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/log-in-fill';
 import folderFill from '@iconify/icons-eva/layout-fill';
@@ -149,6 +150,12 @@ const sidebarConfig = [
   //     }
   //   ]
   // },
+
+  {
+    title: 'Pending Task',
+    path: 'DatabasesMobitelProjects/PendingMobitelTasks',
+    icon: getIcon(shoppingBagFill)
+  },
 
   {
     title: 'Material Return',

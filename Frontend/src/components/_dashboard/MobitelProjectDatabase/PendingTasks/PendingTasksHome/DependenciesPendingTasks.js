@@ -49,7 +49,7 @@ export default function DependenciesPendingTasks({ dependencies }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Dependencies
+        SAR Pending
       </Typography>
     </RootStyle>
   );

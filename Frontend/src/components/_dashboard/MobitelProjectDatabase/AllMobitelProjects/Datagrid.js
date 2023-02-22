@@ -45,6 +45,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   const [pageSize, setPageSize] = React.useState(10);
   const [snackbar, setSnackbar] = React.useState(null);
   const [state, setState] = React.useState([]);
+  const [column, setColumn] = React.useState([]);
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
@@ -52,8 +53,9 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
-    console.log(res.data.success[0].mobitelDatabasePropertys);
+    console.log(res.data.success[0]);
     setState(res.data.success[0].mobitelDatabasePropertys);
+    setColumn(res.data.success[0].headerproperties);
   };
 
   const getRowsFromCurrentPage = ({ apiRef }) =>
@@ -68,280 +70,276 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     'SaveAlt'
   );
 
-  const Columns = [
-    {
-      field: 'Task_Ref',
-      headerName: 'Task Ref',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 200,
-      editable: true,
-      hide: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Site_Id',
-      headerName: 'Site Id',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Site_Name',
-      headerName: 'Site Name',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Handover',
-      headerName: 'Handover',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Project',
-      headerName: 'Project',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Scope',
-      headerName: 'Scope',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Site_Engineer',
-      headerName: 'Site Engineer',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Sub_Contractor',
-      headerName: 'Sub Contractor',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Task_Category',
-      headerName: 'Task Category',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Task_Assigned',
-      headerName: 'Task Assigned',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Task_Commenced',
-      headerName: 'Task Commenced',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Task_Completed',
-      headerName: 'Task Completed',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Commission',
-      headerName: 'Commission',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Submit_PAT',
-      headerName: 'Submit PAT',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
+  // const Columns = [
+  //   {
+  //     field: 'Task_Ref',
+  //     headerName: 'Task Ref',
+  //     headerClassName: 'super-app-theme--header',
+  //     align: 'left',
+  //     width: 200,
+  //     editable: true,
+  //     hide: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Site_Id',
+  //     headerName: 'Site Id',
+  //     headerClassName: 'super-app-theme--header',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Site_Name',
+  //     headerName: 'Site Name',
+  //     headerClassName: 'super-app-theme--header',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Handover',
+  //     headerName: 'Handover',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Project',
+  //     headerName: 'Project',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Scope',
+  //     headerName: 'Scope',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Site_Engineer',
+  //     headerName: 'Site Engineer',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Sub_Contractor',
+  //     headerName: 'Sub Contractor',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Task_Category',
+  //     headerName: 'Task Category',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Task_Assigned',
+  //     headerName: 'Task Assigned',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Task_Commenced',
+  //     headerName: 'Task Commenced',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Task_Completed',
+  //     headerName: 'Task Completed',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Commission',
+  //     headerName: 'Commission',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Submit_PAT',
+  //     headerName: 'Submit PAT',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
 
-    {
-      field: 'PAT_Pass',
-      headerName: 'PAT Pass',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Submit_SAR',
-      headerName: 'Submit SAR',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'SAR_Pass',
-      headerName: 'SAR Pass',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'On_air',
-      headerName: 'On air',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'BOQ_Submit',
-      headerName: 'BOQ Submit',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'BOQ_Approve',
-      headerName: 'BOQ Approve',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'PR_Raise',
-      headerName: 'PR Raise',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Material_Return',
-      headerName: 'Material Return',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'PO_issue',
-      headerName: 'PO issue',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Submit_Invoice',
-      headerName: 'Submit Invoice',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Approve_Invoice',
-      headerName: 'Approve Invoice',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'Payment',
-      headerName: 'Payment',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    },
-    {
-      field: 'PO_closure',
-      headerName: 'PO closure',
-      headerClassName: 'super-app-theme--header',
-      headerAlign: 'left',
-      align: 'left',
-      width: 180,
-      editable: true,
-      cellClassName: 'super-app-theme--cell'
-    }
-  ];
+  //   {
+  //     field: 'PAT_Pass',
+  //     headerName: 'PAT Pass',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Submit_SAR',
+  //     headerName: 'Submit SAR',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'SAR_Pass',
+  //     headerName: 'SAR Pass',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'On_air',
+  //     headerName: 'On air',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'BOQ_Submit',
+  //     headerName: 'BOQ Submit',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'BOQ_Approve',
+  //     headerName: 'BOQ Approve',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'PR_Raise',
+  //     headerName: 'PR Raise',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Material_Return',
+  //     headerName: 'Material Return',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'PO_issue',
+  //     headerName: 'PO issue',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Submit_Invoice',
+  //     headerName: 'Submit Invoice',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Approve_Invoice',
+  //     headerName: 'Approve Invoice',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'Payment',
+  //     headerName: 'Payment',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true,
+  //     cellClassName: 'super-app-theme--cell'
+  //   },
+  //   {
+  //     field: 'PO_closure',
+  //     headerName: 'PO closure',
+  //     headerClassName: 'super-app-theme--header',
+  //     headerAlign: 'left',
+  //     align: 'left',
+  //     width: 180,
+  //     editable: true
+  //   }
+  // ];
 
   // -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------
@@ -404,14 +402,15 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   };
 
   const getData = async () => {
-    await axiosInstance.get('/column/').then((res) => {
+    await axiosInstance.get('/MobitelDatabaseColumnGet').then((res) => {
       // console.log(res.data);
       setColumnVisibilityModel(res.data);
     });
   };
 
   const updateColumn = async () => {
-    await axiosInstance.put('/column/Edit', columnVisibilityModel).then((res) => {});
+    console.log(columnVisibilityModel);
+    await axiosInstance.put('/mobitelDatabaseColumnEdit', columnVisibilityModel).then((res) => {});
   };
 
   React.useEffect(() => {
@@ -444,7 +443,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
         apiRef={apiRef}
         rows={state}
         getRowId={(row) => row.Task_Ref}
-        columns={Columns}
+        columns={column}
         components={{ Toolbar: CustomToolbar }}
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

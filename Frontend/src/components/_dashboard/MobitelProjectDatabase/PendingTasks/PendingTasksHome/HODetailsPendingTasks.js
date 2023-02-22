@@ -45,7 +45,7 @@ export default function HODetailsPendingTasks({ handover }) {
         )}
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Handover
+        Installation Pending
       </Typography>
     </RootStyle>
   );

@@ -49,7 +49,7 @@ export default function PaymentPendingTasks({ payment }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Payment
+        Invoice Pending
       </Typography>
     </RootStyle>
   );

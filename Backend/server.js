@@ -21,26 +21,28 @@ app.use("/mpd/api", authRouts);
 app.use("/mpd/api/private", privateRouts);
 
 const userListGetRoutes = require("./routes/AuthGetRoutes/AuthGetUsersRoutes.js");
-const hodatacollectionRouters = require("./routes/mobitelProjectsDatabaseRoutes.js");
-const mobitelProjectsDatabases = require("./routes/mobitelProjectsDatabaseRoutes.js");
+const mobitelProjectsDatabases = require("./routes/mobitelProjectsDatabasesRoutes.js");
+const mobitelProjectsDatabaseColumnHide = require("./routes/columnHide/mobitelDatabaseColumnHide.js");
 
 // Error Handler Middleware
 app.use(errorHandler);
 
 app.use("/mpd/api", userListGetRoutes);
-app.use("/mpd/api", hodatacollectionRouters);
 app.use("/mpd/api", mobitelProjectsDatabases);
 
+//Column Hide
+app.use("/mpd/api", mobitelProjectsDatabaseColumnHide);
+
 // Boq System with api calling
-require("./routes/mobitelProjectsDatabaseRoutes.js");
+require("./routes/getBoqRoutes.js");
 
 require("dotenv").config({ path: "./.env" });
 
 // --------------------------------------------------------------------------
 
-app.use(express.static(path.join(__dirname, "/materialkit/build")));
-app.get("/mpd", (req, res) =>
-  res.sendFile(path.join(__dirname, "/materialkit/build/index.html"))
+app.use(express.static(path.join(__dirname, "/Frontend/build")));
+app.get("/", (req, res) =>
+  res.sendFile(path.join(__dirname, "/Frontend/build/index.html"))
 );
 
 // if (process.env.NODE_ENV === "production") {
@@ -58,7 +60,7 @@ app.get("/mpd", (req, res) =>
 
 // --------------------------------------------------------------------------
 
-const PORT = process.env.PORT || 8072;
+const PORT = process.env.PORT || 80;
 
 const server = app.listen(PORT, () =>
   console.log(`Sever is up and running on port ${PORT}`)

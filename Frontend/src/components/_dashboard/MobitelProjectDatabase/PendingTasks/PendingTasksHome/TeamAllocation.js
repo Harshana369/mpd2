@@ -49,7 +49,7 @@ export default function TeamAllocation({ teamAllocation }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Team Allocation
+        PAT Pending
       </Typography>
     </RootStyle>
   );

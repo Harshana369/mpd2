@@ -48,7 +48,7 @@ export default function AcceptancePendingTasks({ acceptance }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Acceptance
+        PO Pending
       </Typography>
     </RootStyle>
   );

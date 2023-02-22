@@ -12,6 +12,7 @@ import LogisticsPendingTasks from './LogisticsPendingTasks';
 import ImplementationPendingTasks from './ImplementationPendingTasks';
 import AcceptancePendingTasks from './AcceptancePendingTasks';
 import PaymentPendingTasks from './PaymentPendingTasks';
+import PoClosurePending from './PoClosurePendingTasks';
 // -------------------------------------------------------------------
 export default function CardLists() {
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
@@ -124,6 +125,15 @@ export default function CardLists() {
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Payment"
         >
           <PaymentPendingTasks payment={Payment} />
+        </Link>
+      </Grid>
+      <Grid item xs={12} sm={6} md={2.4}>
+        <Link
+          underline="none"
+          component={RouterLink}
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Payment"
+        >
+          <PoClosurePending />
         </Link>
       </Grid>
     </Grid>

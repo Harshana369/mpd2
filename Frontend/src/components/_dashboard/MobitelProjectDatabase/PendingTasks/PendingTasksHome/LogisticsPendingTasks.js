@@ -49,7 +49,7 @@ export default function LogisticsPendingTasks({ logistics }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Logistics
+        Material Return Pending
       </Typography>
     </RootStyle>
   );

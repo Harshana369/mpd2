@@ -49,7 +49,7 @@ export default function PRPOProgressPendingTasks({ pRPOProgress }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        PR/PO Progress
+        On air Pending
       </Typography>
     </RootStyle>
   );

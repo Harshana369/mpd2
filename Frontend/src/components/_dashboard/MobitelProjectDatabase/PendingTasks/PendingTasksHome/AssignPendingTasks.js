@@ -49,7 +49,7 @@ export default function AssignPendingTasks({ assign }) {
         </Typography>
       </IconWrapperStyle>
       <Typography variant="subtitle1" sx={{ opacity: 1 }}>
-        Work Allocation
+        Commissioning Pending
       </Typography>
     </RootStyle>
   );
