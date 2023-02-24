@@ -30,8 +30,8 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function AssignPendingTasks({ assign }) {
-  const AssignPendingTasksNotifications = assign;
+export default function CommissioningPendingTasks() {
+  const AssignPendingTasksNotifications = 0;
 
   return (
     <RootStyle>

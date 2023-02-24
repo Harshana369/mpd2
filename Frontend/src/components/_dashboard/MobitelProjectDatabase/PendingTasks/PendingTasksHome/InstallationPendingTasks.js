@@ -29,8 +29,8 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function HODetailsPendingTasks({ handover }) {
-  const HandoverPendingTasksNotifications = handover;
+export default function InstallationPendingTasks() {
+  const HandoverPendingTasksNotifications = 0;
   return (
     <RootStyle>
       <IconWrapperStyle>

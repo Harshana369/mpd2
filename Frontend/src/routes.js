@@ -88,7 +88,7 @@ import DatabasesMobitelProjectsAllMobitelPatPassData from './components/_dashboa
 import DatabasesMobitelProjectsAllMobitelOnAirData from './components/_dashboard/MobitelProjectDatabase/AllMobitelProjects/AllMobitelOnAirData';
 import DatabasesMobitelProjectsAllMobitelHoldData from './components/_dashboard/MobitelProjectDatabase/AllMobitelProjects/AllMobitelHoldData';
 import DatabasesMobitelProjectsPendingMobitelProjects from './components/_dashboard/MobitelProjectDatabase/PendingTasks/PendingTasksHome/MobitelDatabasesPendingTasksHome';
-import DatabasesMobitelProjectsPendingMobitelProjectsHODetails from './components/_dashboard/MobitelProjectDatabase/PendingTasks/HODetails/HODetailsPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsInstallation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/HODetails/InstallationDetailsPage';
 import DatabasesMobitelProjectsPendingMobitelProjectsAssign from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Assign/AssignPage';
 import DatabasesMobitelProjectsPendingMobitelProjectsTeamAllocation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/TeamAllocation/TeamAllocationPage';
 import DatabasesMobitelProjectsPendingMobitelProjectsDependencies from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Dependencies/DependenciesPage';
@@ -1116,10 +1116,10 @@ export default function Router() {
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/HandoverDetails',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Installation',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsHODetails />
+              <DatabasesMobitelProjectsPendingMobitelProjectsInstallation />
             ) : (
               <Navigate to="/unauthorized" />
             )

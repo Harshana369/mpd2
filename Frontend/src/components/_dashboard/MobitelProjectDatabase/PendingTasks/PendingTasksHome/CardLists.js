@@ -3,8 +3,7 @@ import axios from 'axios';
 // material
 import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Link } from '@mui/material';
-import HODetailsPendingTasks from './HODetailsPendingTasks';
-import AssignPendingTasks from './AssignPendingTasks';
+import CommissioningPendingTasks from './AssignPendingTasks';
 import TeamAllocatioPendingTasks from './TeamAllocation';
 import DependenciesPendingTasks from './DependenciesPendingTasks';
 import PRPOProgressPendingTasks from './PRPOProgressPendingTasks';
@@ -13,6 +12,7 @@ import ImplementationPendingTasks from './ImplementationPendingTasks';
 import AcceptancePendingTasks from './AcceptancePendingTasks';
 import PaymentPendingTasks from './PaymentPendingTasks';
 import PoClosurePending from './PoClosurePendingTasks';
+import InstallationPendingTasks from './InstallationPendingTasks';
 // -------------------------------------------------------------------
 export default function CardLists() {
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
@@ -27,9 +27,9 @@ export default function CardLists() {
   const [Acceptance, setAcceptanceNotifications] = useState('0');
   const [Payment, setPaymentNotifications] = useState('0');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/mobitelProjectsDatabasesPendingTasks`);
@@ -50,9 +50,9 @@ export default function CardLists() {
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/HandoverDetails"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Installation"
         >
-          <HODetailsPendingTasks handover={Handover} />
+          <InstallationPendingTasks />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -61,7 +61,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/WorkAllocation"
         >
-          <AssignPendingTasks assign={Assign} />
+          <CommissioningPendingTasks assign={Assign} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>

@@ -35,7 +35,7 @@ const retrieveData = async () => {
   }
 };
 
-cron.schedule("*/1 * * * *", retrieveData);
+cron.schedule("0 0 * * *", retrieveData);
 
 // every day -> 0 0 * * *
 //one mints -> */1 * * * *

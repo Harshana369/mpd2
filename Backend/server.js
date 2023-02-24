@@ -22,7 +22,10 @@ app.use("/mpd/api/private", privateRouts);
 
 const userListGetRoutes = require("./routes/AuthGetRoutes/AuthGetUsersRoutes.js");
 const mobitelProjectsDatabases = require("./routes/mobitelProjectsDatabasesRoutes.js");
+
+// -------------------
 const mobitelProjectsDatabaseColumnHide = require("./routes/columnHide/mobitelDatabaseColumnHide.js");
+const installationPending = require("./routes/columnHide/installationPendingColumnHide.js");
 
 // Error Handler Middleware
 app.use(errorHandler);
@@ -32,6 +35,7 @@ app.use("/mpd/api", mobitelProjectsDatabases);
 
 //Column Hide
 app.use("/mpd/api", mobitelProjectsDatabaseColumnHide);
+app.use("/mpd/api", installationPending);
 
 // Boq System with api calling
 require("./routes/getBoqRoutes.js");
