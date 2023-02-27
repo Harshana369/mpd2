@@ -42,16 +42,19 @@ const subSchemaproperties = new mongoose.Schema({
   Scope: String,
   Site_Engineer: String,
   Sub_Contractor: String,
-  Task_Assigned: String,
-  Task_Commenced: String,
-  BOQ_Submit: String,
-  BOQ_Approve: String,
-  PR_Raise: String,
-  //--------------------
-  Task_Completed: {
+
+  Task_Category: {
     type: String,
     default: null,
   },
+
+  Task_Assigned: String,
+  Task_Commenced: String,
+  Installation_Completed: {
+    type: String,
+    default: null,
+  },
+
   Commission: {
     type: String,
     default: null,
@@ -64,6 +67,7 @@ const subSchemaproperties = new mongoose.Schema({
     type: String,
     default: null,
   },
+
   Submit_SAR: {
     type: String,
     default: null,
@@ -72,14 +76,17 @@ const subSchemaproperties = new mongoose.Schema({
     type: String,
     default: null,
   },
+
   On_air: {
     type: String,
     default: null,
   },
-  Task_Category: {
-    type: String,
-    default: null,
-  },
+
+  BOQ_Submit: String,
+  BOQ_Approve: String,
+  PR_Raise: String,
+  //--------------------
+
   Material_Return: {
     type: String,
     default: null,

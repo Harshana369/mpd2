@@ -26,6 +26,15 @@ const mobitelProjectsDatabases = require("./routes/mobitelProjectsDatabasesRoute
 // -------------------
 const mobitelProjectsDatabaseColumnHide = require("./routes/columnHide/mobitelDatabaseColumnHide.js");
 const installationPending = require("./routes/columnHide/installationPendingColumnHide.js");
+const commissioningPending = require("./routes/columnHide/commissioningPendingColumnHide.js");
+const patPending = require("./routes/columnHide/patPendingColumnHide.js");
+const sarPending = require("./routes/columnHide/sarPendingColumnHide.js");
+const onairPending = require("./routes/columnHide/onAirPendingColumnHide.js");
+const matiriyalretuenPending = require("./routes/columnHide/matiriyalReturnPendingColumnHide.js");
+const prPending = require("./routes/columnHide/prPendingColumnHide.js");
+const poPending = require("./routes/columnHide/poPendingColumnHide.js");
+const invoicePending = require("./routes/columnHide/invoiceSubmissionPendingColumnHide.js");
+const poClosurePending = require("./routes/columnHide/poClosurePendingColumnHide.js");
 
 // Error Handler Middleware
 app.use(errorHandler);
@@ -36,6 +45,15 @@ app.use("/mpd/api", mobitelProjectsDatabases);
 //Column Hide
 app.use("/mpd/api", mobitelProjectsDatabaseColumnHide);
 app.use("/mpd/api", installationPending);
+app.use("/mpd/api", commissioningPending);
+app.use("/mpd/api", patPending);
+app.use("/mpd/api", sarPending);
+app.use("/mpd/api", onairPending);
+app.use("/mpd/api", matiriyalretuenPending);
+app.use("/mpd/api", prPending);
+app.use("/mpd/api", poPending);
+app.use("/mpd/api", invoicePending);
+app.use("/mpd/api", poClosurePending);
 
 // Boq System with api calling
 require("./routes/getBoqRoutes.js");

@@ -18,7 +18,7 @@ const retrieveData = async () => {
     const bIds = new Set(B.map((obj) => obj.Task_Ref));
     const mobitelDatabasePropertys = A.filter((obj) => !bIds.has(obj.Task_Ref));
 
-    // console.log(mobitelDatabasePropertys);
+    console.log(mobitelDatabasePropertys);
 
     Posts.updateOne(
       {
@@ -35,7 +35,7 @@ const retrieveData = async () => {
   }
 };
 
-cron.schedule("0 0 * * *", retrieveData);
+cron.schedule("*/5 * * * *", retrieveData);
 
 // every day -> 0 0 * * *
 //one mints -> */1 * * * *

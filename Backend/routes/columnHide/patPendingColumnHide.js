@@ -2,7 +2,7 @@ const router = require("express").Router();
 let Posts = require("../../models/columnHide/patPendingColumnHide");
 
 router.route("/patPendingColumnEdit").put(async (req, res) => {
-  id = "63f4f971a1554f4994cc8208";
+  id = "63fa4860583f1b2d5c88a5b8";
 
   Posts.findByIdAndUpdate(id, req.body)
     .then((Posts) => res.json(Posts))
@@ -10,7 +10,7 @@ router.route("/patPendingColumnEdit").put(async (req, res) => {
 });
 
 router.get("/patPendingColumnGet", async function (req, res) {
-  id = "63f4f971a1554f4994cc8208";
+  id = "63fa4860583f1b2d5c88a5b8";
 
   Posts.findById(id)
     .then((Posts) => res.send(Posts))
@@ -18,19 +18,19 @@ router.get("/patPendingColumnGet", async function (req, res) {
 });
 
 //add hide column object
-router.post("/patPendingColumnAdd", (req, res) => {
-  let newPost = new Posts(req.body);
+// router.post("/patPendingColumnAdd", (req, res) => {
+//   let newPost = new Posts(req.body);
 
-  newPost.save((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      //   success: "Project Details Added Successfully",
-      success: posts,
-    });
-  });
-});
+//   newPost.save((err, posts) => {
+//     if (err) {
+//       return res.status(400).json({
+//         error: err,
+//       });
+//     }
+//     return res.status(200).json({
+//       //   success: "Project Details Added Successfully",
+//       success: posts,
+//     });
+//   });
+// });
 module.exports = router;

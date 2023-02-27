@@ -88,15 +88,16 @@ import DatabasesMobitelProjectsAllMobitelPatPassData from './components/_dashboa
 import DatabasesMobitelProjectsAllMobitelOnAirData from './components/_dashboard/MobitelProjectDatabase/AllMobitelProjects/AllMobitelOnAirData';
 import DatabasesMobitelProjectsAllMobitelHoldData from './components/_dashboard/MobitelProjectDatabase/AllMobitelProjects/AllMobitelHoldData';
 import DatabasesMobitelProjectsPendingMobitelProjects from './components/_dashboard/MobitelProjectDatabase/PendingTasks/PendingTasksHome/MobitelDatabasesPendingTasksHome';
-import DatabasesMobitelProjectsPendingMobitelProjectsInstallation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/HODetails/InstallationDetailsPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsAssign from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Assign/AssignPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsTeamAllocation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/TeamAllocation/TeamAllocationPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsDependencies from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Dependencies/DependenciesPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsPRPO from './components/_dashboard/MobitelProjectDatabase/PendingTasks/PRPOProgress/PRPOProgressPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsLogistics from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Logistics/LogisticsPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsImplementation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Implementation/ImplementationPage';
-import DatabasesMobitelProjectsPendingMobitelProjectsAcceptance from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Acceptance/AcceptancePage';
-import DatabasesMobitelProjectsPendingMobitelProjectsPayment from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Payment/PaymentPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsInstallation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/installation/InstallationDetailsPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsCommissioning from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Commissioning/CommissioningPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsPat from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Pat/PatPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsSar from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Sar/SarPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsOnAir from './components/_dashboard/MobitelProjectDatabase/PendingTasks/onAir/OnAirPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsMaterialReturn from './components/_dashboard/MobitelProjectDatabase/PendingTasks/materialReturn/MaterialReturnPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsPr from './components/_dashboard/MobitelProjectDatabase/PendingTasks/pr/PrPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsPo from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Po/PoPage';
+import DatabasesMobitelProjectsPendingMobitelProjectsInvoice from './components/_dashboard/MobitelProjectDatabase/PendingTasks/invoice/InvoicePage';
+import DatabasesMobitelProjectsPendingMobitelProjectsPoClosure from './components/_dashboard/MobitelProjectDatabase/PendingTasks/poClosure/PoClosurePage';
 import DatabasesMobitelProjectsAllMobitelProjectsViewOnly from './components/_dashboard/MobitelProjectDatabase/ViewOnlyMobitelDatabase/ViewOnlyMobitelProjectsPage';
 
 // Users
@@ -146,15 +147,15 @@ import EditZTEProjectPayment from './components/_dashboard/VendorProjectDatabase
 // Edit ZTE Vendor Projects Database
 import AddNewMobitelProject from './components/_dashboard/MobitelProjectDatabase/AllMobitelProjects/AddNewMobitelProject';
 import EditMobitelProject from './components/_dashboard/MobitelProjectDatabase/AllMobitelProjects/EditMobitelProject';
-import EditMobitelProjectHandover from './components/_dashboard/MobitelProjectDatabase/PendingTasks/HODetails/EditMobitelProjectHODetails';
-import EditMobitelProjectWorkAllocation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Assign/EditMobitelProjectAssign';
-import EditMobitelProjectTeamAllocation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/TeamAllocation/EditMobitelProjectTeamAllocation';
-import EditMobitelProjectDependencies from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Dependencies/EditMobitelProjectDependencies';
-import EditMobitelProjectLogistic from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Logistics/EditMobitelProjectLogistics';
-import EditMobitelProjectPRPOProgress from './components/_dashboard/MobitelProjectDatabase/PendingTasks/PRPOProgress/EditMobitelProjectPRPOProgress';
-import EditMobitelProjectImplementation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Implementation/EditMobitelProjectImplementation';
-import EditMobitelProjectAcceptance from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Acceptance/EditMobitelProjectAcceptance';
-import EditMobitelProjectPayment from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Payment/EditMobitelProjectPayment';
+import EditMobitelProjectHandover from './components/_dashboard/MobitelProjectDatabase/PendingTasks/installation/EditMobitelProjectHODetails';
+import EditMobitelProjectWorkAllocation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Commissioning/EditMobitelProjectAssign';
+import EditMobitelProjectTeamAllocation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Pat/EditMobitelProjectTeamAllocation';
+import EditMobitelProjectDependencies from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Sar/EditMobitelProjectDependencies';
+import EditMobitelProjectLogistic from './components/_dashboard/MobitelProjectDatabase/PendingTasks/materialReturn/EditMobitelProjectLogistics';
+import EditMobitelProjectPRPOProgress from './components/_dashboard/MobitelProjectDatabase/PendingTasks/onAir/EditMobitelProjectPRPOProgress';
+import EditMobitelProjectImplementation from './components/_dashboard/MobitelProjectDatabase/PendingTasks/pr/EditMobitelProjectImplementation';
+import EditMobitelProjectAcceptance from './components/_dashboard/MobitelProjectDatabase/PendingTasks/Po/EditMobitelProjectAcceptance';
+import EditMobitelProjectPayment from './components/_dashboard/MobitelProjectDatabase/PendingTasks/invoice/EditMobitelProjectPayment';
 import EditDetailsMOT from './components/_dashboard/MobitelProjectsOverview/EditDetails';
 import TestDatagrid from './pages/TestDatagrid';
 import Settings from './pages/Settings';
@@ -1125,77 +1126,88 @@ export default function Router() {
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/WorkAllocation',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Commissioning',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsAssign />
+              <DatabasesMobitelProjectsPendingMobitelProjectsCommissioning />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/TeamAllocation',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Pat',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsTeamAllocation />
+              <DatabasesMobitelProjectsPendingMobitelProjectsPat />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Dependencies',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Sar',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsDependencies />
+              <DatabasesMobitelProjectsPendingMobitelProjectsSar />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/PRPO',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/OnAir',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsPRPO />
+              <DatabasesMobitelProjectsPendingMobitelProjectsOnAir />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Logistics',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/MaterialReturn',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsLogistics />
+              <DatabasesMobitelProjectsPendingMobitelProjectsMaterialReturn />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Implementation',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Pr',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsImplementation />
+              <DatabasesMobitelProjectsPendingMobitelProjectsPr />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Acceptance',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Po',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsAcceptance />
+              <DatabasesMobitelProjectsPendingMobitelProjectsPo />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
         {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Payment',
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Invoice',
           element:
             userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsPayment />
+              <DatabasesMobitelProjectsPendingMobitelProjectsInvoice />
             ) : (
               <Navigate to="/unauthorized" />
             )
         },
+
+        {
+          path: 'DatabasesMobitelProjects/PendingMobitelTasks/PoClosure',
+          element:
+            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+              <DatabasesMobitelProjectsPendingMobitelProjectsPoClosure />
+            ) : (
+              <Navigate to="/unauthorized" />
+            )
+        },
+
         {
           path: 'DatabasesMobitelProjects/AddNew',
           element:

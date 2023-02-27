@@ -3,14 +3,14 @@ import axios from 'axios';
 // material
 import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Link } from '@mui/material';
-import CommissioningPendingTasks from './AssignPendingTasks';
-import TeamAllocatioPendingTasks from './TeamAllocation';
-import DependenciesPendingTasks from './DependenciesPendingTasks';
-import PRPOProgressPendingTasks from './PRPOProgressPendingTasks';
-import LogisticsPendingTasks from './LogisticsPendingTasks';
-import ImplementationPendingTasks from './ImplementationPendingTasks';
-import AcceptancePendingTasks from './AcceptancePendingTasks';
-import PaymentPendingTasks from './PaymentPendingTasks';
+import CommissioningPendingTasks from './CommissioningPendingTasks';
+import PatPendingTasks from './PatPendingTasks';
+import SarPendingTasks from './SarPendingTasks';
+import OnAirPendingTasks from './OnAirPendingTasks';
+import MaterialReturnPendingTasks from './MaterialReturnPendingTasks';
+import PrPendingTasks from './PrPendingTasks';
+import PoPendingTasks from './PoPendingTasks';
+import InvoicePendingTasks from './InvoicePendingTasks';
 import PoClosurePending from './PoClosurePendingTasks';
 import InstallationPendingTasks from './InstallationPendingTasks';
 // -------------------------------------------------------------------
@@ -59,7 +59,7 @@ export default function CardLists() {
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/WorkAllocation"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Commissioning"
         >
           <CommissioningPendingTasks assign={Assign} />
         </Link>
@@ -68,70 +68,71 @@ export default function CardLists() {
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/TeamAllocation"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Pat"
         >
-          <TeamAllocatioPendingTasks teamAllocation={TeamAllocation} />
+          <PatPendingTasks teamAllocation={TeamAllocation} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Dependencies"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Sar"
         >
-          <DependenciesPendingTasks dependencies={Dependencies} />
+          <SarPendingTasks dependencies={Dependencies} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/PRPO"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/OnAir"
         >
-          <PRPOProgressPendingTasks pRPOProgress={PRPOProgress} />
+          <OnAirPendingTasks pRPOProgress={PRPOProgress} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Logistics"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/MaterialReturn"
         >
-          <LogisticsPendingTasks logistics={Logistics} />
+          <MaterialReturnPendingTasks logistics={Logistics} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Implementation"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Pr"
         >
-          <ImplementationPendingTasks implementations={Implementations} />
+          <PrPendingTasks implementations={Implementations} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Acceptance"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Po"
         >
-          <AcceptancePendingTasks acceptance={Acceptance} />
+          <PoPendingTasks acceptance={Acceptance} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Payment"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Invoice"
         >
-          <PaymentPendingTasks payment={Payment} />
+          <InvoicePendingTasks payment={Payment} />
         </Link>
       </Grid>
+
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
-          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Payment"
+          to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/PoClosure"
         >
           <PoClosurePending />
         </Link>

@@ -53,7 +53,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
-    // console.log(res.data.success[0].mobitelDatabasePropertys[0]);
+    console.log(res.data.success[0].mobitelDatabasePropertys);
     setState(res.data.success[0].mobitelDatabasePropertys);
     setColumn(res.data.success[0].headerproperties);
   };
@@ -180,8 +180,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       cellClassName: 'super-app-theme--cell'
     },
     {
-      field: 'Task_Completed',
-      headerName: 'Task Completed',
+      field: 'Installation_Completed',
+      headerName: 'Installation Completed',
       headerClassName: 'super-app-theme--header',
       headerAlign: 'left',
       align: 'left',
@@ -189,6 +189,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       editable: true,
       cellClassName: 'super-app-theme--cell'
     },
+
     {
       field: 'Commission',
       headerName: 'Commission',
@@ -280,6 +281,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       editable: true,
       cellClassName: 'super-app-theme--cell'
     },
+
     {
       field: 'Material_Return',
       headerName: 'Material Return',

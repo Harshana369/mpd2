@@ -2,7 +2,7 @@ const router = require("express").Router();
 let Posts = require("../../models/columnHide/installationPendingColumnHide.js");
 
 router.route("/installationPendingColumnEdit").put(async (req, res) => {
-  id = "63f821ee2f9a9653285f3af1";
+  id = "63f87cc2a9c146260cb1bf61";
 
   Posts.findByIdAndUpdate(id, req.body)
     .then((Posts) => res.json(Posts))
@@ -10,7 +10,7 @@ router.route("/installationPendingColumnEdit").put(async (req, res) => {
 });
 
 router.get("/installationPendingColumnGet", async function (req, res) {
-  id = "63f821ee2f9a9653285f3af1";
+  id = "63f87cc2a9c146260cb1bf61";
 
   Posts.findById(id)
     .then((Posts) => res.send(Posts))
