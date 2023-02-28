@@ -29,18 +29,18 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function InstallationPendingTasks() {
-  const HandoverPendingTasksNotifications = 0;
+export default function InstallationPendingTasks({ Installation }) {
+  const InstallationPendingTasksNotifications = Installation;
   return (
     <RootStyle>
       <IconWrapperStyle>
-        {HandoverPendingTasksNotifications < 5 ? (
+        {InstallationPendingTasksNotifications < 5 ? (
           <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-            {HandoverPendingTasksNotifications}
+            {InstallationPendingTasksNotifications}
           </Typography>
         ) : (
           <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-            {HandoverPendingTasksNotifications}
+            {InstallationPendingTasksNotifications}
           </Typography>
         )}
       </IconWrapperStyle>

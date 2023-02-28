@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function LogisticsPendingTasks({ logistics }) {
-  const LogisticsPendingTasksNotifications = logistics;
+export default function LogisticsPendingTasks({ MaterialReturn }) {
+  const MaterialReturnPendingTasksNotifications = MaterialReturn;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {LogisticsPendingTasksNotifications < 5 ? (
+          {MaterialReturnPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {LogisticsPendingTasksNotifications}
+              {MaterialReturnPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {LogisticsPendingTasksNotifications}
+              {MaterialReturnPendingTasksNotifications}
             </Typography>
           )}
         </Typography>

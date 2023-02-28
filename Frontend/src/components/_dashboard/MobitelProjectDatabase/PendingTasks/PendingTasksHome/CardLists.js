@@ -17,31 +17,33 @@ import InstallationPendingTasks from './InstallationPendingTasks';
 export default function CardLists() {
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
-  const [Handover, setHODetailsNotifications] = useState('0');
-  const [Assign, setWorkAllocationNotifications] = useState('0');
-  const [TeamAllocation, setTeamAllocationNotifications] = useState('0');
-  const [Dependencies, setDependenciesNotifications] = useState('0');
-  const [PRPOProgress, setPRPOProgressNotifications] = useState('0');
-  const [Logistics, setLogisticsNotifications] = useState('0');
-  const [Implementations, setImplementationsNotifications] = useState('0');
-  const [Acceptance, setAcceptanceNotifications] = useState('0');
-  const [Payment, setPaymentNotifications] = useState('0');
+  const [Installation, setInstallation] = useState('0');
+  const [Commission, setCommission] = useState('0');
+  const [Pat, setPat] = useState('0');
+  const [Sar, setSar] = useState('0');
+  const [OnAir, setOnAir] = useState('0');
+  const [MaterialReturn, setMaterialReturn] = useState('0');
+  const [Pr, setPr] = useState('0');
+  const [Po, setPo] = useState('0');
+  const [Invoice, setInvoice] = useState('0');
+  const [PoClosure, setPoClosure] = useState('0');
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/mobitelProjectsDatabasesPendingTasks`);
-    setHODetailsNotifications(res.data.HOPendingTasks.length);
-    setWorkAllocationNotifications(res.data.AssignPendingTasks.length);
-    setTeamAllocationNotifications(res.data.TeamAllocationPendingTasks.length);
-    setDependenciesNotifications(res.data.DependenciesPendingTasks.length);
-    setPRPOProgressNotifications(res.data.PRPOProgressPendingTasks.length);
-    setLogisticsNotifications(res.data.LogisticsPendingTasks.length);
-    setImplementationsNotifications(res.data.ImplementationPendingTasks.length);
-    setAcceptanceNotifications(res.data.AcceptancePendingTasks.length);
-    setPaymentNotifications(res.data.PaymentPendingTasks.length);
+    setInstallation(res.data.InstallationPendingTasks);
+    setCommission(res.data.CommissioningPendingTasks);
+    setPat(res.data.PatPendingTasks);
+    setSar(res.data.SarPendingTasks);
+    setOnAir(res.data.OnAirPendingTasks);
+    setMaterialReturn(res.data.MaterialReturnPendingTasks);
+    setPr(res.data.PrPendingTasks);
+    setPo(res.data.PoPendingTasks);
+    setInvoice(res.data.InvoicePendingTasks);
+    setPoClosure(res.data.PoClosurePendingTasks);
   };
 
   return (
@@ -52,7 +54,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Installation"
         >
-          <InstallationPendingTasks />
+          <InstallationPendingTasks Installation={Installation} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -61,7 +63,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Commissioning"
         >
-          <CommissioningPendingTasks assign={Assign} />
+          <CommissioningPendingTasks Commission={Commission} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -70,7 +72,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Pat"
         >
-          <PatPendingTasks teamAllocation={TeamAllocation} />
+          <PatPendingTasks Pat={Pat} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -79,7 +81,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Sar"
         >
-          <SarPendingTasks dependencies={Dependencies} />
+          <SarPendingTasks Sar={Sar} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -88,7 +90,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/OnAir"
         >
-          <OnAirPendingTasks pRPOProgress={PRPOProgress} />
+          <OnAirPendingTasks OnAir={OnAir} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -97,7 +99,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/MaterialReturn"
         >
-          <MaterialReturnPendingTasks logistics={Logistics} />
+          <MaterialReturnPendingTasks MaterialReturn={MaterialReturn} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -106,7 +108,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Pr"
         >
-          <PrPendingTasks implementations={Implementations} />
+          <PrPendingTasks Pr={Pr} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -115,7 +117,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Po"
         >
-          <PoPendingTasks acceptance={Acceptance} />
+          <PoPendingTasks Po={Po} />
         </Link>
       </Grid>
       <Grid item xs={12} sm={6} md={2.4}>
@@ -124,7 +126,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Invoice"
         >
-          <InvoicePendingTasks payment={Payment} />
+          <InvoicePendingTasks Invoice={Invoice} />
         </Link>
       </Grid>
 
@@ -134,7 +136,7 @@ export default function CardLists() {
           component={RouterLink}
           to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/PoClosure"
         >
-          <PoClosurePending />
+          <PoClosurePending PoClosure={PoClosure} />
         </Link>
       </Grid>
     </Grid>

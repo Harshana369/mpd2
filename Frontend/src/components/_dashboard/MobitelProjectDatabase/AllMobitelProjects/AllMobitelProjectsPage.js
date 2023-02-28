@@ -42,7 +42,7 @@ export default function AllMobitelProjectsPage() {
     const req = await axiosInstance
       .get('/mobitelProjectsOverviewTable/ProjectsArray')
       .then((res) => {
-        console.log(res.data.mobitelProjectsNamesArrayForInsights);
+        // console.log(res.data.mobitelProjectsNamesArrayForInsights);
         setprojectNamesArray(res.data.mobitelProjectsNamesArrayForInsights);
       });
   };

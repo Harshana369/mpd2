@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function OnAirPendingTasks({ pRPOProgress }) {
-  const PRPOPendingTasksNotifications = pRPOProgress;
+export default function OnAirPendingTasks({ OnAir }) {
+  const OnAirPendingTasksNotifications = OnAir;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {PRPOPendingTasksNotifications < 5 ? (
+          {OnAirPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {PRPOPendingTasksNotifications}
+              {OnAirPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {PRPOPendingTasksNotifications}
+              {OnAirPendingTasksNotifications}
             </Typography>
           )}
         </Typography>

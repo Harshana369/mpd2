@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function PatPendingTasks({ teamAllocation }) {
-  const TeamAllocationsPendingTasksNotifications = teamAllocation;
+export default function PatPendingTasks({ Pat }) {
+  const PatPendingTasksNotifications = Pat;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {TeamAllocationsPendingTasksNotifications < 5 ? (
+          {PatPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {TeamAllocationsPendingTasksNotifications}
+              {PatPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {TeamAllocationsPendingTasksNotifications}
+              {PatPendingTasksNotifications}
             </Typography>
           )}
         </Typography>

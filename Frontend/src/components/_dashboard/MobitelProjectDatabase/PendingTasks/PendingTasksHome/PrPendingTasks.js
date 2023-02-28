@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function PrPendingTasks({ implementations }) {
-  const ImplementationsPendingTasksNotifications = implementations;
+export default function PrPendingTasks({ Pr }) {
+  const PrPendingTasksNotifications = Pr;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="pendingtasks" sx={{ opacity: 1 }}>
-          {ImplementationsPendingTasksNotifications < 5 ? (
+          {PrPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {ImplementationsPendingTasksNotifications}
+              {PrPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {ImplementationsPendingTasksNotifications}
+              {PrPendingTasksNotifications}
             </Typography>
           )}
         </Typography>

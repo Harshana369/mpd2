@@ -60,11 +60,11 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   // ---------------------------------------------------------
 
   const fetchData = async () => {
-    const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
+    const res = await axiosInstance.get(`/getMaterialReturn`);
     // console.log(res.data.success[0].mobitelDatabasePropertys);
-    setState(res.data.success[0].mobitelDatabasePropertys);
-    setColumn(res.data.success[0].headerproperties);
-    setObjId(res.data.success[0]._id);
+    setState(res.data.MaterialReturn);
+    // setColumn(res.data.success[0].headerproperties);
+    // setObjId(res.data.success[0]._id);
   };
 
   const getRowsFromCurrentPage = ({ apiRef }) =>
@@ -443,8 +443,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     await axiosInstance.put('/matiriyalReturnPendingColumnEdit', columnVisibilityModel);
   };
 
-  const updateInstallation = async () => {
-    await axiosInstance.put('/updatePendingTask', tableRow);
+  const updateMaterialReturn = async () => {
+    await axiosInstance.put('/updateMaterialReturn', tableRow);
   };
 
   React.useEffect(() => {
@@ -457,7 +457,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   }, [columnVisibilityModel]);
 
   React.useEffect(() => {
-    updateInstallation();
+    updateMaterialReturn();
   }, [tableRow]);
 
   return (

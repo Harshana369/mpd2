@@ -53,9 +53,9 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
-    console.log(res.data.success[0].mobitelDatabasePropertys);
-    setState(res.data.success[0].mobitelDatabasePropertys);
-    setColumn(res.data.success[0].headerproperties);
+    // console.log(res.data);
+    setState(res.data.success);
+    // setColumn(res.data.success[0].headerproperties);
   };
 
   const getRowsFromCurrentPage = ({ apiRef }) =>
@@ -405,7 +405,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   const getData = async () => {
     await axiosInstance.get('/MobitelDatabaseColumnGet').then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       setColumnVisibilityModel(res.data);
     });
   };

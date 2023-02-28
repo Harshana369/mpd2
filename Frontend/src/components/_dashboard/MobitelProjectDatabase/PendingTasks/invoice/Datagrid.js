@@ -60,11 +60,11 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   // ---------------------------------------------------------
 
   const fetchData = async () => {
-    const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
+    const res = await axiosInstance.get(`/geInvoice`);
     // console.log(res.data.success[0].mobitelDatabasePropertys);
-    setState(res.data.success[0].mobitelDatabasePropertys);
-    setColumn(res.data.success[0].headerproperties);
-    setObjId(res.data.success[0]._id);
+    setState(res.data.Invoice);
+    // setColumn(res.data.success[0].headerproperties);
+    // setObjId(res.data.success[0]._id);
   };
 
   const getRowsFromCurrentPage = ({ apiRef }) =>
@@ -444,7 +444,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   };
 
   const updateInstallation = async () => {
-    await axiosInstance.put('/updatePendingTask', tableRow);
+    await axiosInstance.put('/updateInvoice', tableRow);
   };
 
   React.useEffect(() => {

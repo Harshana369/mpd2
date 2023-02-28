@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function DependenciesPendingTasks({ dependencies }) {
-  const DependenciesPendingTasksNotifications = dependencies;
+export default function DependenciesPendingTasks({ Sar }) {
+  const SarPendingTasksNotifications = Sar;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {DependenciesPendingTasksNotifications < 5 ? (
+          {SarPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {DependenciesPendingTasksNotifications}
+              {SarPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {DependenciesPendingTasksNotifications}
+              {SarPendingTasksNotifications}
             </Typography>
           )}
         </Typography>

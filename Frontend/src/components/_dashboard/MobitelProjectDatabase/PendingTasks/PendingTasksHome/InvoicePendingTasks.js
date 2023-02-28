@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function InvoicePendingTasks({ payment }) {
-  const PaymentPendingTasksNotifications = payment;
+export default function InvoicePendingTasks({ Invoice }) {
+  const InvoicePendingTasksNotifications = Invoice;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {PaymentPendingTasksNotifications < 5 ? (
+          {InvoicePendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {PaymentPendingTasksNotifications}
+              {InvoicePendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {PaymentPendingTasksNotifications}
+              {InvoicePendingTasksNotifications}
             </Typography>
           )}
         </Typography>

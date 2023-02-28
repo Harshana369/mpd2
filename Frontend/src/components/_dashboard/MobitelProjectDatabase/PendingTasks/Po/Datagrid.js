@@ -60,11 +60,11 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   // ---------------------------------------------------------
 
   const fetchData = async () => {
-    const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
+    const res = await axiosInstance.get(`/getPo`);
     // console.log(res.data.success[0].mobitelDatabasePropertys);
-    setState(res.data.success[0].mobitelDatabasePropertys);
-    setColumn(res.data.success[0].headerproperties);
-    setObjId(res.data.success[0]._id);
+    setState(res.data.Po);
+    // setColumn(res.data.success[0].headerproperties);
+    // setObjId(res.data.success[0]._id);
   };
 
   const getRowsFromCurrentPage = ({ apiRef }) =>
@@ -443,8 +443,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     await axiosInstance.put('/poPendingColumnEdit', columnVisibilityModel);
   };
 
-  const updateInstallation = async () => {
-    await axiosInstance.put('/updatePendingTask', tableRow);
+  const updatePo = async () => {
+    await axiosInstance.put('/updatePo', tableRow);
   };
 
   React.useEffect(() => {
@@ -457,7 +457,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   }, [columnVisibilityModel]);
 
   React.useEffect(() => {
-    updateInstallation();
+    updatePo();
   }, [tableRow]);
 
   return (

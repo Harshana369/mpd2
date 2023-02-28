@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function PoClosurePendingTasks({ po }) {
-  const PaymentPendingTasksNotifications = po;
+export default function PoClosurePendingTasks({ PoClosure }) {
+  const PoPendingTasksNotifications = PoClosure;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {PaymentPendingTasksNotifications < 5 ? (
+          {PoPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {PaymentPendingTasksNotifications}
+              {PoPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {PaymentPendingTasksNotifications}
+              {PoPendingTasksNotifications}
             </Typography>
           )}
         </Typography>

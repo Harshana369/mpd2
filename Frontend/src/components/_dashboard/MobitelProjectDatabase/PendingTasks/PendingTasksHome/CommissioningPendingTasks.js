@@ -30,20 +30,20 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function CommissioningPendingTasks() {
-  const AssignPendingTasksNotifications = 0;
+export default function CommissioningPendingTasks({ Commission }) {
+  const CommissionPendingTasksNotifications = Commission;
 
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-          {AssignPendingTasksNotifications < 5 ? (
+          {CommissionPendingTasksNotifications < 5 ? (
             <Typography variant="subtitle1" color="primary" sx={{ opacity: 1 }}>
-              {AssignPendingTasksNotifications}
+              {CommissionPendingTasksNotifications}
             </Typography>
           ) : (
             <Typography variant="subtitle1" color="PendingTasks" sx={{ opacity: 1 }}>
-              {AssignPendingTasksNotifications}
+              {CommissionPendingTasksNotifications}
             </Typography>
           )}
         </Typography>
