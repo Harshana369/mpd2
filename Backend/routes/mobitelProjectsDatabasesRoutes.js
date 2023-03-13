@@ -172,6 +172,8 @@ function getPat(posts) {
 }
 
 //-----------------------Update Pat Pending Task-----------------------------
+
+//------------------------Pss--------------------
 router.route("/updatePat").put(async (req, res) => {
   const Tr = req.body.Task_Ref;
   const today = new Date();
@@ -187,6 +189,34 @@ router.route("/updatePat").put(async (req, res) => {
     {
       $set: {
         PAT_Pass: formattedDate,
+      },
+    }
+  );
+
+  if (artist) {
+    res.send("Successful");
+  } else {
+    res.status(500).send("Not successful");
+  }
+});
+
+//---------------------- Submitted--------------------
+
+router.route("/updatePatSubmitted").put(async (req, res) => {
+  const Tr = req.body.Task_Ref;
+  const today = new Date();
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+  const formattedDate = today.toLocaleDateString("en-US", options);
+
+  const artist = await Posts.updateOne(
+    { Task_Ref: `${Tr}` },
+    {
+      $set: {
+        Submit_PAT: formattedDate,
       },
     }
   );
@@ -219,8 +249,36 @@ function getSar(posts) {
   return posts.filter((post) => post.SAR_Pass === null);
 }
 
-//-----------------------Update Sar Pending Task-----------------------------
-router.route("/updateSar").put(async (req, res) => {
+//---------------------- Update Sar Submitted  Task--------------------
+
+router.route("/updateSarSubmitted").put(async (req, res) => {
+  const Tr = req.body.Task_Ref;
+  const today = new Date();
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+  const formattedDate = today.toLocaleDateString("en-US", options);
+
+  const artist = await Posts.updateOne(
+    { Task_Ref: `${Tr}` },
+    {
+      $set: {
+        Submit_SAR: formattedDate,
+      },
+    }
+  );
+
+  if (artist) {
+    res.send("Successful");
+  } else {
+    res.status(500).send("Not successful");
+  }
+});
+
+//-----------------------Update Sar Pass Task-----------------------------
+router.route("/updateSarPass").put(async (req, res) => {
   const Tr = req.body.Task_Ref;
   const today = new Date();
   const options = {
@@ -636,5 +694,275 @@ function getPoClosurePendingTasks(posts) {
 
   return PoClosurePendingTasks.length;
 }
+
+//--------------------------------------------
+
+router.get("/mobitelProjectsDatabases", async (req, res, next) => {
+  const projectName = req.query.Project;
+
+  Posts.find().exec((err, posts) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      projectsScopeDataCount: getProjectsScopeDataCount(posts, projectName),
+      projectsHandOverDataCount: getProjectsHandOverDataCount(
+        posts,
+        projectName
+      ),
+      projectsPatDataCount: getProjectsPatDataCount(posts, projectName),
+      projectsOnAirDataCount: getProjectsOnAirDataCount(posts, projectName),
+      //   HoldSitesDataforSquares: getHoldSitesData(posts),
+      projectScopeData: getProjectScopeData(posts, projectName),
+      projectHandOverData: getProjectsHandOverData(posts, projectName),
+      projectsPatData: getProjectsPatData(posts, projectName),
+      projectsOnAirData: getProjectsOnAirData(posts, projectName),
+    });
+  });
+});
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for Getting Get Scope Data to the Front End Squares of Mobitel Projects ---------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getProjectsScopeDataCount(posts, projectName) {
+  var ScopeDataCount = [];
+
+  if (projectName === "All Projects") {
+    ScopeDataCount.push(posts.filter((obj) => obj.Scope !== null).length);
+    return ScopeDataCount;
+  } else {
+    ScopeDataCount.push(
+      posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.Scope !== null).length
+    );
+  }
+
+  //   console.log(ScopeDataCount);
+  return ScopeDataCount;
+}
+
+function getProjectScopeData(posts, projectName) {
+  var scopeData = [];
+
+  if (projectName === "All Projects") {
+    scopeData.push(...posts.filter((obj) => obj.Scope !== null));
+
+    return scopeData;
+  } else {
+    scopeData.push(
+      ...posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.Scope !== null)
+    );
+  }
+
+  //   console.log(scopeData);
+  return scopeData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for Getting Handover Data to the Front End Squares of Mobitel Projects ---------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getProjectsHandOverDataCount(posts, projectName) {
+  var handOverDataCount = [];
+
+  if (projectName === "All Projects") {
+    handOverDataCount.push(posts.filter((obj) => obj.Handover !== null).length);
+
+    return handOverDataCount;
+  } else {
+    handOverDataCount.push(
+      posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.Handover !== null).length
+    );
+  }
+
+  //   console.log(handOverDataCount);
+  return handOverDataCount;
+}
+
+function getProjectsHandOverData(posts, projectName) {
+  var handOverData = [];
+
+  if (projectName === "All Projects") {
+    handOverData.push(...posts.filter((obj) => obj.Handover !== null));
+
+    return handOverData;
+  } else {
+    handOverData.push(
+      ...posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.Handover !== null)
+    );
+  }
+
+  //   console.log(handOverData);
+  return handOverData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for Getting Pat Pass Data to the Front End Squares of Mobitel Projects ---------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getProjectsPatDataCount(posts, projectName) {
+  var patPassDataCount = [];
+
+  if (projectName === "All Projects") {
+    patPassDataCount.push(posts.filter((obj) => obj.PAT_Pass !== null).length);
+
+    return patPassDataCount;
+  } else {
+    patPassDataCount.push(
+      posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.PAT_Pass !== null).length
+    );
+  }
+  //   console.log(patPassDataCount);
+  return patPassDataCount;
+}
+
+function getProjectsPatData(posts, projectName) {
+  var patPassData = [];
+
+  if (projectName === "All Projects") {
+    patPassData.push(...posts.filter((obj) => obj.PAT_Pass !== null));
+
+    return patPassData;
+  } else {
+    patPassData.push(
+      ...posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.PAT_Pass !== null)
+    );
+  }
+
+  //   console.log(patPassData);
+  return patPassData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for Getting Get On Air Data to the Front End Squares of Mobitel Projects ---------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getProjectsOnAirDataCount(posts, projectName) {
+  var OnAirDataCount = [];
+
+  if (projectName === "All Projects") {
+    OnAirDataCount.push(posts.filter((obj) => obj.On_air !== null).length);
+
+    return OnAirDataCount;
+  } else {
+    OnAirDataCount.push(
+      posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.On_air !== null).length
+    );
+  }
+  //   console.log(OnAirDataCount);
+  return OnAirDataCount;
+}
+
+function getProjectsOnAirData(posts, projectName) {
+  var onAirData = [];
+
+  if (projectName === "All Projects") {
+    onAirData.push(...posts.filter((obj) => obj.On_air !== null));
+
+    return onAirData;
+  } else {
+    onAirData.push(
+      ...posts
+        .filter((obj) => obj.Project === projectName)
+        .filter((obj) => obj.On_air !== null)
+    );
+  }
+
+  //   console.log(onAirData);
+  return onAirData;
+}
+
+// ------------------------------------------------------------------------------------------------------------------
+// --------------------------  Get projects name array  -------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------
+
+router.get("/mobitelProjectsOverviewTable/ProjectsArray", (req, res) => {
+  Posts.find().exec((err, mobitelProjects) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      mobitelProjectsNamesArray: getProjectsNamesArray(mobitelProjects),
+      //   mobitelProjectsNamesArrayForInsights:
+      //     getProjectsNamesArrayInsights(mobitelProjects),
+      //   mobitelProjectsNamesArrayToTheExcelUploads:
+      //     getProjectsNamesArrayToExcelUploads(mobitelProjects),
+    });
+  });
+});
+
+//---------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getProjectsNamesArray(mobitelProjects) {
+  //   var projectsNames = [];
+  var projectsNamesArray = [];
+
+  //   projectsNamesLength = mobitelProjects.filter((obj) => obj.Project).length;
+
+  //   for (var i = 0; i < projectsNamesLength; i++) {
+  //     projectsNames[i] = mobitelProjects.filter((obj) => obj.Project)[i].Project;
+
+  //     projectsNamesArray.push({
+  //       value: projectsNames[i],
+  //       label: projectsNames[i],
+  //     });
+
+  const uniqueProjects = mobitelProjects
+    .map((project) => project.Project)
+    .filter((project, index, projects) => projects.indexOf(project) === index);
+
+  for (let i = 0; i < uniqueProjects.length; i++) {
+    projectsNamesArray.push({
+      value: uniqueProjects[i],
+      label: uniqueProjects[i],
+    });
+  }
+  return projectsNamesArray;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------
+// function getProjectsNamesArrayInsights(mobitelProjects) {
+//   var projectsNames = [];
+//   var projectsNamesArray = [
+//     { value: "All Mobitel Projects", label: "All Mobitel Projects" },
+//   ];
+
+//   projectsNamesLength = mobitelProjects.filter((obj) => obj.Project).length;
+
+//   for (var i = 0; i < projectsNamesLength; i++) {
+//     projectsNames[i] = mobitelProjects.filter((obj) => obj.Project)[i].Project;
+
+//     projectsNamesArray.push({
+//       value: projectsNames[i],
+//       label: projectsNames[i],
+//     });
+//   }
+
+//   console.log(projectsNamesArray);
+//   return projectsNamesArray;
+// }
 
 module.exports = router;
