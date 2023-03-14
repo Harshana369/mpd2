@@ -23,6 +23,7 @@ import clsx from 'clsx';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { render } from 'react-dom';
 
 /* eslint-disable camelcase */
 
@@ -49,11 +50,12 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   const [snackbar, setSnackbar] = React.useState(null);
   const [state, setState] = React.useState([]);
   const [column, setColumn] = React.useState([]);
+  const [tableReplace, setTableReplace] = React.useState(false);
+  const [tablePass, setTablePass] = React.useState([]);
+  const [tableSubmitted, setTableSubmitted] = React.useState([]);
+  // let submit_pat = null;
 
   // ----------
-
-  const [tableRow, setTableRow] = React.useState([]);
-  const [objId, setObjId] = React.useState();
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
@@ -351,8 +353,62 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       editable: true
     },
     {
-      field: 'action',
-      headerName: 'Action',
+      field: 'submittedAction',
+      headerName: 'Submitted Action',
+      headerClassName: 'super-app-theme--header',
+      sortable: false,
+      renderCell: ({ api, getValue, id, row }) => {
+        const onClick = (e) => {
+          e.stopPropagation(); // don't select this row after clicking
+
+          const thisRow = {};
+          api
+            .getAllColumns()
+            .filter(({ field }) => field !== '__check__' && !!field)
+            .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
+
+          setTableSubmitted(thisRow);
+
+          setTableReplace(true);
+        };
+
+        return (
+          <Button
+            onClick={onClick}
+            variant="contained"
+            color={row.Submit_PAT === null ? 'error' : 'primary'}
+          >
+            Submitted
+          </Button>
+        );
+      }
+    },
+
+    // {
+    //   field: 'rejected action',
+    //   headerName: 'Rejected Action',
+    //   headerClassName: 'super-app-theme--header',
+    //   sortable: false,
+    //   renderCell: ({ api, getValue, id }) => {
+    //     const onClick = (e) => {};
+
+    //     return <Button onClick={onClick}>Rejected</Button>;
+    //   }
+    // },
+    // {
+    //    field: 'minor pass action',
+    //    headerName: 'Minor Pass Action',
+    //    headerClassName: 'super-app-theme--header',
+    //    sortable: false,
+    //   renderCell: ({ api, getValue, id }) => {
+    //     const onClick = (e) => {};
+
+    //      return <Button onClick={onClick}>Minor Pass</Button>;
+    //    }
+    //  },
+    {
+      field: 'pass action',
+      headerName: 'Pass Action',
       headerClassName: 'super-app-theme--header',
       sortable: false,
       renderCell: ({ api, getValue, id }) => {
@@ -365,10 +421,16 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
             .filter(({ field }) => field !== '__check__' && !!field)
             .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
 
-          setTableRow(thisRow);
+          setTablePass(thisRow);
+
+          setTableReplace(true);
         };
 
-        return <Button onClick={onClick}>To Complete</Button>;
+        return (
+          <Button onClick={onClick} variant="contained" color="primary">
+            Pass
+          </Button>
+        );
       }
     }
   ];
@@ -443,8 +505,13 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     await axiosInstance.put('/patPendingColumnEdit', columnVisibilityModel);
   };
 
-  const updatePat = async () => {
-    await axiosInstance.put('/updatePat', tableRow);
+  const updatePass = async () => {
+    await axiosInstance.put('/updatePat', tablePass);
+  };
+
+  const updateSubmitted = async () => {
+    console.log(tableSubmitted);
+    await axiosInstance.put('/updatePatSubmitted', tableSubmitted);
   };
 
   React.useEffect(() => {
@@ -457,8 +524,17 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   }, [columnVisibilityModel]);
 
   React.useEffect(() => {
-    updatePat();
-  }, [tableRow]);
+    updatePass();
+  }, [tablePass]);
+
+  React.useEffect(() => {
+    updateSubmitted();
+  }, [tableSubmitted]);
+
+  React.useEffect(() => {
+    fetchData();
+    setTableReplace(false);
+  }, [tableReplace]);
 
   return (
     <Box

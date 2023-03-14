@@ -41,6 +41,7 @@ export default function CardLists() {
     setOnAir(res.data.OnAirPendingTasks);
     setMaterialReturn(res.data.MaterialReturnPendingTasks);
     setPr(res.data.PrPendingTasks);
+    console.log(res.data.PrPendingTasks);
     setPo(res.data.PoPendingTasks);
     setInvoice(res.data.InvoicePendingTasks);
     setPoClosure(res.data.PoClosurePendingTasks);

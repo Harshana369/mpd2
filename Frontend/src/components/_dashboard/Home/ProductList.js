@@ -25,7 +25,7 @@ export default function ProductList() {
           <ProductCardDashboard />
         </Link>
       </Grid>
-      <Grid item xs={12} sm={6} md={2.4}>
+      {/* <Grid item xs={12} sm={6} md={2.4}>
         <Link underline="none" component={RouterLink} to="/dashboard/VendorProjectsOverview">
           <VendorProjects />
         </Link>
@@ -39,15 +39,16 @@ export default function ProductList() {
         <Link underline="none" component={RouterLink} to="/dashboard/DatabasesVendorProjects">
           <VendorDatabases />
         </Link>
-      </Grid>
+      </Grid> */}
+
       <Grid item xs={12} sm={6} md={2.4}>
         <Link underline="none" component={RouterLink} to="/dashboard/DatabasesMobitelProjects">
           <MobitelDatabases />
         </Link>
       </Grid>
-      <Grid item xs={12} sm={6} md={2.4}>
+      {/* <Grid item xs={12} sm={6} md={2.4}>
         <DatabasesView />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

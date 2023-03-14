@@ -2,9 +2,6 @@ import axios from 'axios';
 import { type } from 'os';
 
 import {
-  HANDOVER_DATA_FAIL,
-  HANDOVER_DATA_REQUEST,
-  HANDOVER_DATA_SUCCESS,
   MOBITEL_CHART_AREA_DATA_FAIL,
   MOBITEL_CHART_AREA_DATA_REQUEST,
   MOBITEL_CHART_AREA_DATA_SUCCESS,
@@ -22,7 +19,10 @@ import {
   MOBITEL_OVERVIEW_SUCCESS,
   MOBITEL_SCOPE_DATA_FAIL,
   MOBITEL_SCOPE_DATA_REQUEST,
-  MOBITEL_SCOPE_DATA_SUCCESS
+  MOBITEL_SCOPE_DATA_SUCCESS,
+  MOBITEL_TILES_DATA_FAIL,
+  MOBITEL_TILES_DATA_REQUEST,
+  MOBITEL_TILES_DATA_SUCCESS
 } from '../Constants/mobitelConstants';
 
 const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
@@ -118,6 +118,22 @@ export const fetchMobitelLastUpdatesData = (MobitelDropdownValue) => async (disp
   } catch (error) {
     dispatch({
       type: MOBITEL_LAST_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message
+    });
+  }
+};
+
+export const fetchMoitelTilesData = (MobitelDropdownValue) => async (dispatch) => {
+  try {
+    dispatch({ type: MOBITEL_TILES_DATA_REQUEST });
+    const { data } = await axiosInstance.get('/mobitelProjectsDatabases', {
+      params: { Project: MobitelDropdownValue }
+    });
+    dispatch({ type: MOBITEL_TILES_DATA_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: MOBITEL_TILES_DATA_FAIL,
       payload:
         error.response && error.response.data.message ? error.response.data.message : error.message
     });

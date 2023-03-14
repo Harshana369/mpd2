@@ -61,7 +61,6 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/getPr`);
-    console.log(res.data.Pr);
     setState(res.data.Pr);
     // setColumn(res.data.success[0].headerproperties);
     // setObjId(res.data.success[0]._id);
@@ -349,28 +348,28 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       align: 'left',
       width: 180,
       editable: true
-    },
-    {
-      field: 'action',
-      headerName: 'Action',
-      headerClassName: 'super-app-theme--header',
-      sortable: false,
-      renderCell: ({ api, getValue, id }) => {
-        const onClick = (e) => {
-          e.stopPropagation(); // don't select this row after clicking
-
-          const thisRow = {};
-          api
-            .getAllColumns()
-            .filter(({ field }) => field !== '__check__' && !!field)
-            .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
-
-          setTableRow(thisRow);
-        };
-
-        return <Button onClick={onClick}>To Complete</Button>;
-      }
     }
+    // {
+    //   field: 'action',
+    //   headerName: 'Action',
+    //   headerClassName: 'super-app-theme--header',
+    //   sortable: false,
+    //   renderCell: ({ api, getValue, id }) => {
+    //     const onClick = (e) => {
+    //       e.stopPropagation(); // don't select this row after clicking
+
+    //       const thisRow = {};
+    //       api
+    //         .getAllColumns()
+    //         .filter(({ field }) => field !== '__check__' && !!field)
+    //         .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
+
+    //       setTableRow(thisRow);
+    //     };
+
+    //     return <Button onClick={onClick}>To Complete</Button>;
+    //   }
+    // }
   ];
 
   // -------------------------------------------------------------------------------------------------
@@ -443,9 +442,9 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     await axiosInstance.put('/prPendingColumnEdit', columnVisibilityModel);
   };
 
-  const updatePr = async () => {
-    await axiosInstance.put('/updatePr', tableRow);
-  };
+  // const updatePr = async () => {
+  //   await axiosInstance.put('/updatePr', tableRow);
+  // };
 
   React.useEffect(() => {
     fetchData();
@@ -456,9 +455,9 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     updateColumn();
   }, [columnVisibilityModel]);
 
-  React.useEffect(() => {
-    updatePr();
-  }, [tableRow]);
+  // React.useEffect(() => {
+  //   updatePr();
+  // }, [tableRow]);
 
   return (
     <Box

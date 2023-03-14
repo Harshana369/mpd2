@@ -27,11 +27,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // } from './Reducers/zteReducer';
 
 import { AllTableReducer, SiteEngineerForSite, SiteIdReducer } from './Reducers/DayPlanReducer';
+import { mobitelTilesReducer } from './Reducers/mobitelReduce';
 
 const reducer = combineReducers({
   mobitelSiteEngineerDayPlan: SiteIdReducer,
   allTableData: AllTableReducer,
-  SiteEngineerForAllSite: SiteEngineerForSite
+  SiteEngineerForAllSite: SiteEngineerForSite,
+  mobileTilesData: mobitelTilesReducer
 });
 
 const initialState = {};

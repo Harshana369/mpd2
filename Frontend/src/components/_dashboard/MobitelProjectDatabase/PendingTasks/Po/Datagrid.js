@@ -52,7 +52,8 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   // ----------
 
-  const [tableRow, setTableRow] = React.useState([]);
+  const [tablePass, setTablePass] = React.useState([]);
+  const [tableReplace, setTableReplace] = React.useState(false);
   const [objId, setObjId] = React.useState();
 
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -355,6 +356,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       headerName: 'Action',
       headerClassName: 'super-app-theme--header',
       sortable: false,
+      width: 200,
       renderCell: ({ api, getValue, id }) => {
         const onClick = (e) => {
           e.stopPropagation(); // don't select this row after clicking
@@ -365,10 +367,16 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
             .filter(({ field }) => field !== '__check__' && !!field)
             .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
 
-          setTableRow(thisRow);
+          setTablePass(thisRow);
+
+          setTableReplace(true);
         };
 
-        return <Button onClick={onClick}>To Complete</Button>;
+        return (
+          <Button onClick={onClick} variant="contained" color="primary">
+            To Complete
+          </Button>
+        );
       }
     }
   ];
@@ -444,7 +452,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   };
 
   const updatePo = async () => {
-    await axiosInstance.put('/updatePo', tableRow);
+    await axiosInstance.put('/updatePo', tablePass);
   };
 
   React.useEffect(() => {
@@ -458,7 +466,12 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   React.useEffect(() => {
     updatePo();
-  }, [tableRow]);
+  }, [tablePass]);
+
+  React.useEffect(() => {
+    fetchData();
+    setTableReplace(false);
+  }, [tableReplace]);
 
   return (
     <Box

@@ -28,82 +28,82 @@ const sidebarConfig = [
     path: '/dashboard/app',
     icon: getIcon(pieChart2Fill)
   },
-  {
-    title: 'Vendor Projects',
-    path: '/dashboard/VendorProjects',
-    icon: getIcon(folderFill),
-    // collapse submenu
-    children: [
-      {
-        title: 'Overview',
-        path: '/dashboard/VendorProjectsOverview',
-        icon: getIcon(shoppingBagFill)
-      },
-      {
-        title: 'Insights',
-        path: '/dashboard/VendorProjectsInsights',
-        icon: getIcon(shoppingBagFill)
-      },
-      {
-        title: 'Milestones',
-        path: '/dashboard/VendorProjectsMilestones',
-        icon: getIcon(fileTextFill)
-      }
-    ]
-  },
-  {
-    title: 'Mobitel Projects',
-    path: '/dashboard/MobitelProjects',
-    icon: getIcon(activityFill),
-    // collapse submenu
-    children: [
-      {
-        title: 'Overview',
-        path: '/dashboard/MobitelProjectsOverview',
-        icon: getIcon(fileTextFill)
-      },
-      {
-        title: 'Insights',
-        path: '/dashboard/MobitelProjectsInsights',
-        icon: getIcon(fileTextFill)
-      },
-      {
-        title: 'Milestones',
-        path: '/dashboard/MobitelProjectsMilestones',
-        icon: getIcon(fileTextFill)
-      },
-      {
-        title: 'Finance',
-        path: '/dashboard/MobitelProjectsFinance',
-        icon: getIcon(fileTextFill)
-      },
-      {
-        title: 'Sub Projects',
-        path: '/dashboard/MobitelProjects/SubProjects',
-        icon: getIcon(fileTextFill)
-      },
-      {
-        title: 'Site Engineers',
-        path: '/dashboard/MobitelProjects/SiteEngineers',
-        icon: getIcon(AddchartIcon)
-      },
-      {
-        title: 'Day plan',
-        path: '/dashboard/MobitelSiteEngineersDayPlan',
-        icon: getIcon(fileTextFill)
-      }
-    ]
-  },
+  // {
+  //   title: 'Vendor Projects',
+  //   path: '/dashboard/VendorProjects',
+  //   icon: getIcon(folderFill),
+  //   // collapse submenu
+  //   children: [
+  //     {
+  //       title: 'Overview',
+  //       path: '/dashboard/VendorProjectsOverview',
+  //       icon: getIcon(shoppingBagFill)
+  //     },
+  //     {
+  //       title: 'Insights',
+  //       path: '/dashboard/VendorProjectsInsights',
+  //       icon: getIcon(shoppingBagFill)
+  //     },
+  //     {
+  //       title: 'Milestones',
+  //       path: '/dashboard/VendorProjectsMilestones',
+  //       icon: getIcon(fileTextFill)
+  //     }
+  //   ]
+  // },
+  // {
+  //   title: 'Mobitel Projects',
+  //   path: '/dashboard/MobitelProjects',
+  //   icon: getIcon(activityFill),
+  //   // collapse submenu
+  //   children: [
+  //     {
+  //       title: 'Overview',
+  //       path: '/dashboard/MobitelProjectsOverview',
+  //       icon: getIcon(fileTextFill)
+  //     },
+  //     {
+  //       title: 'Insights',
+  //       path: '/dashboard/MobitelProjectsInsights',
+  //       icon: getIcon(fileTextFill)
+  //     },
+  //     {
+  //       title: 'Milestones',
+  //       path: '/dashboard/MobitelProjectsMilestones',
+  //       icon: getIcon(fileTextFill)
+  //     },
+  //     {
+  //       title: 'Finance',
+  //       path: '/dashboard/MobitelProjectsFinance',
+  //       icon: getIcon(fileTextFill)
+  //     },
+  //     {
+  //       title: 'Sub Projects',
+  //       path: '/dashboard/MobitelProjects/SubProjects',
+  //       icon: getIcon(fileTextFill)
+  //     },
+  //     {
+  //       title: 'Site Engineers',
+  //       path: '/dashboard/MobitelProjects/SiteEngineers',
+  //       icon: getIcon(AddchartIcon)
+  //     },
+  //     {
+  //       title: 'Day plan',
+  //       path: '/dashboard/MobitelSiteEngineersDayPlan',
+  //       icon: getIcon(fileTextFill)
+  //     }
+  //   ]
+  // },
   {
     title: 'Databases',
     path: '/dashboard/databases',
     icon: getIcon(listOutline),
     children: [
-      {
-        title: 'Vendor Projects',
-        path: '/dashboard/DatabasesVendorProjects',
-        icon: getIcon(lockFill)
-      },
+      // {
+      //   title: 'Vendor Projects',
+      //   path: '/dashboard/DatabasesVendorProjects',
+      //   icon: getIcon(lockFill)
+      // },
       {
         title: 'Mobitel Projects',
         path: '/dashboard/DatabasesMobitelProjects',
@@ -157,11 +157,11 @@ const sidebarConfig = [
     icon: getIcon(shoppingBagFill)
   },
 
-  {
-    title: 'Material Return',
-    path: '/dashboard/Material',
-    icon: getIcon(fileTextFill)
-  },
+  // {
+  //   title: 'Material Return',
+  //   path: '/dashboard/Material',
+  //   icon: getIcon(fileTextFill)
+  // },
 
   {
     title: 'Users',

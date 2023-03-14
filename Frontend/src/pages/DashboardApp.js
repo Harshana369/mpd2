@@ -1,8 +1,12 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 // material
-import { Grid, Container, Typography, Stack, Card, Button } from '@mui/material';
+import { Grid, Container, Typography, Stack, Card, Button, CircularProgress } from '@mui/material';
 // components
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,17 +23,18 @@ import {
   AppWebsiteVisits1
 } from '../components/_dashboard/app';
 import AppBugReports1 from '../components/_dashboard/app/AppBugReports1';
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
+import { fetchMoitelTilesData } from '../Redux/Action/mobitelAction';
 
 export default function DashboardApp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
   const [MobitelprojectNamesArray, setMobitelprojectNamesArray] = useState([]);
   const [VendorprojectNamesArray, setVendorprojectNamesArray] = useState([]);
 
-  const [MobitelDropdownValue, setMobitelDropdownValue] = useState('All Mobitel Projects');
+  const [MobitelDropdownValue, setMobitelDropdownValue] = useState('All Projects');
   const [VendorDropdownValue, setVendorDropdownValue] = useState('All Vendor Projects');
 
   const [ChartDataForColumnGraphMobitel, setChartDatForColumnGraphMobitel] = useState([
@@ -83,156 +88,165 @@ export default function DashboardApp() {
     const req = await axiosInstance
       .get('/mobitelProjectsOverviewTable/ProjectsArray')
       .then((res) => {
-        setMobitelprojectNamesArray(res.data.mobitelProjectsNamesArrayForInsights);
+        setMobitelprojectNamesArray(res.data.mobitelProjectsNamesArray);
       });
   };
 
-  const fetchVendorProjectNames = async () => {
-    const req = await axiosInstance.get('/vendorProjectsOverviewTableProjectsArray').then((res) => {
-      setVendorprojectNamesArray(res.data.vendorProjectsNamesArrayForInsights);
-    });
-  };
+  const mobitelTilesDetails = useSelector((state) => state.mobileTilesData);
+
+  const { loading, error, mobitelTilesData } = mobitelTilesDetails;
+
+  // console.log(mobitelTilesData.projectsHandOverDataCount);
+
+  // const fetchVendorProjectNames = async () => {
+  //   const req = await axiosInstance.get('/vendorProjectsOverviewTableProjectsArray').then((res) => {
+  //     setVendorprojectNamesArray(res.data.vendorProjectsNamesArrayForInsights);
+  //   });
+  // };
   const MobitelprojectNames = MobitelprojectNamesArray.concat({
-    value: '',
-    label: 'Vendor Projects Only'
+    value: 'All Projects',
+    label: 'All Projects'
   });
-  const VendorprojectNames = VendorprojectNamesArray.concat({
-    value: '',
-    label: 'Mobitel Projects Only'
-  });
+  // const VendorprojectNames = VendorprojectNamesArray.concat({
+  //   value: '',
+  //   label: 'Mobitel Projects Only'
+  // });
 
   useEffect(() => {
-    fetchMobitelData();
-    fetchVendorData();
-    fetchMobitelScopeData();
-    fetchVendorScopeData();
-    fetchMobitelColumnGraphData();
-    fetchVendorColumnGraphData();
-    fetchMobitelProjectsLastUpdates();
-    fetchVendorProjectsLastUpdates();
+    // fetchMobitelData();
+    // fetchVendorData();
+    // fetchMobitelScopeData();
+    // fetchVendorScopeData();
+    // fetchMobitelColumnGraphData();
+    // fetchVendorColumnGraphData();
+    // fetchMobitelProjectsLastUpdates();
+    // fetchVendorProjectsLastUpdates();
     fetchMobitelProjectNames();
-    fetchVendorProjectNames();
-  }, []);
+    // fetchVendorProjectNames();
+    dispatch(fetchMoitelTilesData(MobitelDropdownValue));
+  }, [dispatch]);
 
   useEffect(() => {
-    fetchMobitelData();
-    fetchVendorData();
-    fetchMobitelScopeData();
-    fetchVendorScopeData();
-    fetchMobitelColumnGraphData();
-    fetchVendorColumnGraphData();
-    fetchMobitelProjectsLastUpdates();
-    fetchVendorProjectsLastUpdates();
+    // fetchMobitelData();
     fetchMobitelProjectNames();
-    fetchVendorProjectNames();
-  }, [MobitelDropdownValue]);
+    dispatch(fetchMoitelTilesData(MobitelDropdownValue));
+  }, [dispatch, MobitelDropdownValue]);
 
-  useEffect(() => {
-    fetchMobitelData();
-    fetchVendorData();
-    fetchMobitelScopeData();
-    fetchVendorScopeData();
-    fetchMobitelColumnGraphData();
-    fetchVendorColumnGraphData();
-    fetchMobitelProjectsLastUpdates();
-    fetchVendorProjectsLastUpdates();
-    fetchMobitelProjectNames();
-    fetchVendorProjectNames();
-  }, [VendorDropdownValue]);
+  // useEffect(() => {
+  //   fetchMobitelData();
+  //   fetchVendorData();
+  //   fetchMobitelScopeData();
+  //   fetchVendorScopeData();
+  //   fetchMobitelColumnGraphData();
+  //   fetchVendorColumnGraphData();
+  //   fetchMobitelProjectsLastUpdates();
+  //   fetchVendorProjectsLastUpdates();
+  //   fetchMobitelProjectNames();
+  //   fetchVendorProjectNames();
+  // }, [MobitelDropdownValue]);
 
-  const fetchMobitelColumnGraphData = () => {
-    axiosInstance
-      .get('/mobitelProjectsDatabasesChartDataColumnChartData', {
-        params: { Project: MobitelDropdownValue }
-      })
-      .then((res) => {
-        setChartDatForColumnGraphMobitel(res.data.chartDataForFrontEnd);
-        setXaxisDataMobitel(res.data.XaxisDataForTheGraphs);
-      });
-  };
+  // useEffect(() => {
+  //   fetchMobitelData();
+  //   fetchVendorData();
+  //   fetchMobitelScopeData();
+  //   fetchVendorScopeData();
+  //   fetchMobitelColumnGraphData();
+  //   fetchVendorColumnGraphData();
+  //   fetchMobitelProjectsLastUpdates();
+  //   fetchVendorProjectsLastUpdates();
+  //   fetchMobitelProjectNames();
+  //   fetchVendorProjectNames();
+  // }, [VendorDropdownValue]);
 
-  const fetchMobitelData = () => {
-    axiosInstance
-      .get('/mobitelProjectsDatabases', {
-        params: { Project: MobitelDropdownValue }
-      })
-      .then((res) => {
-        setHandoverDataMobitel(res.data.HandOverDataToSquares);
-        sePATPassDataMobitel(res.data.PatDataForFrontEnd);
-        setHoldSitesDataMobitel(res.data.HoldSitesDataforSquares);
-        setOnAirDataMobitel(res.data.OnAirDataForFrontEnd);
-        setProjectCompletionMobitel(res.data.ProjectCompletionForFrontEnd);
-        setxAxisDaysLabelMobitel(res.data.SevenDaysOfWeek);
-        setweeklyProgressDataMobitel(res.data.weeklyProgressDataForFrontEnd);
-        setcompletedSitesMobitel(res.data.WeeklyProgressOnAirSitesData);
-      });
-  };
+  // const fetchMobitelColumnGraphData = () => {
+  //   axiosInstance
+  //     .get('/mobitelProjectsDatabasesChartDataColumnChartData', {
+  //       params: { Project: MobitelDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setChartDatForColumnGraphMobitel(res.data.chartDataForFrontEnd);
+  //       setXaxisDataMobitel(res.data.XaxisDataForTheGraphs);
+  //     });
+  // };
 
-  const fetchMobitelScopeData = () => {
-    axiosInstance
-      .get('/mobitelProjectsOverviewTable', {
-        params: { ProjectName: MobitelDropdownValue }
-      })
-      .then((res) => {
-        setScopeDataMobitel(res.data.scopeDataToTheFrontEnd);
-      });
-  };
+  // const fetchMobitelData = () => {
+  //   axiosInstance
+  //     .get('/mobitelProjectsDatabases', {
+  //       params: { Project: MobitelDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setHandoverDataMobitel(res.data.projectsHandOverDataCount);
+  //       sePATPassDataMobitel(res.data.projectsPatDataCount);
+  //       //  setHoldSitesDataMobitel(res.data.HoldSitesDataforSquares);
+  //       setOnAirDataMobitel(res.data.projectsOnAirDataCount);
+  //     });
+  // };
 
-  const fetchVendorColumnGraphData = () => {
-    axiosInstance
-      .get('/vendorProjectsDatabasesChartDataColumnChartData', {
-        params: { Project: VendorDropdownValue }
-      })
-      .then((res) => {
-        setChartDatForColumnGraphVendor(res.data.chartDataForFrontEnd);
-      });
-  };
+  // const fetchMobitelScopeData = () => {
+  //   axiosInstance
+  //     .get('/mobitelProjectsOverviewTable', {
+  //       params: { ProjectName: MobitelDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setScopeDataMobitel(res.data.scopeDataToTheFrontEnd);
+  //     });
+  // };
 
-  const fetchVendorData = () => {
-    axiosInstance
-      .get('/vendorProjectsDatabases', {
-        params: { Project: VendorDropdownValue }
-      })
-      .then((res) => {
-        setHandoverDataVendor(res.data.HandOverDataToSquares);
-        sePATPassDataVendor(res.data.PatDataForFrontEnd);
-        setHoldSitesDataVendor(res.data.HoldSitesDataforSquares);
-        setOnAirDataVendor(res.data.OnAirDataForFrontEnd);
-        setProjectCompletionVendor(res.data.ProjectCompletionForFrontEnd);
-        setweeklyProgressDataVendor(res.data.weeklyProgressDataForFrontEnd);
-        setcompletedSitesVendor(res.data.WeeklyProgressOnAirSitesData);
-      });
-  };
+  // const fetchVendorColumnGraphData = () => {
+  //   axiosInstance
+  //     .get('/vendorProjectsDatabasesChartDataColumnChartData', {
+  //       params: { Project: VendorDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setChartDatForColumnGraphVendor(res.data.chartDataForFrontEnd);
+  //     });
+  // };
 
-  const fetchVendorScopeData = () => {
-    axiosInstance
-      .get('/vendorProjectsOverviewTable', {
-        params: { ProjectName: VendorDropdownValue }
-      })
-      .then((res) => {
-        setScopeDataVendor(res.data.scopeDataToTheFrontEnd);
-      });
-  };
+  // const fetchVendorData = () => {
+  //   axiosInstance
+  //     .get('/vendorProjectsDatabases', {
+  //       params: { Project: VendorDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setHandoverDataVendor(res.data.HandOverDataToSquares);
+  //       sePATPassDataVendor(res.data.PatDataForFrontEnd);
+  //       setHoldSitesDataVendor(res.data.HoldSitesDataforSquares);
+  //       setOnAirDataVendor(res.data.OnAirDataForFrontEnd);
+  //       setProjectCompletionVendor(res.data.ProjectCompletionForFrontEnd);
+  //       setweeklyProgressDataVendor(res.data.weeklyProgressDataForFrontEnd);
+  //       setcompletedSitesVendor(res.data.WeeklyProgressOnAirSitesData);
+  //     });
+  // };
 
-  const fetchMobitelProjectsLastUpdates = () => {
-    axiosInstance
-      .get('/mobitelProjectsLastUpdates', {
-        params: { Project: MobitelDropdownValue }
-      })
-      .then((res) => {
-        setMobitelLastUpdates(res.data.existingPosts);
-      });
-  };
+  // const fetchVendorScopeData = () => {
+  //   axiosInstance
+  //     .get('/vendorProjectsOverviewTable', {
+  //       params: { ProjectName: VendorDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setScopeDataVendor(res.data.scopeDataToTheFrontEnd);
+  //     });
+  // };
 
-  const fetchVendorProjectsLastUpdates = () => {
-    axiosInstance
-      .get('/vendorProjectsLastUpdates', {
-        params: { Project: VendorDropdownValue }
-      })
-      .then((res) => {
-        setVendorLastUpdates(res.data.existingPosts);
-      });
-  };
+  // const fetchMobitelProjectsLastUpdates = () => {
+  //   axiosInstance
+  //     .get('/mobitelProjectsLastUpdates', {
+  //       params: { Project: MobitelDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setMobitelLastUpdates(res.data.existingPosts);
+  //     });
+  // };
+
+  // const fetchVendorProjectsLastUpdates = () => {
+  //   axiosInstance
+  //     .get('/vendorProjectsLastUpdates', {
+  //       params: { Project: VendorDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setVendorLastUpdates(res.data.existingPosts);
+  //     });
+  // };
 
   const handleMobitelDropdownValue = (event) => {
     setMobitelDropdownValue(event.target.value);
@@ -303,6 +317,7 @@ export default function DashboardApp() {
             All Projects Overview
           </Typography>
         </Stack>
+
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
           <Typography variant="caption1">Select Options</Typography>
           <Stack
@@ -327,7 +342,7 @@ export default function DashboardApp() {
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
+            {/* <TextField
               style={{ float: 'right' }}
               sx={{ width: 200 }}
               size="small"
@@ -341,21 +356,23 @@ export default function DashboardApp() {
                   {option.label}
                 </MenuItem>
               ))}
-            </TextField>
+            </TextField> */}
           </Stack>
         </Stack>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={2.4}>
-            <AppWeeklySales scopeData={ScopeData} />
+            <AppWeeklySales scopeData={mobitelTilesData.projectsScopeDataCount} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={2.4}>
+            <AppBugReports1 handoverData={mobitelTilesData.projectsHandOverDataCount} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={2.4}>
+            <AppItemOrders patData={mobitelTilesData.projectsPatDataCount} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
-            <AppBugReports1 handoverData={HandoverData} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppItemOrders patData={PATPassData} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppNewUsers onAirData={OnAirData} />
+            <AppNewUsers onAirData={mobitelTilesData.projectsOnAirDataCount} />
           </Grid>
           <Grid item xs={12} sm={6} md={2.4}>
             <AppBugReports holdData={HoldSitesData} />
@@ -384,9 +401,9 @@ export default function DashboardApp() {
                 <Button
                   color="secondary"
                   onClick={() => {
-                    showMobitelProjectsUpdates();
-                    fetchMobitelProjectsLastUpdates();
-                    fetchVendorProjectsLastUpdates();
+                    // showMobitelProjectsUpdates();
+                    // fetchMobitelProjectsLastUpdates();
+                    // fetchVendorProjectsLastUpdates();
                   }}
                 >
                   Mobitel projects
@@ -394,9 +411,9 @@ export default function DashboardApp() {
                 <Button
                   color="secondary"
                   onClick={() => {
-                    showVendorProjectsUpdates();
-                    fetchMobitelProjectsLastUpdates();
-                    fetchVendorProjectsLastUpdates();
+                    // showVendorProjectsUpdates();
+                    // fetchMobitelProjectsLastUpdates();
+                    // fetchVendorProjectsLastUpdates();
                   }}
                 >
                   Vendor projects

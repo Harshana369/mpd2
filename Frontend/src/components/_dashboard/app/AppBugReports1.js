@@ -4,6 +4,7 @@ import bugFilled from '@iconify/icons-eva/radio-outline';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -37,15 +38,28 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 export default function AppBugReports1({ handoverData }) {
   const [TOTAL, setTOTAL] = useState('0');
 
+  const mobitelTilesDetails = useSelector((state) => state.mobileTilesData);
+
+  const { loading, error, mobitelTilesData } = mobitelTilesDetails;
+
   useEffect(() => {
     if (Number.isNaN(Number(handoverData)) === false) {
       setTOTAL(handoverData);
     }
   }, [handoverData]);
 
+  const handleClickOpen = () => {
+    const newWindow = window.open(
+      'http://35.78.68.113:80/mpd/DatabasesMobitelProjects/AllMobitelHandoverData',
+      'Scope Details',
+      'width=1000px,height=400px'
+    );
+    newWindow.arrayData = mobitelTilesData.projectHandOverData;
+  };
+
   return (
     <RootStyle>
-      <IconWrapperStyle>
+      <IconWrapperStyle onClick={handleClickOpen}>
         <Icon icon={bugFilled} width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h3">{TOTAL}</Typography>

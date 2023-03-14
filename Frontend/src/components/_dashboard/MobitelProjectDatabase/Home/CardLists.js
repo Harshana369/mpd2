@@ -16,7 +16,7 @@ export default function CardLists() {
           <AllMobitelProjects />
         </Link>
       </Grid>
-      <Grid item xs={12} sm={6} md={2.4}>
+      {/* <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
@@ -24,7 +24,7 @@ export default function CardLists() {
         >
           <PendingTasks />
         </Link>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

@@ -61,7 +61,7 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to ASAP
+              Sign in to MPD2
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
               Enter your login details to proceed.

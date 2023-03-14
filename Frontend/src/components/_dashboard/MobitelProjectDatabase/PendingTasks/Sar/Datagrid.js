@@ -49,10 +49,12 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   const [snackbar, setSnackbar] = React.useState(null);
   const [state, setState] = React.useState([]);
   const [column, setColumn] = React.useState([]);
+  const [tableReplace, setTableReplace] = React.useState(false);
+  const [tablePass, setTablePass] = React.useState([]);
+  const [tableSubmitted, setTableSubmitted] = React.useState([]);
 
   // ----------
 
-  const [tableRow, setTableRow] = React.useState([]);
   const [objId, setObjId] = React.useState();
 
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -350,9 +352,53 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
       width: 180,
       editable: true
     },
+
     {
-      field: 'action',
-      headerName: 'Action',
+      field: 'submittedAction',
+      headerName: 'Submitted Action',
+      headerClassName: 'super-app-theme--header',
+      sortable: false,
+      renderCell: ({ api, getValue, id, row }) => {
+        const onClick = (e) => {
+          e.stopPropagation(); // don't select this row after clicking
+
+          const thisRow = {};
+          api
+            .getAllColumns()
+            .filter(({ field }) => field !== '__check__' && !!field)
+            .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
+
+          setTableSubmitted(thisRow);
+
+          setTableReplace(true);
+        };
+
+        return (
+          <Button
+            onClick={onClick}
+            variant="contained"
+            color={row.Submit_SAR === null ? 'error' : 'primary'}
+          >
+            Submitted
+          </Button>
+        );
+      }
+    },
+
+    // {
+    //   field: 'rejected action',
+    //   headerName: 'Rejected Action',
+    //   headerClassName: 'super-app-theme--header',
+    //   sortable: false,
+    //   renderCell: ({ api, getValue, id }) => {
+    //     const onClick = (e) => {};
+
+    //     return <Button onClick={onClick}>Rejected</Button>;
+    //   }
+    // },
+    {
+      field: 'pass action',
+      headerName: 'Pass Action',
       headerClassName: 'super-app-theme--header',
       sortable: false,
       renderCell: ({ api, getValue, id }) => {
@@ -365,10 +411,16 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
             .filter(({ field }) => field !== '__check__' && !!field)
             .forEach(({ field }) => (thisRow[field] = getValue(id, field)));
 
-          setTableRow(thisRow);
+          setTablePass(thisRow);
+
+          setTableReplace(true);
         };
 
-        return <Button onClick={onClick}>To Complete</Button>;
+        return (
+          <Button onClick={onClick} variant="contained" color="primary">
+            Pass
+          </Button>
+        );
       }
     }
   ];
@@ -443,8 +495,12 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
     await axiosInstance.put('/sarPendingColumnEdit', columnVisibilityModel);
   };
 
-  const updateSar = async () => {
-    await axiosInstance.put('/updateSar', tableRow);
+  const updateSarPass = async () => {
+    await axiosInstance.put('/updateSarPass', tablePass);
+  };
+
+  const updateSarSubmitted = async () => {
+    await axiosInstance.put('/updateSarSubmitted', tableSubmitted);
   };
 
   React.useEffect(() => {
@@ -457,8 +513,17 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   }, [columnVisibilityModel]);
 
   React.useEffect(() => {
-    updateSar();
-  }, [tableRow]);
+    updateSarPass();
+  }, [tablePass]);
+
+  React.useEffect(() => {
+    fetchData();
+    setTableReplace(false);
+  }, [tableReplace]);
+
+  React.useEffect(() => {
+    updateSarSubmitted();
+  }, [tableSubmitted]);
 
   return (
     <Box

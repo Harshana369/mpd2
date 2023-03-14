@@ -1,47 +1,369 @@
-/* eslint-disable */
+import React, { useEffect, useState } from 'react';
 
-import React, { useState } from 'react';
+import axios from 'axios';
+
+import { useSelector } from 'react-redux';
+
 import {
   DataGrid,
   GridToolbarDensitySelector,
   GridToolbarColumnsButton,
   GridToolbarContainer,
-  GridToolbarFilterButton
+  GridToolbarFilterButton,
+  gridPaginatedVisibleSortedGridRowIdsSelector,
+  gridSortedRowIdsSelector,
+  gridVisibleSortedRowIdsSelector,
+  useGridApiContext,
+  useGridApiRef
 } from '@mui/x-data-grid';
-import axios from 'axios';
-import Page from '../../../../components/Page';
+import { createSvgIcon } from '@mui/material/utils';
+import { Box, Stack } from '@mui/material';
+import clsx from 'clsx';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
-import { Grid, Container, Stack, Typography, TextField } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import { Box } from '@mui/system';
+/* eslint-disable camelcase */
 
-const columns = [
-  { field: 'ProjectName', headerName: 'ProjectName', width: 220, editable: true },
-  { field: 'Vendor', headerName: 'Vendor', width: 100, editable: true },
-  { field: 'StartDate', headerName: 'StartDate', width: 100, editable: true },
-  { field: 'EndDate', headerName: 'EndDate', width: 100, editable: true },
-  { field: 'ProjectScope', headerName: 'ProjectScope', width: 140, editable: true },
-  { field: 'HandoverScope', headerName: 'HandoverScope', width: 140, editable: true }
-];
+const ExportIcon = createSvgIcon(
+  <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />,
+  'SaveAlt'
+);
+
+const useDummyMutation = () =>
+  React.useCallback(
+    (post) =>
+      new Promise((resolve) =>
+        setTimeout(() => {
+          resolve(post);
+        }, 500)
+      ),
+    []
+  );
 
 export default function AllMobitelScopeData() {
-  const [columnVisibilityModel, setColumnVisibilityModel] = React.useState({});
   const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
-  const [dropdownValue, setDropdownValue] = useState('All Mobitel Projects');
-  const [DetailsDataInScope, setDetailsDataInScope] = React.useState({});
+  const apiRef = useGridApiRef();
+  const [pageSize, setPageSize] = React.useState(10);
+  const [snackbar, setSnackbar] = React.useState(null);
+  const [state, setState] = React.useState([]);
+  const [column, setColumn] = React.useState([]);
 
-  const handleChange = (event) => {
-    //   console.log(event.target.name);
-    //   console.log(event.target.checked);
+  const handleCloseSnackbar = () => setSnackbar(null);
 
-    setColumnVisibilityModel({
-      ...columnVisibilityModel,
-      [event.target.name]: event.target.checked
-    });
-  };
+  // ---------------------------------------------------------
+
+  // const fetchData = async () => {
+  //   const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
+  //   // console.log(res.data);
+  //   // setState(res.data.success);
+  //   // setColumn(res.data.success[0].headerproperties);
+  // };
+
+  const getRowsFromCurrentPage = ({ apiRef }) =>
+    gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
+
+  const getUnfilteredRows = ({ apiRef }) => gridSortedRowIdsSelector(apiRef);
+
+  const getFilteredRows = ({ apiRef }) => gridVisibleSortedRowIdsSelector(apiRef);
+
+  const ExportIcon = createSvgIcon(
+    <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />,
+    'SaveAlt'
+  );
+
+  // const mobitelTilesDetails = useSelector((state) => state.mobileTilesData);
+
+  // const { loading, error, mobitelTilesData } = mobitelTilesDetails;
+  // console.log(mobitelTilesData.projectScopeData);
+
+  const Columns = [
+    {
+      field: 'Task_Ref',
+      headerName: 'Task Ref',
+      headerClassName: 'super-app-theme--header',
+      align: 'left',
+      width: 200,
+      editable: true,
+      hide: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Site_Id',
+      headerName: 'Site Id',
+      headerClassName: 'super-app-theme--header',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Site_Name',
+      headerName: 'Site Name',
+      headerClassName: 'super-app-theme--header',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Handover',
+      headerName: 'Handover',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Project',
+      headerName: 'Project',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Scope',
+      headerName: 'Scope',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Site_Engineer',
+      headerName: 'Site Engineer',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Sub_Contractor',
+      headerName: 'Sub Contractor',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Task_Category',
+      headerName: 'Task Category',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Task_Assigned',
+      headerName: 'Task Assigned',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Task_Commenced',
+      headerName: 'Task Commenced',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Installation_Completed',
+      headerName: 'Installation Completed',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+
+    {
+      field: 'Commission',
+      headerName: 'Commission',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Submit_PAT',
+      headerName: 'Submit PAT',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+
+    {
+      field: 'PAT_Pass',
+      headerName: 'PAT Pass',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Submit_SAR',
+      headerName: 'Submit SAR',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'SAR_Pass',
+      headerName: 'SAR Pass',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'On_air',
+      headerName: 'On air',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'BOQ_Submit',
+      headerName: 'BOQ Submit',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'BOQ_Approve',
+      headerName: 'BOQ Approve',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'PR_Raise',
+      headerName: 'PR Raise',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+
+    {
+      field: 'Material_Return',
+      headerName: 'Material Return',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'PO_issue',
+      headerName: 'PO issue',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Submit_Invoice',
+      headerName: 'Submit Invoice',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Approve_Invoice',
+      headerName: 'Approve Invoice',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'Payment',
+      headerName: 'Payment',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true,
+      cellClassName: 'super-app-theme--cell'
+    },
+    {
+      field: 'PO_closure',
+      headerName: 'PO closure',
+      headerClassName: 'super-app-theme--header',
+      headerAlign: 'left',
+      align: 'left',
+      width: 180,
+      editable: true
+    }
+  ];
+
+  // -------------------------------------------------------------------------------------------------
+  // -------------------------------------------------------------------------------------------------
 
   const CustomToolbar = () => {
-    const [buttonPopup, setButtomPopup] = React.useState(false);
+    const apiRef = useGridApiContext();
+
+    const handleExport = (options) => apiRef.current.exportDataAsCsv(options);
+
+    const buttonBaseProps = {
+      color: 'primary',
+      size: 'small',
+      startIcon: <ExportIcon />
+    };
+
     return (
       <GridToolbarContainer>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={0}>
@@ -55,70 +377,105 @@ export default function AllMobitelScopeData() {
             <GridToolbarColumnsButton />
             <GridToolbarFilterButton />
             <GridToolbarDensitySelector />
+            <Button
+              {...buttonBaseProps}
+              onClick={() => handleExport({ getRowsToExport: getUnfilteredRows })}
+            >
+              All Database
+            </Button>
+            <Button
+              {...buttonBaseProps}
+              onClick={() => handleExport({ getRowsToExport: getFilteredRows })}
+            >
+              Filtered
+            </Button>
+            <Button
+              {...buttonBaseProps}
+              onClick={() => handleExport({ getRowsToExport: getRowsFromCurrentPage })}
+            >
+              Current page
+            </Button>
           </Stack>
         </Stack>
       </GridToolbarContainer>
     );
   };
 
-  //   const getStudents = async () => {
-  //     await axios.get('http://localhost:8060/column/').then((res) => {
-  //       setColumnVisibilityModel(res.data);
-  //     });
-  //   };
+  const [columnVisibilityModel, setColumnVisibilityModel] = React.useState({});
 
-  //   const updateColumn = async () => {
-  //     await axios.put('http://localhost:8060/column/Edit', columnVisibilityModel).then((res) => {});
-  //   };
+  const handleChange = (event) => {
+    setColumnVisibilityModel({
+      ...columnVisibilityModel,
+      [event.target.name]: event.target.checked
+    });
+  };
 
-  const fetchScopeData = async () => {
-    const req = await axiosInstance
-      .get('/mobitelProjectsOverviewTable', {
-        params: { ProjectName: dropdownValue }
-      })
-      .then((res) => {
-        setDetailsDataInScope(res.data.scopeDetailsDataToTheFrontEnd);
-      });
+  const getData = async () => {
+    await axiosInstance.get('/MobitelDatabaseColumnGet').then((res) => {
+      setColumnVisibilityModel(res.data);
+    });
+  };
+
+  const updateColumn = async () => {
+    await axiosInstance.put('/mobitelDatabaseColumnEdit', columnVisibilityModel).then((res) => {});
   };
 
   React.useEffect(() => {
-    // getStudents();
-    fetchScopeData();
+    setState(window.arrayData);
+    getData();
   }, []);
 
   React.useEffect(() => {
-    // updateColumn();
+    updateColumn();
   }, [columnVisibilityModel]);
 
   return (
-    <Box height={10000000} width="100%" backgroundColor="#000f1f">
-      <Stack alignItems="center" mb={2}>
-        <Typography variant="h6" mt={4} gutterBottom>
-          Mobitel Projects ScopeData
-        </Typography>
-      </Stack>
+    <Box
+      sx={{
+        height: 515,
+        width: '100%',
+        '& .super-app-theme--header': {
+          backGridolor: 'rgba(0,0,0,0)',
+          color: 'rgb(198,198,198)',
+          fontWeight: '600'
+        },
+        '& .super-app-theme--cell': {
+          backGridolor: 'rgba(0,0,0,0)',
+          color: 'rgb(128,128,128)',
+          fontWeight: '200'
+        }
+      }}
+    >
       <DataGrid
+        apiRef={apiRef}
+        rows={state}
+        getRowId={(row) => row._id}
+        columns={Columns}
+        components={{ Toolbar: CustomToolbar }}
+        pageSize={pageSize}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        rowsPerPageOptions={[5, 10, 20, 50, 100]}
+        pagination
+        density="compact"
+        disableSelectionOnClick
+        checkboxSelection
+        editMode="row"
         sx={{
-          fontFamily: 'Plus Jakarta Sans, sans-serif',
-          color: 'white',
-          backgroundColor: '#000f1f'
-        }}
-        rows={DetailsDataInScope}
-        getRowId={(DetailsDataInScope) => DetailsDataInScope._id}
-        columns={columns}
-        components={{
-          Toolbar: CustomToolbar
-          //   SwitchesGroup: CustomSwitchesGroup,
+          boxShadow: 0,
+          border: 0.1,
+          borderColor: 'secondary.main',
+          '& .MuidataGrid-cell:hover': {
+            color: 'secondary.main'
+          }
         }}
         columnVisibilityModel={columnVisibilityModel}
         onColumnVisibilityModelChange={(newModel) => setColumnVisibilityModel(newModel)}
-        initialState={{
-          pagination: {
-            pageSize: 10000000
-          }
-        }}
-        hideFooter
       />
+      {!!snackbar && (
+        <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={5000}>
+          <Alert {...snackbar} onClose={handleCloseSnackbar} />
+        </Snackbar>
+      )}
     </Box>
   );
 }

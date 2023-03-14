@@ -4,6 +4,7 @@ import site from '@iconify/icons-eva/radio-outline';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -36,6 +37,19 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 export default function AppNewUsers({ onAirData }) {
   const [TOTAL, setTOTAL] = useState('0');
 
+  const mobitelTilesDetails = useSelector((state) => state.mobileTilesData);
+
+  const { loading, error, mobitelTilesData } = mobitelTilesDetails;
+
+  const handleClickOpen = () => {
+    const newWindow = window.open(
+      'http://35.78.68.113:80/mpd/DatabasesMobitelProjects/AllMobitelOnAirData',
+      'Scope Details',
+      'width=1000px,height=400px'
+    );
+    newWindow.arrayData = mobitelTilesData.projectsOnAirData;
+  };
+
   useEffect(() => {
     if (Number.isNaN(Number(onAirData)) === false) {
       setTOTAL(onAirData);
@@ -44,7 +58,7 @@ export default function AppNewUsers({ onAirData }) {
 
   return (
     <RootStyle>
-      <IconWrapperStyle>
+      <IconWrapperStyle onClick={handleClickOpen}>
         <Icon icon={site} width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h3">{TOTAL}</Typography>

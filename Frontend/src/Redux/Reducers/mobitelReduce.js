@@ -17,7 +17,10 @@ import {
   MOBITEL_LAST_UPDATE_REQUEST,
   MOBITEL_LAST_UPDATE_SUCCESS,
   MOBITEL_LAST_UPDATE_FAIL,
-  MOBITEL_HANDOVER_DATA_SUCCESS
+  MOBITEL_HANDOVER_DATA_SUCCESS,
+  MOBITEL_TILES_DATA_REQUEST,
+  MOBITEL_TILES_DATA_SUCCESS,
+  MOBITEL_TILES_DATA_FAIL
 } from '../Constants/mobitelConstants';
 
 export const mobitelDatabseReducer = (state = { mobitelDatabaseData: [] }, action) => {
@@ -108,6 +111,19 @@ export const mobitelHandOverProjectsReducer = (
       return { mobitelLastUpdateLoading: false, mobitelLastUpdateData: action.payload };
     case MOBITEL_LAST_UPDATE_FAIL:
       return { mobitelLastUpdateLoading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const mobitelTilesReducer = (state = { mobitelTilesData: [] }, action) => {
+  switch (action.type) {
+    case MOBITEL_TILES_DATA_REQUEST:
+      return { mobitelTilesDataLoading: true, mobitelTilesData: [] };
+    case MOBITEL_TILES_DATA_SUCCESS:
+      return { mobitelTilesDataLoading: false, mobitelTilesData: action.payload };
+    case MOBITEL_TILES_DATA_FAIL:
+      return { mobitelTilesDataLoading: false, error: action.payload };
     default:
       return state;
   }

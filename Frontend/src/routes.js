@@ -173,6 +173,7 @@ import SettingsMobitelProjectsSubContractor from './components/_dashboard/Settin
 // Admin matiriyal
 import Material from './pages/Material';
 import MobitelSiteEngineersDayPlan from './pages/MobitelSiteEngineersDayPlan';
+import store from './Redux/store';
 
 export default function Router() {
   const [userRole, setUserRole] = useState('Admin');
@@ -1307,18 +1308,18 @@ export default function Router() {
               <Navigate to="/unauthorized" />
             )
         },
-        {
-          path: 'DatabasesMobitelProjects/AllMobitelProjects/ViewOnly',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Editor' ||
-            userRole === 'View Only' ? (
-              <DatabasesMobitelProjectsAllMobitelProjectsViewOnly />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
+        // {
+        //   path: 'DatabasesMobitelProjects/AllMobitelProjects/ViewOnly',
+        //   element:
+        //     userRole === 'Admin' ||
+        //     userRole === 'Moderator' ||
+        //     userRole === 'Editor' ||
+        //     userRole === 'View Only' ? (
+        //       <DatabasesMobitelProjectsAllMobit elProjectsViewOnly />
+        //     ) : (
+        //       <Navigate to="/unauthorized" />
+        //     )
+        // },
         {
           path: 'DatabasesUploadProjectFiles/MobitelProjects',
           element:
