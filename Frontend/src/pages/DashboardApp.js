@@ -23,7 +23,7 @@ import {
   AppWebsiteVisits1
 } from '../components/_dashboard/app';
 import AppBugReports1 from '../components/_dashboard/app/AppBugReports1';
-import { fetchMoitelTilesData } from '../Redux/Action/mobitelAction';
+import { fetchMobitelColumnGraphData, fetchMoitelTilesData } from '../Redux/Action/mobitelAction';
 
 export default function DashboardApp() {
   const navigate = useNavigate();
@@ -92,11 +92,25 @@ export default function DashboardApp() {
       });
   };
 
+  // const fetchMobitelColumnGraphData = () => {
+  //   axiosInstance
+  //     .get('/mobitelProjectsDatabasesChartDataColumnChartData', {
+  //       params: { Project: MobitelDropdownValue }
+  //     })
+  //     .then((res) => {
+  //       setChartDatForColumnGraphMobitel(res.data.chartDataForFrontEnd);
+  //       setXaxisDataMobitel(res.data.XaxisDataForTheGraphs);
+  //     });
+  // };
+
   const mobitelTilesDetails = useSelector((state) => state.mobileTilesData);
 
-  const { loading, error, mobitelTilesData } = mobitelTilesDetails;
+  const { mobitelTilesDataLoading, error, mobitelTilesData } = mobitelTilesDetails;
 
-  // console.log(mobitelTilesData.projectsHandOverDataCount);
+  const mobitelColumnChatDetails = useSelector((state) => state.mobitelColumnChartData);
+
+  const { mobitelChartColumnLoading, mobitelChartColumData, mobitelChartColumDataError } =
+    mobitelColumnChatDetails;
 
   // const fetchVendorProjectNames = async () => {
   //   const req = await axiosInstance.get('/vendorProjectsOverviewTableProjectsArray').then((res) => {
@@ -117,18 +131,20 @@ export default function DashboardApp() {
     // fetchVendorData();
     // fetchMobitelScopeData();
     // fetchVendorScopeData();
-    // fetchMobitelColumnGraphData();
     // fetchVendorColumnGraphData();
     // fetchMobitelProjectsLastUpdates();
     // fetchVendorProjectsLastUpdates();
     fetchMobitelProjectNames();
     // fetchVendorProjectNames();
+    dispatch(fetchMobitelColumnGraphData(MobitelDropdownValue));
     dispatch(fetchMoitelTilesData(MobitelDropdownValue));
   }, [dispatch]);
 
   useEffect(() => {
     // fetchMobitelData();
+    fetchMobitelColumnGraphData();
     fetchMobitelProjectNames();
+    dispatch(fetchMobitelColumnGraphData(MobitelDropdownValue));
     dispatch(fetchMoitelTilesData(MobitelDropdownValue));
   }, [dispatch, MobitelDropdownValue]);
 
@@ -256,49 +272,6 @@ export default function DashboardApp() {
     setVendorDropdownValue(event.target.value);
   };
 
-  const ScopeData = ScopeDataMobitel + ScopeDataVendor;
-  const HandoverData = parseInt(HandoverDataMobitel, 10) + parseInt(HandoverDataVendor, 10);
-  const PATPassData = parseInt(PATPassDataMobitel, 10) + parseInt(PATPassDataVendor, 10);
-  const OnAirData = OnAirDataMobitel + OnAirDataVendor;
-  const HoldSitesData = HoldSitesDataMobitel + HoldSitesDataVendor;
-
-  // -- ChartDataForColumnGraph ------------------------------------------------------------
-
-  const onAir1 = ChartDataForColumnGraphMobitel[0];
-  const onAir2 = ChartDataForColumnGraphVendor[0];
-  const onAir = onAir1.map((a, i) => a + onAir2[i]);
-  // ----------------------------------------------
-  const PAT1 = ChartDataForColumnGraphMobitel[1];
-  const PAT2 = ChartDataForColumnGraphVendor[1];
-  const PAT = PAT1.map((a, i) => a + PAT2[i]);
-  // --------------------------------------------
-  const SAR1 = ChartDataForColumnGraphMobitel[2];
-  const SAR2 = ChartDataForColumnGraphVendor[2];
-  const SAR = SAR1.map((a, i) => a + SAR2[i]);
-  // --------------------------------------------
-  const Com1 = ChartDataForColumnGraphMobitel[3];
-  const Com2 = ChartDataForColumnGraphVendor[3];
-  const Com = Com1.map((a, i) => a + Com2[i]);
-  // --------------------------------------------
-  const Ins1 = ChartDataForColumnGraphMobitel[4];
-  const Ins2 = ChartDataForColumnGraphVendor[4];
-  const Ins = Ins1.map((a, i) => a + Ins2[i]);
-  // --------------------------------------------
-  const Mob1 = ChartDataForColumnGraphMobitel[5];
-  const Mob2 = ChartDataForColumnGraphVendor[5];
-  const Mob = Mob1.map((a, i) => a + Mob2[i]);
-  // ----------------------------------------------
-
-  const columnChartData = [];
-  columnChartData.push(
-    { name: 'On Air', type: 'column', data: onAir },
-    { name: 'PAT', type: 'column', data: PAT },
-    { name: 'SAR', type: 'column', data: SAR },
-    { name: 'Commisioned', type: 'column', data: Com },
-    { name: 'Installed', type: 'column', data: Ins },
-    { name: 'Mobilized', type: 'column', data: Mob }
-  );
-
   const showVendorProjectsUpdates = () => {
     setVendorUpdatesIsShown(true);
     setMobitelUpdatesIsShown(false);
@@ -309,6 +282,7 @@ export default function DashboardApp() {
     setMobitelUpdatesIsShown(true);
   };
 
+  const HoldSitesData = 0;
   return (
     <Page title="Dashboard | Mobitel Projects Dashboard">
       <Container maxWidth="xl">
@@ -360,33 +334,96 @@ export default function DashboardApp() {
           </Stack>
         </Stack>
         <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppWeeklySales scopeData={mobitelTilesData.projectsScopeDataCount} />
-          </Grid>
+          {mobitelTilesDataLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : error ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <AppWeeklySales scopeData={mobitelTilesData.projectsScopeDataCount} />
+            </Grid>
+          )}
 
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppBugReports1 handoverData={mobitelTilesData.projectsHandOverDataCount} />
-          </Grid>
+          {mobitelTilesDataLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : error ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <AppBugReports1 handoverData={mobitelTilesData.projectsHandOverDataCount} />
+            </Grid>
+          )}
 
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppItemOrders patData={mobitelTilesData.projectsPatDataCount} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppNewUsers onAirData={mobitelTilesData.projectsOnAirDataCount} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2.4}>
-            <AppBugReports holdData={HoldSitesData} />
-          </Grid>
-          <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits chartData={columnChartData} xaxisData={XaxisDataMobitel} />
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits
-              projectCompletionMobitel={ProjectCompletionMobitel}
-              projectCompletionVendor={ProjectCompletionVendor}
-            />
-          </Grid>
-          <Grid item xs={12} md={6} lg={12} mb={0}>
+          {mobitelTilesDataLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : error ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <AppItemOrders patData={mobitelTilesData.projectsPatDataCount} />
+            </Grid>
+          )}
+
+          {mobitelTilesDataLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : error ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <AppNewUsers onAirData={mobitelTilesData.projectsOnAirDataCount} />
+            </Grid>
+          )}
+
+          {mobitelTilesDataLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : error ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <AppBugReports holdData={HoldSitesData} />
+            </Grid>
+          )}
+
+          {mobitelChartColumnLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : mobitelChartColumDataError ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} md={6} lg={8}>
+              <AppWebsiteVisits
+                chartData={mobitelChartColumData.columnChartData}
+                xaxisData={mobitelChartColumData.XaxisDataForTheGraphs}
+              />
+            </Grid>
+          )}
+
+          {mobitelChartColumnLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : mobitelChartColumDataError ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} md={6} lg={4}>
+              <AppCurrentVisits
+                projectCompletionMobitel={mobitelChartColumData.ProjectCompletionForFrontEnd}
+              />
+            </Grid>
+          )}
+
+          {/* <Grid item xs={12} md={6} lg={12} mb={0}>
             <AppWebsiteVisits1
               xAxisDaysLabel={XAxisDaysLabelMobitel}
               weeklyProgressDataMobitel={WeeklyProgressDataMobitel}
@@ -394,8 +431,8 @@ export default function DashboardApp() {
               completedSitesMobitel={CompletedSitesMobitel}
               completedSitesVendor={CompletedSitesVendor}
             />
-          </Grid>
-          <Grid item xs={12} md={6} lg={12} mb={0}>
+          </Grid> */}
+          {/* <Grid item xs={12} md={6} lg={12} mb={0}>
             <Card style={{ height: '520px' }}>
               <Stack sx={{ p: 2 }} direction="row">
                 <Button
@@ -424,7 +461,7 @@ export default function DashboardApp() {
               )}
               {VendorUpdatesIsShown && <LastUpdatesVendor vendorLastUpdates={VendorLastUpdates} />}
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

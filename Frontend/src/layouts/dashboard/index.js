@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 // material
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import { AllSiteId } from '../../Redux/Action/DayPlanAction';
+
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 import Logo from '../../components/Logo';
@@ -90,12 +90,6 @@ export default function DashboardLayout({ isOpenSidebar, onCloseSidebar, onOpenS
     onOpenSidebar: PropTypes.func
   };
 
-  const dispatch = useDispatch();
-
-  // loading all site engineers names
-  React.useEffect(() => {
-    dispatch(AllSiteId());
-  }, [dispatch]);
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />

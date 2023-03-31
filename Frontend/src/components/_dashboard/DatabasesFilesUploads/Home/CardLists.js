@@ -6,7 +6,7 @@ import MobitelProjects from './MobitelProjects';
 export default function CardLists() {
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12} sm={6} md={2.4}>
+      {/* <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"
           component={RouterLink}
@@ -14,7 +14,7 @@ export default function CardLists() {
         >
           <VendorProjects />
         </Link>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12} sm={6} md={2.4}>
         <Link
           underline="none"

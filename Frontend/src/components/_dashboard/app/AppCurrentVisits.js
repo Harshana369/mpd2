@@ -30,12 +30,10 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-export default function AppCurrentVisits({ projectCompletionMobitel, projectCompletionVendor }) {
+export default function AppCurrentVisits({ projectCompletionMobitel }) {
   const theme = useTheme();
 
-  const ProjCom1 = projectCompletionMobitel;
-  const ProjCom2 = projectCompletionVendor;
-  const ProjCom = ProjCom1.map((a, i) => a + ProjCom2[i]);
+  const ProjCom = projectCompletionMobitel;
 
   const CHART_DATA = ProjCom;
   const chartOptions = merge(BaseOptionChart(), {

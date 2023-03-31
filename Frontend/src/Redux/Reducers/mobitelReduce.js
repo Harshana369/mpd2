@@ -48,18 +48,6 @@ export const mobitelOverviewReducer = (state = { mobitelOverviewData: [] }, acti
       return state;
   }
 };
-export const mobitelChartColumnReducer = (state = { mobitelChartColumData: [] }, action) => {
-  switch (action.type) {
-    case MOBITEL_CHART_COLUMN_DATA_REQUEST:
-      return { mobitelChartColumnLoading: true, mobitelChartColumData: [] };
-    case MOBITEL_CHART_COLUMN_DATA_SUCCESS:
-      return { mobitelChartColumnLoading: false, mobitelChartColumData: action.payload };
-    case MOBITEL_CHART_COLUMN_DATA_FAIL:
-      return { mobitelChartColumnLoading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
 
 export const mobitelChartAreaReducer = (state = { mobitelChartAreaData: [] }, action) => {
   switch (action.type) {
@@ -124,6 +112,19 @@ export const mobitelTilesReducer = (state = { mobitelTilesData: [] }, action) =>
       return { mobitelTilesDataLoading: false, mobitelTilesData: action.payload };
     case MOBITEL_TILES_DATA_FAIL:
       return { mobitelTilesDataLoading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const mobitelChartColumnReducer = (state = { mobitelChartColumData: [] }, action) => {
+  switch (action.type) {
+    case MOBITEL_CHART_COLUMN_DATA_REQUEST:
+      return { mobitelChartColumnLoading: true, mobitelChartColumData: [] };
+    case MOBITEL_CHART_COLUMN_DATA_SUCCESS:
+      return { mobitelChartColumnLoading: false, mobitelChartColumData: action.payload };
+    case MOBITEL_CHART_COLUMN_DATA_FAIL:
+      return { mobitelChartColumnLoading: false, mobitelChartColumDataError: action.payload };
     default:
       return state;
   }

@@ -85,12 +85,17 @@ router.route("/updateInstalling").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        Installation_Completed: formattedDate,
+        Installation_Completed: yyyyMmDd,
       },
     }
   );
@@ -133,12 +138,17 @@ router.route("/updateCommissioning").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        Commission: formattedDate,
+        Commission: yyyyMmDd,
       },
     }
   );
@@ -183,12 +193,17 @@ router.route("/updatePat").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        PAT_Pass: formattedDate,
+        PAT_Pass: yyyyMmDd,
       },
     }
   );
@@ -211,12 +226,17 @@ router.route("/updatePatSubmitted").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        Submit_PAT: formattedDate,
+        Submit_PAT: yyyyMmDd,
       },
     }
   );
@@ -259,13 +279,18 @@ router.route("/updateSarSubmitted").put(async (req, res) => {
     month: "2-digit",
     day: "2-digit",
   };
-  const formattedDate = today.toLocaleDateString("en-US", options);
 
+  const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        Submit_SAR: formattedDate,
+        Submit_SAR: yyyyMmDd,
       },
     }
   );
@@ -287,12 +312,17 @@ router.route("/updateSarPass").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        SAR_Pass: formattedDate,
+        SAR_Pass: yyyyMmDd,
       },
     }
   );
@@ -336,12 +366,17 @@ router.route("/updateOnAir").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        On_air: formattedDate,
+        On_air: yyyyMmDd,
       },
     }
   );
@@ -385,12 +420,17 @@ router.route("/updateMaterialReturn").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        Material_Return: formattedDate,
+        Material_Return: yyyyMmDd,
       },
     }
   );
@@ -433,12 +473,17 @@ router.route("/updatePr").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        PR_Raise: formattedDate,
+        PR_Raise: yyyyMmDd,
       },
     }
   );
@@ -481,12 +526,17 @@ router.route("/updatePo").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        PO_issue: formattedDate,
+        PO_issue: yyyyMmDd,
       },
     }
   );
@@ -528,12 +578,17 @@ router.route("/updateInvoice").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        Submit_Invoice: formattedDate,
+        Submit_Invoice: yyyyMmDd,
       },
     }
   );
@@ -575,12 +630,17 @@ router.route("/updatePoClosure").put(async (req, res) => {
     day: "2-digit",
   };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const date = new Date(formattedDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const yyyyMmDd = `${year}-${month}-${day}`;
 
   const artist = await Posts.updateOne(
     { Task_Ref: `${Tr}` },
     {
       $set: {
-        PO_closure: formattedDate,
+        PO_closure: yyyyMmDd,
       },
     }
   );
@@ -904,30 +964,12 @@ router.get("/mobitelProjectsOverviewTable/ProjectsArray", (req, res) => {
     return res.status(200).json({
       success: true,
       mobitelProjectsNamesArray: getProjectsNamesArray(mobitelProjects),
-      //   mobitelProjectsNamesArrayForInsights:
-      //     getProjectsNamesArrayInsights(mobitelProjects),
-      //   mobitelProjectsNamesArrayToTheExcelUploads:
-      //     getProjectsNamesArrayToExcelUploads(mobitelProjects),
     });
   });
 });
 
-//---------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------
-
 function getProjectsNamesArray(mobitelProjects) {
-  //   var projectsNames = [];
   var projectsNamesArray = [];
-
-  //   projectsNamesLength = mobitelProjects.filter((obj) => obj.Project).length;
-
-  //   for (var i = 0; i < projectsNamesLength; i++) {
-  //     projectsNames[i] = mobitelProjects.filter((obj) => obj.Project)[i].Project;
-
-  //     projectsNamesArray.push({
-  //       value: projectsNames[i],
-  //       label: projectsNames[i],
-  //     });
 
   const uniqueProjects = mobitelProjects
     .map((project) => project.Project)
@@ -942,27 +984,438 @@ function getProjectsNamesArray(mobitelProjects) {
   return projectsNamesArray;
 }
 
+//------------------------------------------------Mobitel Projects Database Excell Upload ---------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------------
+
+router.post("/mobitelProjectsDatabasesExcell/upload", (req, res) => {
+  const newPost = req.body;
+  async function run() {
+    try {
+      const options = { ordered: true };
+      const result = await Posts.insertMany(newPost, options);
+      return res.status(200).json({
+        success: `${newPost.length} Projects Added Successfully !`,
+      });
+    } catch (err) {
+      if (err.code === 11000) {
+        return res.status(400).json({
+          error: "Planning ID must be a unique value !",
+        });
+      } else {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+    }
+  }
+  run();
+});
+
+//------------------------------------------------------Get Site Data to The ColumnChart---------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------------
-// function getProjectsNamesArrayInsights(mobitelProjects) {
-//   var projectsNames = [];
-//   var projectsNamesArray = [
-//     { value: "All Mobitel Projects", label: "All Mobitel Projects" },
-//   ];
 
-//   projectsNamesLength = mobitelProjects.filter((obj) => obj.Project).length;
+router.get(
+  "/mobitelProjectsDatabasesChartDataColumnChartData",
+  async (req, res, next) => {
+    let reqQuery = [];
+    if (req.query.Project === "All Projects") {
+      reqQuery = {};
+    } else {
+      reqQuery = { ...req.query };
+    }
 
-//   for (var i = 0; i < projectsNamesLength; i++) {
-//     projectsNames[i] = mobitelProjects.filter((obj) => obj.Project)[i].Project;
+    let queryStr = JSON.stringify(reqQuery);
+    Posts.find(JSON.parse(queryStr)).exec((err, posts) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
 
-//     projectsNamesArray.push({
-//       value: projectsNames[i],
-//       label: projectsNames[i],
-//     });
-//   }
+      return res.status(200).json({
+        success: true,
+        columnChartData: getchartData(posts), // Graph data of number of sites Mobilized in each month sending to front end Appwebsitevisits.
+        XaxisDataForTheGraphs: getXaxisData(), // x axis data labels array sending to the Column graghs front end.
+        ProjectCompletionForFrontEnd: getProjectCompletionData(posts), // Data for Front end Mobitel Projects Insights project Completion Donut Graph.
+        // weeklyProgressDataForFrontEnd: getWeeklyProgressData(posts), // Data for Front end Mobitel Projects Insights Weekly Progress Graph.
+        // WeeklyProgressOnAirSitesData: getWeeklyProgressOnAirSitesData(posts), // Data for Front end Mobitel Projects Insights Weekly Progress Graph Tool tip.
+      });
+    });
+  }
+);
 
-//   console.log(projectsNamesArray);
-//   return projectsNamesArray;
-// }
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for X Axis Labels to the Front End of Vendor Project Databases ---------------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getXaxisData() {
+  var theMonths = new Array(
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+  );
+
+  var monthsArray = [];
+  var d = new Date();
+  d.setDate(1);
+  for (i = 0; i <= 11; i++) {
+    monthsArray.push(theMonths[d.getMonth()] + "/01/" + d.getFullYear());
+    d.setMonth(d.getMonth() - 1);
+  }
+
+  monthsArray.reverse();
+
+  var XaxisMonths = monthsArray;
+
+  //   console.log(monthsArray);
+  return XaxisMonths;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Functions for Getting Graph Data to the Front End of Mobitel Project Databases ----------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getchartData(posts) {
+  var installedData = [];
+  var commissioned = [];
+  var sarData = [];
+  var patData = [];
+  var onairData = [];
+
+  var theMonths = new Array(
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+  );
+  var now = new Date();
+
+  for (var i = 0; i < 12; i++) {
+    var future = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    var month = theMonths[future.getMonth()];
+    var year = future.getFullYear();
+    var monthsArrayReversed = [];
+    var monthsCountFrom2015 = (year - 2014) * 12;
+
+    for (var i = 0; i < monthsCountFrom2015; i++) {
+      monthsArrayReversed.push(
+        now.getFullYear().toString() + "-" + theMonths[now.getMonth()]
+      );
+      now.setMonth(now.getMonth() - 1);
+    }
+    monthsArrayReversed.reverse();
+  }
+
+  let monthsArray = monthsArrayReversed;
+  // console.log(monthsArray);
+  // monthsArray = ['2021-02', '2021-03','2021-04', '2021-05','2021-06', '2021-07','2021-08', '2021-09','2021-10', '2021-11','2021-12', '2022-01']
+  // console.log(monthsCountFrom2015);
+  for (var i = 0; i < monthsCountFrom2015; i++) {
+    (installedData[i] = posts
+      .filter((obj) => obj.Installation_Completed !== null)
+      .filter(
+        (obj) => obj.Installation_Completed.slice(0, 7) === monthsArray[i]
+      ).length),
+      (commissioned[i] = posts
+        .filter((obj) => obj.Commission !== null)
+        .filter((obj) => obj.Commission.slice(0, 7) === monthsArray[i]).length),
+      (sarData[i] = posts
+        .filter((obj) => obj.SAR_Pass !== null)
+        .filter((obj) => obj.SAR_Pass.slice(0, 7) === monthsArray[i]).length),
+      (patData[i] = posts
+        .filter((obj) => obj.PAT_Pass !== null)
+        .filter((obj) => obj.PAT_Pass.slice(0, 7) === monthsArray[i]).length),
+      (onairData[i] = posts
+        .filter((obj) => obj.On_air !== null)
+        .filter((obj) => obj.On_air.slice(0, 7) === monthsArray[i]).length);
+  }
+  // ----------------------------------------------------------------------------------------------------------------------------------------------
+
+  let myarray2 = installedData,
+    cumilative2 = [];
+  let myarray3 = commissioned,
+    cumilative3 = [];
+  let myarray4 = sarData,
+    cumilative4 = [];
+  let myarray5 = patData,
+    cumilative5 = [];
+  let myarray6 = onairData,
+    cumilative6 = [];
+
+  for (let i = 0, s = myarray2[0]; i < myarray2.length; i++, s += myarray2[i])
+    cumilative2.push(s);
+  for (let i = 0, s = myarray3[0]; i < myarray3.length; i++, s += myarray3[i])
+    cumilative3.push(s);
+  for (let i = 0, s = myarray4[0]; i < myarray4.length; i++, s += myarray4[i])
+    cumilative4.push(s);
+  for (let i = 0, s = myarray5[0]; i < myarray5.length; i++, s += myarray5[i])
+    cumilative5.push(s);
+  for (let i = 0, s = myarray6[0]; i < myarray6.length; i++, s += myarray6[i])
+    cumilative6.push(s);
+
+  let chartData = [];
+  let LastYearCum6 = cumilative6.slice(
+    cumilative6.length - 13,
+    cumilative6.length - 1
+  ); // On air
+  let LastYearCum5 = cumilative5.slice(
+    cumilative5.length - 13,
+    cumilative5.length - 1
+  );
+  let LastYearCum4 = cumilative4.slice(
+    cumilative4.length - 13,
+    cumilative4.length - 1
+  );
+  let LastYearCum3 = cumilative3.slice(
+    cumilative3.length - 13,
+    cumilative3.length - 1
+  );
+  let LastYearCum2 = cumilative2.slice(
+    cumilative2.length - 13,
+    cumilative2.length - 1
+  );
+
+  chartData.push(
+    { name: "On Air", type: "column", data: LastYearCum6 },
+    { name: "PAT", type: "column", data: LastYearCum5 },
+    { name: "SAR", type: "column", data: LastYearCum4 },
+    { name: "Commisioned", type: "column", data: LastYearCum3 },
+    { name: "Installed", type: "column", data: LastYearCum2 }
+  );
+
+  //console.log(chartData);
+  return chartData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------Function for Getting Project Cpmpletion Data to the Front End Mobitel Projects Insights Project Completion Donut---
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getProjectCompletionData(posts) {
+  (onAirSites = getOnAirData(posts)), (handOverSites = getHandOverData(posts));
+
+  const projectCompletionChartData = [];
+  const completed = onAirSites;
+  const pending = handOverSites - onAirSites;
+  const hold = 0;
+
+  projectCompletionChartData.push(completed, pending, hold);
+
+  //console.log(projectCompletionChartData);
+  return projectCompletionChartData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for Getting Get On Air Data to the Front End Squares of Mobitel Projects ---------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getOnAirData(posts) {
+  var OnAirData = [];
+
+  OnAirData = posts.filter((obj) => obj.On_air !== null).length;
+  //console.log(OnAirData);
+  return OnAirData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//--------------------- Function for Getting Handover Data to the Front End Squares of Mobitel Projects ---------------------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getHandOverData(posts) {
+  var handOverData = [];
+
+  handOverData.push(posts.filter((obj) => obj.Handover !== null).length);
+
+  //console.log(handOverData);
+  return handOverData;
+}
 
 module.exports = router;
+
+//---------------------------------------------------------------------------------------------------------------------------
+//---------- Functions for Getting Last Week Progress Graph Data to the Front End of Mobitel Project Databases Insights------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getWeeklyProgressData(posts) {
+  var onairData = [];
+  var onairTargetData = [];
+
+  var lastWeekDates = [];
+  var yesterdayDate = [];
+  var yesterdayMonth = [];
+  var yesterdayYear = [];
+
+  for (var i = 0; i < 7; i++) {
+    yesterdayDate[i] = new Date(
+      new Date().setDate(new Date().getDate() - i)
+    ).getDate();
+    yesterdayMonth[i] = (
+      "0" +
+      (new Date(new Date().setDate(new Date().getDate() - i)).getMonth() + 1)
+    ).slice(-2);
+    yesterdayYear[i] = new Date(
+      new Date().setDate(new Date().getDate() - i)
+    ).getFullYear();
+
+    lastWeekDates[i] =
+      yesterdayYear[i] + "-" + yesterdayMonth[i] + "-" + yesterdayDate[i];
+  }
+  lastWeekDates.reverse();
+
+  // console.log(lastWeekDates);
+  // lastWeekDates = ['2022-01-10','2022-01-11','2022-01-12','2022-01-13','2022-01-14','2022-01-15','2022-01-16']
+
+  for (var i = 0; i < 7; i++) {
+    onairData[i] = posts.filter(
+      (obj) => obj.On_air === lastWeekDates[i]
+    ).length;
+    onairTargetData[i] = posts.filter(
+      (obj) => obj.On_Air_Target === lastWeekDates[i]
+    ).length;
+  }
+  // ----------------------------------------------------------------------------------------------------------------------------------------------
+  // console.log(onairData);
+
+  let onAirArray = onairData;
+  let onAirTargetArray = onairTargetData;
+  // console.log(onAirArray);
+
+  let weeklyProgressData = [];
+  weeklyProgressData.push(
+    { name: "Completed", type: "column", data: onAirArray },
+    { name: "Targeted", type: "column", data: onAirTargetArray }
+  );
+
+  // console.log(weeklyProgressData);
+  return weeklyProgressData;
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+//---------- Functions for Last Week Progress On Air Sites Data to the Front End of Mobitel Project Databases Insights-------
+//---------------------------------------------------------------------------------------------------------------------------
+
+function getWeeklyProgressOnAirSitesData(posts) {
+  var lastWeekDates = [];
+  var yesterdayDate = [];
+  var yesterdayMonth = [];
+  var yesterdayYear = [];
+
+  for (var i = 0; i < 7; i++) {
+    yesterdayDate[i] = new Date(
+      new Date().setDate(new Date().getDate() - i)
+    ).getDate();
+    yesterdayMonth[i] = (
+      "0" +
+      (new Date(new Date().setDate(new Date().getDate() - i)).getMonth() + 1)
+    ).slice(-2);
+    yesterdayYear[i] = new Date(
+      new Date().setDate(new Date().getDate() - i)
+    ).getFullYear();
+
+    lastWeekDates[i] =
+      yesterdayYear[i] + "-" + yesterdayMonth[i] + "-" + yesterdayDate[i];
+  }
+  lastWeekDates.reverse();
+  // console.log(lastWeekDates);
+  // lastWeekDates = ['2022-01-10','2022-01-11','2022-01-12','2022-01-13','2022-01-14','2022-01-15','2022-01-16']
+
+  var onairData = [];
+  var weeklyOnAirSitesID = [];
+  var onairSitesId1 = [];
+  var onairSitesId2 = [];
+  var onairSitesId3 = [];
+  var onairSitesId4 = [];
+  var onairSitesId5 = [];
+  var onairSitesId6 = [];
+  var onairSitesId7 = [];
+
+  if (projectName === "All Projects") {
+    for (var i = 0; i < 7; i++) {
+      onairData[i] = posts.filter(
+        (obj) => obj.On_air === lastWeekDates[i]
+      ).length;
+    }
+    // console.log(onairData);
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    for (var j = 0; j < onairData[0]; j++) {
+      onairSitesId1.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[0])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+    for (var j = 0; j < onairData[1]; j++) {
+      onairSitesId2.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[1])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+    for (var j = 0; j < onairData[2]; j++) {
+      onairSitesId3.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[2])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+    for (var j = 0; j < onairData[3]; j++) {
+      onairSitesId4.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[3])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+    for (var j = 0; j < onairData[4]; j++) {
+      onairSitesId5.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[4])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+    for (var j = 0; j < onairData[5]; j++) {
+      onairSitesId6.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[5])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+    for (var j = 0; j < onairData[6]; j++) {
+      onairSitesId7.push(
+        posts
+          .filter((obj) => obj.On_air === lastWeekDates[6])
+          .filter((obj) => obj.Site_Id)[j].Site_Id
+      );
+    }
+  }
+  // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  weeklyOnAirSitesID.push(
+    onairSitesId1,
+    onairSitesId2,
+    onairSitesId3,
+    onairSitesId4,
+    onairSitesId5,
+    onairSitesId6,
+    onairSitesId7
+  );
+
+  //console.log(projectName);
+  return weeklyOnAirSitesID;
+}
