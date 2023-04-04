@@ -55,706 +55,6 @@ router.get("/mobitelProjectsDatabasesSiteData", async (req, res, next) => {
 });
 //------------------------------------------------------------------------------------------
 
-//----------------Getting Installation Pending Task data--------------------
-router.get("/getInstalling", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      Installing: getInstalling(posts),
-    });
-  });
-});
-
-function getInstalling(posts) {
-  return posts.filter((post) => post.Installation_Completed === null);
-}
-
-//-----------------------Update Installing Pending Task-----------------------------
-
-router.route("/updateInstalling").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        Installation_Completed: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//----------------Getting Commissioning data--------------------
-router.get("/getCommissioning", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      commissioning: getCommissiioning(posts),
-    });
-  });
-});
-
-function getCommissiioning(posts) {
-  return posts.filter((post) => post.Commission === null);
-}
-
-//-----------------------Update Commissioning Pending Task-----------------------------
-router.route("/updateCommissioning").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        Commission: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//----------------Getting Pat data--------------------
-router.get("/getPat", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      Pat: getPat(posts),
-    });
-  });
-});
-
-function getPat(posts) {
-  return posts.filter((post) => post.PAT_Pass === null);
-}
-
-//-----------------------Update Pat Pending Task-----------------------------
-
-//------------------------Pss--------------------
-router.route("/updatePat").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        PAT_Pass: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//---------------------- Submitted--------------------
-
-router.route("/updatePatSubmitted").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        Submit_PAT: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//---------------Getting Sar data--------------------
-router.get("/getSar", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      Sar: getSar(posts),
-    });
-  });
-});
-
-function getSar(posts) {
-  return posts.filter((post) => post.SAR_Pass === null);
-}
-
-//---------------------- Update Sar Submitted  Task--------------------
-
-router.route("/updateSarSubmitted").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        Submit_SAR: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//-----------------------Update Sar Pass Task-----------------------------
-router.route("/updateSarPass").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        SAR_Pass: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//-------------Getting OnAir data-----------------------
-
-router.get("/getOnAir", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      OnAir: getOnAir(posts),
-    });
-  });
-});
-
-function getOnAir(posts) {
-  return posts.filter((post) => post.On_air === null);
-}
-
-//-----------------------Update OnAir Pending Task-----------------------------
-router.route("/updateOnAir").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        On_air: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//-------------Getting Material Return data-----------------------
-
-router.get("/getMaterialReturn", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      MaterialReturn: getMaterialReturn(posts),
-    });
-  });
-});
-
-function getMaterialReturn(posts) {
-  return posts.filter((post) => post.Material_Return === null);
-}
-
-//-----------------------Update MaterialReturn Pending Task-----------------------------
-router.route("/updateMaterialReturn").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        Material_Return: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//-------------Getting Pr data-----------------------
-
-router.get("/getPr", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      Pr: getPr(posts),
-    });
-  });
-});
-
-function getPr(posts) {
-  return posts.filter((post) => post.PR_Raise === null);
-}
-//-----------------------Update Pr Pending Task-----------------------------
-router.route("/updatePr").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        PR_Raise: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//-------------Getting Po data-----------------------
-router.get("/getPo", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      Po: getPo(posts),
-    });
-  });
-});
-
-function getPo(posts) {
-  return posts.filter((post) => post.PO_issue === null);
-}
-
-//-----------------------Update Po Pending Task-----------------------------
-router.route("/updatePo").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        PO_issue: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//-------------Getting Invoice data-----------------------
-router.get("/geInvoice", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      Invoice: getInvoice(posts),
-    });
-  });
-});
-
-function getInvoice(posts) {
-  return posts.filter((post) => post.Submit_Invoice === null);
-}
-
-router.route("/updateInvoice").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        Submit_Invoice: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-//------------------------------------------------------------------------------------------
-
-//-------------Getting Po Closure data-----------------------
-router.get("/gePoClosure", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      PoClosure: getPoClosure(posts),
-    });
-  });
-});
-
-function getPoClosure(posts) {
-  return posts.filter((post) => post.PO_closure === null);
-}
-
-router.route("/updatePoClosure").put(async (req, res) => {
-  const Tr = req.body.Task_Ref;
-  const today = new Date();
-  const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  };
-  const formattedDate = today.toLocaleDateString("en-US", options);
-  const date = new Date(formattedDate);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const yyyyMmDd = `${year}-${month}-${day}`;
-
-  const artist = await Posts.updateOne(
-    { Task_Ref: `${Tr}` },
-    {
-      $set: {
-        PO_closure: yyyyMmDd,
-      },
-    }
-  );
-
-  if (artist) {
-    res.send("Successful");
-  } else {
-    res.status(500).send("Not successful");
-  }
-});
-
-router.get("/mobitelProjectsDatabasesPendingTasks", async (req, res, next) => {
-  Posts.find().exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      InstallationPendingTasks: getInstallationPendingTasks(posts),
-      CommissioningPendingTasks: getCommissioningPendingTasks(posts),
-      PatPendingTasks: getPatPendingTasks(posts),
-      SarPendingTasks: getSarPendingTasks(posts),
-      OnAirPendingTasks: getOnAirPendingTasks(posts),
-      MaterialReturnPendingTasks: getMaterialReturnPendingTask(posts),
-      PrPendingTasks: getPrPendingTasks(posts),
-      PoPendingTasks: getPoPendingTasks(posts),
-      InvoicePendingTasks: getInvoicePendingTasks(posts),
-      PoClosurePendingTasks: getPoClosurePendingTasks(posts),
-    });
-  });
-});
-
-function getInstallationPendingTasks(posts) {
-  let InstallationPendingTasks = [];
-
-  InstallationPendingTasks = posts.filter(
-    (post) => post.Installation_Completed === null
-  );
-
-  return InstallationPendingTasks.length;
-}
-
-function getCommissioningPendingTasks(posts) {
-  let CommissioningPendingTasks = [];
-
-  CommissioningPendingTasks = posts.filter((post) => post.Commission === null);
-
-  return CommissioningPendingTasks.length;
-}
-function getPatPendingTasks(posts) {
-  let PatPendingTasks = [];
-
-  PatPendingTasks = posts.filter((post) => post.PAT_Pass === null);
-
-  return PatPendingTasks.length;
-}
-
-function getSarPendingTasks(posts) {
-  let SarPendingTasks = [];
-
-  SarPendingTasks = posts.filter((post) => post.SAR_Pass === null);
-
-  return SarPendingTasks.length;
-}
-
-function getOnAirPendingTasks(posts) {
-  let OnAirPendingTasks = [];
-  OnAirPendingTasks = posts.filter((post) => post.On_air === null);
-  return OnAirPendingTasks.length;
-}
-
-function getMaterialReturnPendingTask(posts) {
-  let MaterialReturnPendingTasks = [];
-
-  MaterialReturnPendingTasks = posts.filter(
-    (post) => post.Material_Return === null
-  );
-  return MaterialReturnPendingTasks.length;
-}
-
-function getPrPendingTasks(posts) {
-  let PrPendingTasks = [];
-
-  PrPendingTasks = posts.filter((post) => post.PR_Raise === null);
-
-  return PrPendingTasks.length;
-}
-
-function getPoPendingTasks(posts) {
-  let PoPendingTasks = [];
-
-  PoPendingTasks = posts.filter((post) => post.PO_issue === null);
-
-  return PoPendingTasks.length;
-}
-
-function getInvoicePendingTasks(posts) {
-  let InvoicePendingTasks = [];
-
-  InvoicePendingTasks = posts.filter((post) => post.Submit_Invoice === null);
-
-  return InvoicePendingTasks.length;
-}
-
-function getPoClosurePendingTasks(posts) {
-  let PoClosurePendingTasks = [];
-
-  PoClosurePendingTasks = posts.filter((post) => post.PO_closure === null);
-
-  return PoClosurePendingTasks.length;
-}
-
 //--------------------------------------------
 
 router.get("/mobitelProjectsDatabases", async (req, res, next) => {
@@ -1025,6 +325,8 @@ router.get(
     }
 
     let queryStr = JSON.stringify(reqQuery);
+
+    // console.log(queryStr);
     Posts.find(JSON.parse(queryStr)).exec((err, posts) => {
       if (err) {
         return res.status(400).json({
@@ -1037,8 +339,8 @@ router.get(
         columnChartData: getchartData(posts), // Graph data of number of sites Mobilized in each month sending to front end Appwebsitevisits.
         XaxisDataForTheGraphs: getXaxisData(), // x axis data labels array sending to the Column graghs front end.
         ProjectCompletionForFrontEnd: getProjectCompletionData(posts), // Data for Front end Mobitel Projects Insights project Completion Donut Graph.
-        // weeklyProgressDataForFrontEnd: getWeeklyProgressData(posts), // Data for Front end Mobitel Projects Insights Weekly Progress Graph.
-        // WeeklyProgressOnAirSitesData: getWeeklyProgressOnAirSitesData(posts), // Data for Front end Mobitel Projects Insights Weekly Progress Graph Tool tip.
+        weeklyProgressDataForFrontEnd: getWeeklyProgressData(posts), // Data for Front end Mobitel Projects Insights Weekly Progress Graph.
+        SevenDaysOfWeek: getSevenDaysOfWeek(), // 7 Days of Week going to front end weekly progress column graph.
       });
     });
   }
@@ -1247,8 +549,6 @@ function getHandOverData(posts) {
   return handOverData;
 }
 
-module.exports = router;
-
 //---------------------------------------------------------------------------------------------------------------------------
 //---------- Functions for Getting Last Week Progress Graph Data to the Front End of Mobitel Project Databases Insights------
 //---------------------------------------------------------------------------------------------------------------------------
@@ -1279,143 +579,80 @@ function getWeeklyProgressData(posts) {
   }
   lastWeekDates.reverse();
 
-  // console.log(lastWeekDates);
+  //console.log(lastWeekDates);
   // lastWeekDates = ['2022-01-10','2022-01-11','2022-01-12','2022-01-13','2022-01-14','2022-01-15','2022-01-16']
 
   for (var i = 0; i < 7; i++) {
     onairData[i] = posts.filter(
       (obj) => obj.On_air === lastWeekDates[i]
     ).length;
-    onairTargetData[i] = posts.filter(
-      (obj) => obj.On_Air_Target === lastWeekDates[i]
-    ).length;
   }
   // ----------------------------------------------------------------------------------------------------------------------------------------------
-  // console.log(onairData);
+  //   console.log(onairData);
 
   let onAirArray = onairData;
-  let onAirTargetArray = onairTargetData;
   // console.log(onAirArray);
 
   let weeklyProgressData = [];
-  weeklyProgressData.push(
-    { name: "Completed", type: "column", data: onAirArray },
-    { name: "Targeted", type: "column", data: onAirTargetArray }
-  );
+  weeklyProgressData.push({
+    name: "Completed",
+    type: "column",
+    data: onAirArray,
+  });
 
-  // console.log(weeklyProgressData);
+  //console.log(weeklyProgressData);
   return weeklyProgressData;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
-//---------- Functions for Last Week Progress On Air Sites Data to the Front End of Mobitel Project Databases Insights-------
+//-------------- Function for 7 days of week for Front End Weekly Progress Graph of Mobitel Project Databases ---------------
 //---------------------------------------------------------------------------------------------------------------------------
 
-function getWeeklyProgressOnAirSitesData(posts) {
-  var lastWeekDates = [];
-  var yesterdayDate = [];
-  var yesterdayMonth = [];
-  var yesterdayYear = [];
+function getSevenDaysOfWeek() {
+  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  for (var i = 0; i < 7; i++) {
-    yesterdayDate[i] = new Date(
-      new Date().setDate(new Date().getDate() - i)
-    ).getDate();
-    yesterdayMonth[i] = (
-      "0" +
-      (new Date(new Date().setDate(new Date().getDate() - i)).getMonth() + 1)
-    ).slice(-2);
-    yesterdayYear[i] = new Date(
-      new Date().setDate(new Date().getDate() - i)
-    ).getFullYear();
-
-    lastWeekDates[i] =
-      yesterdayYear[i] + "-" + yesterdayMonth[i] + "-" + yesterdayDate[i];
+  let today = new Date();
+  let start = today.getDay();
+  if (start == 6) {
+    return days;
+    console.log(days);
+  } else {
+    return days.slice(start).concat(days.slice(0, start));
+    //console.log(days.slice(start).concat(days.slice(0,start)));
   }
-  lastWeekDates.reverse();
-  // console.log(lastWeekDates);
-  // lastWeekDates = ['2022-01-10','2022-01-11','2022-01-12','2022-01-13','2022-01-14','2022-01-15','2022-01-16']
-
-  var onairData = [];
-  var weeklyOnAirSitesID = [];
-  var onairSitesId1 = [];
-  var onairSitesId2 = [];
-  var onairSitesId3 = [];
-  var onairSitesId4 = [];
-  var onairSitesId5 = [];
-  var onairSitesId6 = [];
-  var onairSitesId7 = [];
-
-  if (projectName === "All Projects") {
-    for (var i = 0; i < 7; i++) {
-      onairData[i] = posts.filter(
-        (obj) => obj.On_air === lastWeekDates[i]
-      ).length;
-    }
-    // console.log(onairData);
-    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    for (var j = 0; j < onairData[0]; j++) {
-      onairSitesId1.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[0])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-    for (var j = 0; j < onairData[1]; j++) {
-      onairSitesId2.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[1])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-    for (var j = 0; j < onairData[2]; j++) {
-      onairSitesId3.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[2])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-    for (var j = 0; j < onairData[3]; j++) {
-      onairSitesId4.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[3])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-    for (var j = 0; j < onairData[4]; j++) {
-      onairSitesId5.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[4])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-    for (var j = 0; j < onairData[5]; j++) {
-      onairSitesId6.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[5])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-    for (var j = 0; j < onairData[6]; j++) {
-      onairSitesId7.push(
-        posts
-          .filter((obj) => obj.On_air === lastWeekDates[6])
-          .filter((obj) => obj.Site_Id)[j].Site_Id
-      );
-    }
-  }
-  // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-  weeklyOnAirSitesID.push(
-    onairSitesId1,
-    onairSitesId2,
-    onairSitesId3,
-    onairSitesId4,
-    onairSitesId5,
-    onairSitesId6,
-    onairSitesId7
-  );
-
-  //console.log(projectName);
-  return weeklyOnAirSitesID;
 }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------- Get sites data to the graphs  ---------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+router.get("/mobitelProjectsLastUpdates", async (req, res, next) => {
+  let reqQuery = [];
+  if (req.query.Project === "All Projects") {
+    reqQuery = {};
+  } else {
+    reqQuery = { ...req.query };
+  }
+
+  // console.log(reqQuery);
+
+  let queryStr = JSON.stringify(reqQuery);
+  // console.log(queryStr);
+
+  Posts.find(JSON.parse(queryStr), {}, { sort: { updatedAt: -1 } })
+    .limit(5)
+    .exec((err, posts) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        existingPosts: posts,
+      });
+    });
+});
+
+module.exports = router;

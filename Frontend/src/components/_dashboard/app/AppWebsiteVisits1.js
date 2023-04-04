@@ -12,37 +12,20 @@ import { BaseOptionChart5 } from '../../charts';
 
 // ---------------------------  Daily work progress graph in dashboard----------------------------
 
-export default function AppWebsiteVisits1({
-  xAxisDaysLabel,
-  weeklyProgressDataMobitel,
-  weeklyProgressDataVendor,
-  completedSitesMobitel,
-  completedSitesVendor
-}) {
+export default function AppWebsiteVisits1({ xAxisDaysLabel, completedSitesMobitel }) {
   const [alert1, setAlert1] = useState(false);
   const [alertContent1, setAlertContent1] = useState('');
   const [open1, setOpen1] = React.useState(false);
 
-  const weeklyProgress1 = weeklyProgressDataMobitel[0].data;
-  const weeklyProgress2 = weeklyProgressDataVendor[0].data;
-  const weeklyProgress = weeklyProgress1.map((a, i) => a + weeklyProgress2[i]);
-
-  const weeklyTarget1 = weeklyProgressDataMobitel[1].data;
-  const weeklyTarget2 = weeklyProgressDataVendor[1].data;
-  const weeklyTarget = weeklyTarget1.map((a, i) => a + weeklyTarget2[i]);
-
   const weeklyProgressData = [];
-  weeklyProgressData.push(
-    { name: 'Completed', type: 'column', data: weeklyProgress },
-    { name: 'Targeted', type: 'column', data: weeklyTarget }
-  );
+  weeklyProgressData.push({ name: 'Completed', type: 'column', data: completedSitesMobitel });
 
   // --------- Assigning Data To Graph ----------------------------------
 
   const xAxisData = xAxisDaysLabel;
 
   const CHART_DATA = weeklyProgressData;
-  const CompletedSites = completedSitesMobitel.map((a, i) => a.concat(completedSitesVendor[i]));
+  const CompletedSites = completedSitesMobitel;
 
   const chartOptions = merge(BaseOptionChart5(), {
     stroke: { width: [3, 1] },

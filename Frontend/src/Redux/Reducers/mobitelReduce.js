@@ -20,7 +20,10 @@ import {
   MOBITEL_HANDOVER_DATA_SUCCESS,
   MOBITEL_TILES_DATA_REQUEST,
   MOBITEL_TILES_DATA_SUCCESS,
-  MOBITEL_TILES_DATA_FAIL
+  MOBITEL_TILES_DATA_FAIL,
+  MOBITEL_PENDING_TASK_DATA_REQUEST,
+  MOBITEL_PENDING_TASK_DATA_SUCCESS,
+  MOBITEL_PENDING_TASK_DATA_FAIL
 } from '../Constants/mobitelConstants';
 
 export const mobitelDatabseReducer = (state = { mobitelDatabaseData: [] }, action) => {
@@ -125,6 +128,19 @@ export const mobitelChartColumnReducer = (state = { mobitelChartColumData: [] },
       return { mobitelChartColumnLoading: false, mobitelChartColumData: action.payload };
     case MOBITEL_CHART_COLUMN_DATA_FAIL:
       return { mobitelChartColumnLoading: false, mobitelChartColumDataError: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const mobitelPendingTaskDataReducer = (state = { mobitelPendingTaskData: [] }, action) => {
+  switch (action.type) {
+    case MOBITEL_PENDING_TASK_DATA_REQUEST:
+      return { mobitelPendingTaskDataLoading: true, mobitelPendingTaskData: [] };
+    case MOBITEL_PENDING_TASK_DATA_SUCCESS:
+      return { mobitelPendingTaskDataLoading: false, mobitelPendingTaskData: action.payload };
+    case MOBITEL_PENDING_TASK_DATA_FAIL:
+      return { mobitelPendingTaskDataLoading: false, mobitelPendingTaskDataError: action.payload };
     default:
       return state;
   }

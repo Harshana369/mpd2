@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { type } from 'os';
 
 import {
   MOBITEL_CHART_AREA_DATA_FAIL,
@@ -17,6 +16,9 @@ import {
   MOBITEL_OVERVIEW_FAIL,
   MOBITEL_OVERVIEW_REQUEST,
   MOBITEL_OVERVIEW_SUCCESS,
+  MOBITEL_PENDING_TASK_DATA_FAIL,
+  MOBITEL_PENDING_TASK_DATA_REQUEST,
+  MOBITEL_PENDING_TASK_DATA_SUCCESS,
   MOBITEL_SCOPE_DATA_FAIL,
   MOBITEL_SCOPE_DATA_REQUEST,
   MOBITEL_SCOPE_DATA_SUCCESS,
@@ -140,18 +142,19 @@ export const fetchMobitelColumnGraphData = (MobitelDropdownValue) => async (disp
   }
 };
 
-// export const fetchMobitelHandOverData = (ProjectNameDropdownValue) => async (dispatch) => {
-//   try {
-//     dispatch({ type: HANDOVER_DATA_REQUEST });
-//     const { data } = await axiosInstance.get('/mobitelHandOverProjects', {
-//       params: { Project: ProjectNameDropdownValue }
-//     });
-//     dispatch({ type: HANDOVER_DATA_SUCCESS, payload: data });
-//   } catch (error) {
-//     dispatch({
-//       type: ,
-//       payload:
-//         error.response && error.response.data.message ? error.response.data.message : error.message
-//     });
-//   }
-// };
+export const fetchMobitelPendingTaskData = (MobitelDropdownValue) => async (dispatch) => {
+  try {
+    dispatch({ type: MOBITEL_PENDING_TASK_DATA_REQUEST });
+    const { data } = await axiosInstance.get('/mobitelPendingTaskData', {
+      params: { Site_Engineer: MobitelDropdownValue }
+    });
+
+    dispatch({ type: MOBITEL_PENDING_TASK_DATA_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: MOBITEL_PENDING_TASK_DATA_FAIL,
+      payload:
+        error.response && error.response.data.message ? error.response.data.message : error.message
+    });
+  }
+};

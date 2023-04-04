@@ -92,6 +92,16 @@ export default function DashboardApp() {
       });
   };
 
+  const fetchMobitelProjectsLastUpdates = () => {
+    axiosInstance
+      .get('/mobitelProjectsLastUpdates', {
+        params: { Project: MobitelDropdownValue }
+      })
+      .then((res) => {
+        setMobitelLastUpdates(res.data.existingPosts);
+      });
+  };
+
   // const fetchMobitelColumnGraphData = () => {
   //   axiosInstance
   //     .get('/mobitelProjectsDatabasesChartDataColumnChartData', {
@@ -134,6 +144,7 @@ export default function DashboardApp() {
     // fetchVendorColumnGraphData();
     // fetchMobitelProjectsLastUpdates();
     // fetchVendorProjectsLastUpdates();
+    fetchMobitelProjectsLastUpdates();
     fetchMobitelProjectNames();
     // fetchVendorProjectNames();
     dispatch(fetchMobitelColumnGraphData(MobitelDropdownValue));
@@ -142,8 +153,9 @@ export default function DashboardApp() {
 
   useEffect(() => {
     // fetchMobitelData();
-    fetchMobitelColumnGraphData();
+
     fetchMobitelProjectNames();
+    fetchMobitelProjectsLastUpdates();
     dispatch(fetchMobitelColumnGraphData(MobitelDropdownValue));
     dispatch(fetchMoitelTilesData(MobitelDropdownValue));
   }, [dispatch, MobitelDropdownValue]);
@@ -423,45 +435,39 @@ export default function DashboardApp() {
             </Grid>
           )}
 
-          {/* <Grid item xs={12} md={6} lg={12} mb={0}>
-            <AppWebsiteVisits1
-              xAxisDaysLabel={XAxisDaysLabelMobitel}
-              weeklyProgressDataMobitel={WeeklyProgressDataMobitel}
-              weeklyProgressDataVendor={WeeklyProgressDataVendor}
-              completedSitesMobitel={CompletedSitesMobitel}
-              completedSitesVendor={CompletedSitesVendor}
-            />
-          </Grid> */}
-          {/* <Grid item xs={12} md={6} lg={12} mb={0}>
+          {mobitelChartColumnLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : mobitelChartColumDataError ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} md={6} lg={12} mb={0}>
+              <AppWebsiteVisits1
+                xAxisDaysLabel={mobitelChartColumData.SevenDaysOfWeek}
+                completedSitesMobitel={mobitelChartColumData.weeklyProgressDataForFrontEnd}
+              />
+            </Grid>
+          )}
+
+          <Grid item xs={12} md={6} lg={12} mb={0}>
             <Card style={{ height: '520px' }}>
               <Stack sx={{ p: 2 }} direction="row">
                 <Button
                   color="secondary"
                   onClick={() => {
-                    // showMobitelProjectsUpdates();
-                    // fetchMobitelProjectsLastUpdates();
-                    // fetchVendorProjectsLastUpdates();
+                    showMobitelProjectsUpdates();
+                    fetchMobitelProjectsLastUpdates();
                   }}
                 >
                   Mobitel projects
-                </Button>
-                <Button
-                  color="secondary"
-                  onClick={() => {
-                    // showVendorProjectsUpdates();
-                    // fetchMobitelProjectsLastUpdates();
-                    // fetchVendorProjectsLastUpdates();
-                  }}
-                >
-                  Vendor projects
                 </Button>
               </Stack>
               {MobitelUpdatesIsShown && (
                 <LastUpdatesMobitel mobitelLastUpdates={MobitelLastUpdates} />
               )}
-              {VendorUpdatesIsShown && <LastUpdatesVendor vendorLastUpdates={VendorLastUpdates} />}
             </Card>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Container>
     </Page>

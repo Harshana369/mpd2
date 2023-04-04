@@ -27,14 +27,19 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // } from './Reducers/zteReducer';
 
 import { AllTableReducer, SiteEngineerForSite, SiteIdReducer } from './Reducers/DayPlanReducer';
-import { mobitelChartColumnReducer, mobitelTilesReducer } from './Reducers/mobitelReduce';
+import {
+  mobitelChartColumnReducer,
+  mobitelPendingTaskDataReducer,
+  mobitelTilesReducer
+} from './Reducers/mobitelReduce';
 
 const reducer = combineReducers({
   mobitelSiteEngineerDayPlan: SiteIdReducer,
   allTableData: AllTableReducer,
   SiteEngineerForAllSite: SiteEngineerForSite,
   mobileTilesData: mobitelTilesReducer,
-  mobitelColumnChartData: mobitelChartColumnReducer
+  mobitelColumnChartData: mobitelChartColumnReducer,
+  mobitelPendingTaskData: mobitelPendingTaskDataReducer
 });
 
 const initialState = {};
