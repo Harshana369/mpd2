@@ -37,6 +37,7 @@ export default function App() {
       } catch (error) {
         window.stop('/');
         localStorage.removeItem('auth');
+        localStorage.removeItem('fullName');
         window.stop();
         navigate('/login', { replace: true });
         setError('You are not authorized please login');

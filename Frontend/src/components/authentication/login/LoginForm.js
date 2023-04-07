@@ -51,9 +51,12 @@ export default function LoginForm() {
 
     try {
       const { data } = await axiosInstance.post('/login', { email, password }, config);
-      console.log(data);
+      // console.log(data);
+      const fullName = `${data.user.username} ${data.user.lastName}`;
+
       localStorage.clear();
       localStorage.setItem('auth', data.token);
+      localStorage.setItem('fullName', fullName);
 
       // user data encryption and save in the localStorage
       const secret = 'AuH8e#?y!E87nyVh';

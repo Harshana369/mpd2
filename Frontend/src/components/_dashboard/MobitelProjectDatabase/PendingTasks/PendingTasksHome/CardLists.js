@@ -23,8 +23,11 @@ export default function CardLists() {
   const { mobitelPendingTaskDataLoading, mobitelPendingTaskData, mobitelPendingTaskDataError } =
     mobitelPendingTaskDetails;
 
+  const access = ['Installation', 'Commissioning', 'Pat'];
+
   return (
     <Grid container spacing={1}>
+      {/* Installation */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -47,7 +50,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* Commissioning */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -70,7 +73,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* Pat */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -93,7 +96,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* Sar */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -116,7 +119,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* OnAir */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -139,7 +142,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* MaterialReturn */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -162,7 +165,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* Pr */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -185,7 +188,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* Po */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -208,7 +211,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* Invoice */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />
@@ -231,7 +234,7 @@ export default function CardLists() {
           </Link>
         </Grid>
       )}
-
+      {/* PoClosure */}
       {mobitelPendingTaskDataLoading ? (
         <Grid item xs={12} sm={6} md={2.4}>
           <CircularProgress color="success" />

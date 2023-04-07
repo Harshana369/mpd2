@@ -41,7 +41,7 @@ export default function MobitelDatabasesPendingTasksHome() {
 
   useEffect(() => {
     dispatch(fetchMobitelPendingTaskData(SiteEngineerDropdownValue));
-  }, [SiteEngineerDropdownValue]);
+  }, [SiteEngineerDropdownValue, dispatch]);
 
   return (
     <Page title="Mobitel Projects Databases | Projects Management Database">

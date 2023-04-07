@@ -1,5 +1,6 @@
-import React from 'react';
+/* eslint-disable */
 
+import React from 'react';
 import axios from 'axios';
 
 import {
@@ -18,11 +19,13 @@ import {
   GridCellValue
 } from '@mui/x-data-grid';
 import { createSvgIcon } from '@mui/material/utils';
-import { Box, Stack } from '@mui/material';
+import { Box, CircularProgress, Grid, Stack } from '@mui/material';
 import clsx from 'clsx';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 /* eslint-disable camelcase */
 
@@ -47,27 +50,30 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   const apiRef = useGridApiRef();
   const [pageSize, setPageSize] = React.useState(10);
   const [snackbar, setSnackbar] = React.useState(null);
-  const [state, setState] = React.useState([]);
-  const [column, setColumn] = React.useState([]);
   const [tableReplace, setTableReplace] = React.useState(false);
   const [tablePass, setTablePass] = React.useState([]);
   const [tableSubmitted, setTableSubmitted] = React.useState([]);
 
-  // ----------
+  const dispatch = useDispatch();
 
-  const [objId, setObjId] = React.useState();
+  // ----------
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
+  const mobitelPendingTaskDetails = useSelector((state) => state.mobitelPendingTaskData);
+
+  const { mobitelPendingTaskDataLoading, mobitelPendingTaskData, mobitelPendingTaskDataError } =
+    mobitelPendingTaskDetails;
+
   // ---------------------------------------------------------
 
-  const fetchData = async () => {
-    const res = await axiosInstance.get(`/getSar`);
-    // console.log(res.data.success[0].mobitelDatabasePropertys);
-    setState(res.data.Sar);
-    // setColumn(res.data.success[0].headerproperties);
-    // setObjId(res.data.success[0]._id);
-  };
+  // const fetchData = async () => {
+  //   const res = await axiosInstance.get(`/getSar`);
+  //   // console.log(res.data.success[0].mobitelDatabasePropertys);
+  //   setState(res.data.Sar);
+  //   // setColumn(res.data.success[0].headerproperties);
+  //   // setObjId(res.data.success[0]._id);
+  // };
 
   const getRowsFromCurrentPage = ({ apiRef }) =>
     gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
@@ -504,9 +510,9 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   };
 
   React.useEffect(() => {
-    fetchData();
+    dispatch(fetchMobitelPendingTaskData(SiteEngineerDropdownValue));
     getData();
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     updateColumn();
@@ -517,61 +523,71 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   }, [tablePass]);
 
   React.useEffect(() => {
-    fetchData();
+    dispatch(fetchMobitelPendingTaskData(SiteEngineerDropdownValue));
     setTableReplace(false);
-  }, [tableReplace]);
+  }, [tableReplace, dispatch]);
 
   React.useEffect(() => {
     updateSarSubmitted();
   }, [tableSubmitted]);
 
   return (
-    <Box
-      sx={{
-        height: 515,
-        width: '100%',
-        '& .super-app-theme--header': {
-          backGridolor: 'rgba(0,0,0,0)',
-          color: 'rgb(198,198,198)',
-          fontWeight: '600'
-        },
-        '& .super-app-theme--cell': {
-          backGridolor: 'rgba(0,0,0,0)',
-          color: 'rgb(128,128,128)',
-          fontWeight: '200'
-        }
-      }}
-    >
-      <DataGrid
-        apiRef={apiRef}
-        rows={state}
-        getRowId={(row) => row._id}
-        columns={Columns}
-        components={{ Toolbar: CustomToolbar }}
-        pageSize={pageSize}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        rowsPerPageOptions={[5, 10, 20, 50, 100]}
-        pagination
-        density="compact"
-        disableSelectionOnClick
-        checkboxSelection
-        editMode="row"
-        sx={{
-          boxShadow: 0,
-          border: 0.1,
-          borderColor: 'secondary.main',
-          '& .MuidataGrid-cell:hover': {
-            color: 'secondary.main'
-          }
-        }}
-        columnVisibilityModel={columnVisibilityModel}
-        onColumnVisibilityModelChange={(newModel) => setColumnVisibilityModel(newModel)}
-      />
-      {!!snackbar && (
-        <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={5000}>
-          <Alert {...snackbar} onClose={handleCloseSnackbar} />
-        </Snackbar>
+    <>
+      {mobitelPendingTaskDataLoading ? (
+        <Grid item xs={12} sm={6} md={2.4}>
+          <CircularProgress color="success" />
+        </Grid>
+      ) : mobitelPendingTaskDataError ? (
+        <h1>error...</h1>
+      ) : (
+        <Box
+          sx={{
+            height: 515,
+            width: '100%',
+            '& .super-app-theme--header': {
+              backGridolor: 'rgba(0,0,0,0)',
+              color: 'rgb(198,198,198)',
+              fontWeight: '600'
+            },
+            '& .super-app-theme--cell': {
+              backGridolor: 'rgba(0,0,0,0)',
+              color: 'rgb(128,128,128)',
+              fontWeight: '200'
+            }
+          }}
+        >
+          <DataGrid
+            apiRef={apiRef}
+            rows={mobitelPendingTaskData.SarPendingTasks}
+            getRowId={(row) => row._id}
+            columns={Columns}
+            components={{ Toolbar: CustomToolbar }}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[5, 10, 20, 50, 100]}
+            pagination
+            density="compact"
+            disableSelectionOnClick
+            checkboxSelection
+            editMode="row"
+            sx={{
+              boxShadow: 0,
+              border: 0.1,
+              borderColor: 'secondary.main',
+              '& .MuidataGrid-cell:hover': {
+                color: 'secondary.main'
+              }
+            }}
+            columnVisibilityModel={columnVisibilityModel}
+            onColumnVisibilityModelChange={(newModel) => setColumnVisibilityModel(newModel)}
+          />
+          {!!snackbar && (
+            <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={5000}>
+              <Alert {...snackbar} onClose={handleCloseSnackbar} />
+            </Snackbar>
+          )}
+        </Box>
       )}
-    </Box>
+    </>
   );
 }
