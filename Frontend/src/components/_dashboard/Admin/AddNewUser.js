@@ -46,18 +46,6 @@ const adminLevels = [
   {
     value: 'Editor',
     label: 'Editor'
-  },
-  {
-    value: 'Vendor - Huawei',
-    label: 'Vendor - Huawei'
-  },
-  {
-    value: 'Vendor - ZTE',
-    label: 'Vendor - ZTE'
-  },
-  {
-    value: 'View Only',
-    label: 'View Only'
   }
 ];
 

@@ -23,6 +23,7 @@ app.use("/mpd/api/private", privateRouts);
 const userListGetRoutes = require("./routes/AuthGetRoutes/AuthGetUsersRoutes.js");
 const mobitelProjectsDatabases = require("./routes/mobitelProjectsDatabasesRoutes.js");
 const pendingTask = require("./routes/pendingTaskRoutes.js");
+const accessToPendingTask = require("./routes/accessToPendingTaskRoutes.js");
 
 // -------------------
 const mobitelProjectsDatabaseColumnHide = require("./routes/columnHide/mobitelDatabaseColumnHide.js");
@@ -43,6 +44,7 @@ app.use(errorHandler);
 app.use("/mpd/api", userListGetRoutes);
 app.use("/mpd/api", mobitelProjectsDatabases);
 app.use("/mpd/api", pendingTask);
+app.use("/mpd/api", accessToPendingTask);
 
 //Column Hide
 app.use("/mpd/api", mobitelProjectsDatabaseColumnHide);

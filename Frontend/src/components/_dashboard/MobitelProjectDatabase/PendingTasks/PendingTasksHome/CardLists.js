@@ -16,247 +16,133 @@ import PoPendingTasks from './PoPendingTasks';
 import InvoicePendingTasks from './InvoicePendingTasks';
 import PoClosurePending from './PoClosurePendingTasks';
 import InstallationPendingTasks from './InstallationPendingTasks';
+import axios from 'axios';
+
 // -------------------------------------------------------------------
 export default function CardLists() {
+  const [data, setData] = useState([]);
+  const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
+
   const mobitelPendingTaskDetails = useSelector((state) => state.mobitelPendingTaskData);
 
   const { mobitelPendingTaskDataLoading, mobitelPendingTaskData, mobitelPendingTaskDataError } =
     mobitelPendingTaskDetails;
 
-  const access = ['Installation', 'Commissioning', 'Pat'];
+  const access = data;
+
+  const level = localStorage.getItem('adminLevel');
+
+  const getData = async () => {
+    await axiosInstance.get('/getUpdatePendingTaskPrivilegeLevel').then((res) => {
+      // console.log(res.data.success[0].editor);
+
+      if (level === 'Moderator') {
+        setData(res.data.success[0].moderator);
+      } else if (level === 'Editor') {
+        setData(res.data.success[0].editor);
+      } else {
+        setData(res.data.success[0].admin);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Grid container spacing={1}>
-      {/* Installation */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Installation"
-          >
-            <InstallationPendingTasks
-              Installation={
-                mobitelPendingTaskData.InstallationPendingTasks &&
-                mobitelPendingTaskData.InstallationPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* Commissioning */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Commissioning"
-          >
-            <CommissioningPendingTasks
-              Commission={
-                mobitelPendingTaskData.CommissioningPendingTasks &&
-                mobitelPendingTaskData.CommissioningPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* Pat */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Pat"
-          >
-            <PatPendingTasks
-              Pat={
-                mobitelPendingTaskData.PatPendingTasks &&
-                mobitelPendingTaskData.PatPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* Sar */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Sar"
-          >
-            <SarPendingTasks
-              Sar={
-                mobitelPendingTaskData.SarPendingTasks &&
-                mobitelPendingTaskData.SarPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* OnAir */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/OnAir"
-          >
-            <OnAirPendingTasks
-              OnAir={
-                mobitelPendingTaskData.OnAirPendingTasks &&
-                mobitelPendingTaskData.OnAirPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* MaterialReturn */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/MaterialReturn"
-          >
-            <MaterialReturnPendingTasks
-              MaterialReturn={
-                mobitelPendingTaskData.MaterialReturnPendingTasks &&
-                mobitelPendingTaskData.MaterialReturnPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* Pr */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Pr"
-          >
-            <PrPendingTasks
-              Pr={
-                mobitelPendingTaskData.PrPendingTasks &&
-                mobitelPendingTaskData.PrPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* Po */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Po"
-          >
-            <PoPendingTasks
-              Po={
-                mobitelPendingTaskData.PoPendingTasks &&
-                mobitelPendingTaskData.PoPendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* Invoice */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/Invoice"
-          >
-            <InvoicePendingTasks
-              Invoice={
-                mobitelPendingTaskData.InvoicePendingTasks &&
-                mobitelPendingTaskData.InvoicePendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
-      {/* PoClosure */}
-      {mobitelPendingTaskDataLoading ? (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <CircularProgress color="success" />
-        </Grid>
-      ) : mobitelPendingTaskDataError ? (
-        <h1>error...</h1>
-      ) : (
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Link
-            underline="none"
-            component={RouterLink}
-            to="/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/PoClosure"
-          >
-            <PoClosurePending
-              PoClosure={
-                mobitelPendingTaskData.PoClosurePendingTasks &&
-                mobitelPendingTaskData.PoClosurePendingTasks.length
-              }
-            />
-          </Link>
-        </Grid>
-      )}
+      {access.map((item) => (
+        <React.Fragment key={item}>
+          {mobitelPendingTaskDataLoading ? (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <CircularProgress color="success" />
+            </Grid>
+          ) : mobitelPendingTaskDataError ? (
+            <h1>error...</h1>
+          ) : (
+            <Grid item xs={12} sm={6} md={2.4}>
+              <Link
+                underline="none"
+                component={RouterLink}
+                to={`/dashboard/DatabasesMobitelProjects/PendingMobitelTasks/${item}`}
+              >
+                {item === 'Installation' ? (
+                  <InstallationPendingTasks
+                    Installation={
+                      mobitelPendingTaskData.InstallationPendingTasks &&
+                      mobitelPendingTaskData.InstallationPendingTasks.length
+                    }
+                  />
+                ) : item === 'Commissioning' ? (
+                  <CommissioningPendingTasks
+                    Commission={
+                      mobitelPendingTaskData.CommissioningPendingTasks &&
+                      mobitelPendingTaskData.CommissioningPendingTasks.length
+                    }
+                  />
+                ) : item === 'Pat' ? (
+                  <PatPendingTasks
+                    Pat={
+                      mobitelPendingTaskData.PatPendingTasks &&
+                      mobitelPendingTaskData.PatPendingTasks.length
+                    }
+                  />
+                ) : item === 'Sar' ? (
+                  <SarPendingTasks
+                    Sar={
+                      mobitelPendingTaskData.SarPendingTasks &&
+                      mobitelPendingTaskData.SarPendingTasks.length
+                    }
+                  />
+                ) : item === 'OnAir' ? (
+                  <OnAirPendingTasks
+                    OnAir={
+                      mobitelPendingTaskData.OnAirPendingTasks &&
+                      mobitelPendingTaskData.OnAirPendingTasks.length
+                    }
+                  />
+                ) : item === 'MaterialReturn' ? (
+                  <MaterialReturnPendingTasks
+                    MaterialReturn={
+                      mobitelPendingTaskData.MaterialReturnPendingTasks &&
+                      mobitelPendingTaskData.MaterialReturnPendingTasks.length
+                    }
+                  />
+                ) : item === 'Pr' ? (
+                  <PrPendingTasks
+                    Pr={
+                      mobitelPendingTaskData.PrPendingTasks &&
+                      mobitelPendingTaskData.PrPendingTasks.length
+                    }
+                  />
+                ) : item === 'Po' ? (
+                  <PoPendingTasks
+                    Po={
+                      mobitelPendingTaskData.PoPendingTasks &&
+                      mobitelPendingTaskData.PoPendingTasks.length
+                    }
+                  />
+                ) : item === 'Invoice' ? (
+                  <InvoicePendingTasks
+                    Invoice={
+                      mobitelPendingTaskData.InvoicePendingTasks &&
+                      mobitelPendingTaskData.InvoicePendingTasks.lenght
+                    }
+                  />
+                ) : (
+                  <PoClosurePending
+                    PoClosure={
+                      mobitelPendingTaskData.PoClosurePending &&
+                      mobitelPendingTaskData.PoClosurePending.lenght
+                    }
+                  />
+                )}
+              </Link>
+            </Grid>
+          )}
+        </React.Fragment>
+      ))}
     </Grid>
   );
 }

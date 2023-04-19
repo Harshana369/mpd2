@@ -174,6 +174,7 @@ import SettingsMobitelProjectsSubContractor from './components/_dashboard/Settin
 import Material from './pages/Material';
 import MobitelSiteEngineersDayPlan from './pages/MobitelSiteEngineersDayPlan';
 import store from './Redux/store';
+import GivingAccessPendingTasks from './pages/GivingAccessPendingTasks';
 
 export default function Router() {
   const [userRole, setUserRole] = useState('Admin');
@@ -1361,6 +1362,11 @@ export default function Router() {
         {
           path: 'settings',
           element: userRole === 'Admin' ? <Settings /> : <Navigate to="/unauthorized" />
+        },
+        {
+          path: 'settings/Givingaccesstopendingtasks',
+          element:
+            userRole === 'Admin' ? <GivingAccessPendingTasks /> : <Navigate to="/unauthorized" />
         },
         {
           path: 'settings/VendorProjects',

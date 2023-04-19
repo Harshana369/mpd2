@@ -54,6 +54,25 @@ export default function Settings() {
             </Link>
           </Grid>
         </Grid>
+
+        <Grid item xs={12} sm={6} md={12}>
+          <Link
+            underline="none"
+            component={RouterLink}
+            to="/dashboard/settings/Givingaccesstopendingtasks"
+          >
+            <Accordion
+              sx={{
+                backgroundColor: '#011f40',
+                borderRadius: 0.2
+              }}
+            >
+              <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+                <Typography>Giving access to pending tasks</Typography>
+              </AccordionSummary>
+            </Accordion>
+          </Link>
+        </Grid>
       </Container>
     </Page>
   );

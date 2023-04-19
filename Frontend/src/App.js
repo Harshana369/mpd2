@@ -38,6 +38,7 @@ export default function App() {
         window.stop('/');
         localStorage.removeItem('auth');
         localStorage.removeItem('fullName');
+        localStorage.removeItem('adminLevel');
         window.stop();
         navigate('/login', { replace: true });
         setError('You are not authorized please login');

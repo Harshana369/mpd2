@@ -57,6 +57,7 @@ export default function LoginForm() {
       localStorage.clear();
       localStorage.setItem('auth', data.token);
       localStorage.setItem('fullName', fullName);
+      localStorage.setItem('adminLevel', data.user.adminLevel);
 
       // user data encryption and save in the localStorage
       const secret = 'AuH8e#?y!E87nyVh';
