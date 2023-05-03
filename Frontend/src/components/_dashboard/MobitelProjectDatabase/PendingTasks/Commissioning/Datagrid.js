@@ -20,12 +20,14 @@ import {
   GridCellValue
 } from '@mui/x-data-grid';
 import { createSvgIcon } from '@mui/material/utils';
-import { Box, CircularProgress, Stack } from '@mui/material';
-import clsx from 'clsx';
+import { Box, CircularProgress, Grid, Stack } from '@mui/material';
+
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useSelector } from 'react-redux';
+import { fetchMobitelPendingTaskData } from '../../../../../Redux/Action/mobitelAction';
+import { useDispatch } from 'react-redux';
 
 /* eslint-disable camelcase */
 
@@ -53,7 +55,15 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   const [state, setState] = React.useState([]);
   const [column, setColumn] = React.useState([]);
 
+  const dispatch = useDispatch();
+
   // ----------
+
+  const storedFullName = localStorage.getItem('fullName');
+
+  if (storedFullName === 'Admin Name') {
+    storedFullName = 'All Site Engineers';
+  }
 
   const mobitelPendingTaskDetails = useSelector((state) => state.mobitelPendingTaskData);
 
@@ -464,7 +474,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   };
 
   React.useEffect(() => {
-    fetchData();
+    dispatch(fetchMobitelPendingTaskData(storedFullName));
     getData();
   }, []);
 
@@ -508,7 +518,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
         >
           <DataGrid
             apiRef={apiRef}
-            rows={mobitelPendingTaskData.CommissioningPendingTasks}
+            rows={mobitelPendingTaskData.CommissioningPendingTasks || []}
             getRowId={(row) => row._id}
             columns={Columns}
             components={{ Toolbar: CustomToolbar }}

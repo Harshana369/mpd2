@@ -16,9 +16,8 @@ export default function LastUpdatesMobitel({ mobitelLastUpdates }) {
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
           {mobitelLastUpdates.map((posts, index) => (
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack direction="row" alignItems="center" spacing={2} key={index}>
               <Box
-                key={ImagesArray.index}
                 component="img"
                 src={`/static/Tower (${index + 1}).jpg`}
                 sx={{ width: 48, height: 48, borderRadius: 1.5 }}

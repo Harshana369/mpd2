@@ -17,9 +17,7 @@
 const mongoose = require("mongoose");
 
 const moderatorSchema = new mongoose.Schema({
-  moderator: [String],
-  editor: [String],
-  admin: [String],
+  name: [String],
 });
 
 const ModeratorData = mongoose.model("accessToPendingTask", moderatorSchema);

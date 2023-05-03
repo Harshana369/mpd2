@@ -1,6 +1,8 @@
 require("dotenv").config({ path: "./config.env" });
 const path = require("path");
 const express = require("express");
+const bodyParser = require("body-parser");
+
 const app = express();
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
@@ -11,6 +13,8 @@ dotenv.config();
 
 connectDB();
 
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(cors());
 app.use(express.json());
 

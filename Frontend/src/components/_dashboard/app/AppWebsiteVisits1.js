@@ -17,15 +17,12 @@ export default function AppWebsiteVisits1({ xAxisDaysLabel, completedSitesMobite
   const [alertContent1, setAlertContent1] = useState('');
   const [open1, setOpen1] = React.useState(false);
 
-  const weeklyProgressData = [];
-  weeklyProgressData.push({ name: 'Completed', type: 'column', data: completedSitesMobitel });
-
   // --------- Assigning Data To Graph ----------------------------------
 
   const xAxisData = xAxisDaysLabel;
 
-  const CHART_DATA = weeklyProgressData;
-  const CompletedSites = completedSitesMobitel;
+  const CHART_DATA = completedSitesMobitel;
+  const CompletedSites = xAxisData;
 
   const chartOptions = merge(BaseOptionChart5(), {
     stroke: { width: [3, 1] },

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+
 // routes
 import Router from './routes';
 // theme
@@ -13,40 +14,35 @@ import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 // ------------------------------------------------------------------------
 
 export default function App() {
-  const axiosInstance = axios.create({ baseURL: process.env.REACT_APP_API_URL });
-
+  const [isTokenExpired, setIsTokenExpired] = useState(false);
   const navigate = useNavigate();
 
-  const [error, setError] = useState('');
-  const [privateData, setPrivateData] = useState('');
-
-  useEffect((e) => {
-    const fetchPrivateDate = async () => {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('auth')}`
-        }
-      };
-
+  useEffect(() => {
+    console.log('Token Check');
+    const token = localStorage.getItem('auth');
+    console.log(token);
+    if (token) {
       try {
-        const { data } = await axiosInstance.get('/private', config);
-        console.log(data);
+        const decodedToken = jwtDecode(token);
 
-        setPrivateData(data.data);
+        if (decodedToken.exp < Date.now() / 1000) {
+          // Token has expired
+          setIsTokenExpired(true);
+          localStorage.removeItem('auth');
+          navigate('/login'); // Redirect user to login page
+        }
       } catch (error) {
-        window.stop('/');
+        console.error('Invalid Token:', error);
         localStorage.removeItem('auth');
-        localStorage.removeItem('fullName');
-        localStorage.removeItem('adminLevel');
-        window.stop();
-        navigate('/login', { replace: true });
-        setError('You are not authorized please login');
+        navigate('/login'); // Redirect user to login page
       }
-    };
+    }
 
-    fetchPrivateDate();
-  }, []);
+    // Cleanup function
+    return () => {
+      // Cancel any ongoing subscriptions or asynchronous tasks here
+    };
+  }, [navigate]);
 
   return (
     <ThemeConfig>

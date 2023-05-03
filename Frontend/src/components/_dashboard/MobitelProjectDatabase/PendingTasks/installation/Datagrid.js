@@ -474,7 +474,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
   }, [tablePass, dispatch]);
 
   React.useEffect(() => {
-    dispatch(fetchMobitelPendingTaskData(storedFullName));
+    // dispatch(fetchMobitelPendingTaskData(storedFullName));
     setTableReplace(false);
   }, [tableReplace]);
 

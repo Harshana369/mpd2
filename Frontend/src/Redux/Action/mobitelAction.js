@@ -110,37 +110,48 @@ export const fetchMobitelLastUpdatesData = (MobitelDropdownValue) => async (disp
   }
 };
 
-export const fetchMoitelTilesData = (MobitelDropdownValue) => async (dispatch) => {
-  try {
-    dispatch({ type: MOBITEL_TILES_DATA_REQUEST });
-    const { data } = await axiosInstance.get('/mobitelProjectsDatabases', {
-      params: { Project: MobitelDropdownValue }
-    });
-    dispatch({ type: MOBITEL_TILES_DATA_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: MOBITEL_TILES_DATA_FAIL,
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message
-    });
-  }
-};
+export const fetchMoitelTilesData =
+  (MobitelDropdownValue, siteEngineerName) => async (dispatch) => {
+    try {
+      dispatch({ type: MOBITEL_TILES_DATA_REQUEST });
+      const { data } = await axiosInstance.get('/mobitelProjectsDatabases', {
+        params: { Engineer: siteEngineerName, Project: MobitelDropdownValue }
+      });
 
-export const fetchMobitelColumnGraphData = (MobitelDropdownValue) => async (dispatch) => {
-  try {
-    dispatch({ type: MOBITEL_CHART_COLUMN_DATA_REQUEST });
-    const { data } = await axiosInstance.get('/mobitelProjectsDatabasesChartDataColumnChartData', {
-      params: { Project: MobitelDropdownValue }
-    });
-    dispatch({ type: MOBITEL_CHART_COLUMN_DATA_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: MOBITEL_CHART_COLUMN_DATA_FAIL,
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message
-    });
-  }
-};
+      dispatch({ type: MOBITEL_TILES_DATA_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: MOBITEL_TILES_DATA_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+      });
+    }
+  };
+
+export const fetchMobitelColumnGraphData =
+  (MobitelDropdownValue, siteEngineerName) => async (dispatch) => {
+    try {
+      dispatch({ type: MOBITEL_CHART_COLUMN_DATA_REQUEST });
+      const { data } = await axiosInstance.get(
+        '/mobitelProjectsDatabasesChartDataColumnChartData',
+        {
+          params: { Engineer: siteEngineerName, Project: MobitelDropdownValue }
+        }
+      );
+
+      dispatch({ type: MOBITEL_CHART_COLUMN_DATA_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: MOBITEL_CHART_COLUMN_DATA_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+      });
+    }
+  };
 
 export const fetchMobitelPendingTaskData = (MobitelDropdownValue) => async (dispatch) => {
   try {

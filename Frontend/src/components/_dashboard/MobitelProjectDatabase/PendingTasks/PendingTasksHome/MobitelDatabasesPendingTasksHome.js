@@ -22,7 +22,7 @@ export default function MobitelDatabasesPendingTasksHome() {
   const [SiteEngineerDropdownValue, setSiteEngineerDropdownValue] = useState('All Site Engineers');
 
   const getSiteEngineersNames = async () => {
-    const res = await axiosInstance.get(`/AllSiteEngineersForPendingTask`);
+    const res = await axiosInstance.get(`/AllSiteEngineersNames`);
     setSiteEngineerName(res.data.AllSiteEngineersNames);
   };
 
@@ -56,7 +56,7 @@ export default function MobitelDatabasesPendingTasksHome() {
           justifyContent="flex-end"
           sx={{ mb: 2 }}
         >
-          <FormControl sx={{ minWidth: 200 }}>
+          {/* <FormControl sx={{ minWidth: 200 }}>
             <InputLabel id="demo-simple-select-label">Site Engineers</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -71,7 +71,7 @@ export default function MobitelDatabasesPendingTasksHome() {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
         </Stack>
         <CardLists />
       </Container>

@@ -58,9 +58,27 @@ router.get("/mobitelProjectsDatabasesSiteData", async (req, res, next) => {
 //--------------------------------------------
 
 router.get("/mobitelProjectsDatabases", async (req, res, next) => {
-  const projectName = req.query.Project;
+  const { Project, Engineer } = req.query;
 
-  Posts.find().exec((err, posts) => {
+  let reqQuery = {};
+
+  if (Project === "All Projects" && Engineer === "All siteEngineers") {
+    // return all data related to all Site_Engineers, without filtering by project
+    reqQuery = {};
+  } else if (Project === "All Projects") {
+    // return data related to the specified Site_Engineer for all projects
+    reqQuery = { Site_Engineer: Engineer };
+  } else if (Engineer === "All siteEngineers") {
+    // return data related to the specified Site_Engineer for all projects
+    reqQuery = { Project: Project };
+  } else {
+    // return data related to the specified project and Site_Engineer
+    reqQuery = { Project, Site_Engineer: Engineer };
+  }
+
+  let queryStr = JSON.stringify(reqQuery);
+
+  Posts.find(JSON.parse(queryStr)).exec((err, posts) => {
     if (err) {
       return res.status(400).json({
         error: err,
@@ -69,18 +87,15 @@ router.get("/mobitelProjectsDatabases", async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      projectsScopeDataCount: getProjectsScopeDataCount(posts, projectName),
-      projectsHandOverDataCount: getProjectsHandOverDataCount(
-        posts,
-        projectName
-      ),
-      projectsPatDataCount: getProjectsPatDataCount(posts, projectName),
-      projectsOnAirDataCount: getProjectsOnAirDataCount(posts, projectName),
+      projectsScopeDataCount: getProjectsScopeDataCount(posts, Project),
+      projectsHandOverDataCount: getProjectsHandOverDataCount(posts, Project),
+      projectsPatDataCount: getProjectsPatDataCount(posts, Project),
+      projectsOnAirDataCount: getProjectsOnAirDataCount(posts, Project),
       //   HoldSitesDataforSquares: getHoldSitesData(posts),
-      projectScopeData: getProjectScopeData(posts, projectName),
-      projectHandOverData: getProjectsHandOverData(posts, projectName),
-      projectsPatData: getProjectsPatData(posts, projectName),
-      projectsOnAirData: getProjectsOnAirData(posts, projectName),
+      projectScopeData: getProjectScopeData(posts, Project),
+      projectHandOverData: getProjectsHandOverData(posts, Project),
+      projectsPatData: getProjectsPatData(posts, Project),
+      projectsOnAirData: getProjectsOnAirData(posts, Project),
     });
   });
 });
@@ -103,7 +118,6 @@ function getProjectsScopeDataCount(posts, projectName) {
     );
   }
 
-  //   console.log(ScopeDataCount);
   return ScopeDataCount;
 }
 
@@ -317,16 +331,26 @@ router.post("/mobitelProjectsDatabasesExcell/upload", (req, res) => {
 router.get(
   "/mobitelProjectsDatabasesChartDataColumnChartData",
   async (req, res, next) => {
-    let reqQuery = [];
-    if (req.query.Project === "All Projects") {
+    const { Project, Engineer } = req.query;
+
+    let reqQuery = {};
+
+    if (Project === "All Projects" && Engineer === "All siteEngineers") {
+      // return all data related to all Site_Engineers, without filtering by project
       reqQuery = {};
+    } else if (Project === "All Projects") {
+      // return data related to the specified Site_Engineer for all projects
+      reqQuery = { Site_Engineer: Engineer };
+    } else if (Engineer === "All siteEngineers") {
+      // return data related to the specified Site_Engineer for all projects
+      reqQuery = { Project: Project };
     } else {
-      reqQuery = { ...req.query };
+      // return data related to the specified project and Site_Engineer
+      reqQuery = { Project, Site_Engineer: Engineer };
     }
 
     let queryStr = JSON.stringify(reqQuery);
 
-    // console.log(queryStr);
     Posts.find(JSON.parse(queryStr)).exec((err, posts) => {
       if (err) {
         return res.status(400).json({
@@ -336,8 +360,8 @@ router.get(
 
       return res.status(200).json({
         success: true,
-        columnChartData: getchartData(posts), // Graph data of number of sites Mobilized in each month sending to front end Appwebsitevisits.
-        XaxisDataForTheGraphs: getXaxisData(), // x axis data labels array sending to the Column graghs front end.
+        columnChartData: getchartData(posts), // Graph data of number of sites Mobilized in each month sent to front end Appwebsitevisits.
+        XaxisDataForTheGraphs: getXaxisData(), // x axis data labels array sent to the Column graphs front end.
         ProjectCompletionForFrontEnd: getProjectCompletionData(posts), // Data for Front end Mobitel Projects Insights project Completion Donut Graph.
         weeklyProgressDataForFrontEnd: getWeeklyProgressData(posts), // Data for Front end Mobitel Projects Insights Weekly Progress Graph.
         SevenDaysOfWeek: getSevenDaysOfWeek(), // 7 Days of Week going to front end weekly progress column graph.
@@ -579,7 +603,7 @@ function getWeeklyProgressData(posts) {
   }
   lastWeekDates.reverse();
 
-  //console.log(lastWeekDates);
+  // console.log(lastWeekDates);
   // lastWeekDates = ['2022-01-10','2022-01-11','2022-01-12','2022-01-13','2022-01-14','2022-01-15','2022-01-16']
 
   for (var i = 0; i < 7; i++) {
@@ -588,10 +612,9 @@ function getWeeklyProgressData(posts) {
     ).length;
   }
   // ----------------------------------------------------------------------------------------------------------------------------------------------
-  //   console.log(onairData);
+  // console.log(onairData);
 
   let onAirArray = onairData;
-  // console.log(onAirArray);
 
   let weeklyProgressData = [];
   weeklyProgressData.push({
@@ -600,7 +623,7 @@ function getWeeklyProgressData(posts) {
     data: onAirArray,
   });
 
-  //console.log(weeklyProgressData);
+  // console.log(weeklyProgressData);
   return weeklyProgressData;
 }
 
@@ -615,10 +638,8 @@ function getSevenDaysOfWeek() {
   let start = today.getDay();
   if (start == 6) {
     return days;
-    console.log(days);
   } else {
     return days.slice(start).concat(days.slice(0, start));
-    //console.log(days.slice(start).concat(days.slice(0,start)));
   }
 }
 
@@ -627,17 +648,25 @@ function getSevenDaysOfWeek() {
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 router.get("/mobitelProjectsLastUpdates", async (req, res, next) => {
-  let reqQuery = [];
-  if (req.query.Project === "All Projects") {
+  const { Project, Engineer } = req.query;
+
+  let reqQuery = {};
+
+  if (Project === "All Projects" && Engineer === "All siteEngineers") {
+    // return all data related to all Site_Engineers, without filtering by project
     reqQuery = {};
+  } else if (Project === "All Projects") {
+    // return data related to the specified Site_Engineer for all projects
+    reqQuery = { Site_Engineer: Engineer };
+  } else if (Engineer === "All siteEngineers") {
+    // return data related to the specified Site_Engineer for all projects
+    reqQuery = { Project: Project };
   } else {
-    reqQuery = { ...req.query };
+    // return data related to the specified project and Site_Engineer
+    reqQuery = { Project, Site_Engineer: Engineer };
   }
 
-  // console.log(reqQuery);
-
   let queryStr = JSON.stringify(reqQuery);
-  // console.log(queryStr);
 
   Posts.find(JSON.parse(queryStr), {}, { sort: { updatedAt: -1 } })
     .limit(5)
@@ -653,6 +682,70 @@ router.get("/mobitelProjectsLastUpdates", async (req, res, next) => {
         existingPosts: posts,
       });
     });
+});
+
+router.put("/saveProjectOnlineData", async (req, res) => {
+  Posts.find().exec(async (err, posts) => {
+    const projectOnline = req.body.pOnline;
+    for (let i = 0; i < projectOnline.length; i++) {
+      const taskRef = projectOnline[i].Task_Ref;
+      const matchingObject = posts.find((obj) => obj.Task_Ref === taskRef);
+      if (matchingObject.Task_Ref === taskRef) {
+        // console.log("Editing new object");
+
+        // Update the matching object in the collection
+        matchingObject.Site_Id = projectOnline[i].siteId;
+        matchingObject.Site_Name = projectOnline[i].siteName;
+        matchingObject.Handover = projectOnline[i].handover;
+        matchingObject.Project = projectOnline[i].project;
+        matchingObject.Scope = projectOnline[i].scope;
+        matchingObject.Site_Engineer = projectOnline[i].siteEngineer;
+        matchingObject.Sub_Contractor = projectOnline[i].subContractor;
+        matchingObject.Task_Assigned = projectOnline[i].taskAssigned;
+        matchingObject.Task_Commenced = projectOnline[i].taskCommenced;
+        matchingObject.Installation_Completed =
+          projectOnline[i].installationCompleted;
+        matchingObject.Commission = projectOnline[i].commission;
+        matchingObject.PAT_Pass = projectOnline[i].PATPass;
+        matchingObject.SAR_Pass = projectOnline[i].SARPass;
+        matchingObject.On_air = projectOnline[i].onAir;
+        matchingObject.BOQ_Submit = projectOnline[i].BOQSubmit;
+        matchingObject.BOQ_Approve = projectOnline[i].BOQApprove;
+        matchingObject.PR_Raise = projectOnline[i].PRRaise;
+
+        // Save the updated object
+        await matchingObject.save();
+      } else {
+        // Create a new object in the collection
+
+        // console.log("Add new objects");
+        await Posts.create({
+          Task_Ref: taskRef,
+          Site_Id: projectOnline[i].siteId,
+          Site_Name: projectOnline[i].siteName,
+          Handover: projectOnline[i].handover,
+          Project: projectOnline[i].project,
+          Scope: projectOnline[i].scope,
+          Site_Engineer: projectOnline[i].siteEngineer,
+          Sub_Contractor: projectOnline[i].subContractor,
+          Task_Assigned: projectOnline[i].taskAssigned,
+          Task_Commenced: projectOnline[i].taskCommenced,
+          Installation_Completed: projectOnline[i].installationCompleted,
+          Commission: projectOnline[i].commission,
+          PAT_Pass: projectOnline[i].PATPass,
+          SAR_Pass: projectOnline[i].SARPass,
+          On_air: projectOnline[i].onAir,
+          BOQ_Submit: projectOnline[i].BOQSubmit,
+          BOQ_Approve: projectOnline[i].BOQApprove,
+          PR_Raise: projectOnline[i].PRRaise,
+        });
+      }
+    }
+
+    return res.status(200).json({
+      success: "successfully added",
+    });
+  });
 });
 
 module.exports = router;

@@ -179,21 +179,21 @@ import GivingAccessPendingTasks from './pages/GivingAccessPendingTasks';
 export default function Router() {
   const [userRole, setUserRole] = useState('Admin');
 
-  useEffect(() => {
-    const secret = 'AuH8e#?y!E87nyVh';
-    const encryptedData = localStorage.getItem('encInf');
+  // useEffect(() => {
+  //   const secret = 'AuH8e#?y!E87nyVh';
+  //   const encryptedData = localStorage.getItem('encInf');
 
-    if (encryptedData && typeof encryptedData !== 'undefined') {
-      const decData = CryptoJS.AES.decrypt(encryptedData, secret);
-      if (decData) {
-        const decInfo = decData.toString(CryptoJS.enc.Utf8);
-        if (decData) {
-          const jsonDecInfo = JSON.parse(decInfo);
-          setUserRole(jsonDecInfo.adminLevel);
-        }
-      }
-    }
-  }, []);
+  //   if (encryptedData && typeof encryptedData !== 'undefined') {
+  //     const decData = CryptoJS.AES.decrypt(encryptedData, secret);
+  //     if (decData) {
+  //       const decInfo = decData.toString(CryptoJS.enc.Utf8);
+  //       if (decData) {
+  //         const jsonDecInfo = JSON.parse(decInfo);
+  //         setUserRole(jsonDecInfo.adminLevel);
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   return useRoutes([
     { path: '/', element: <Login />, children: [{ path: 'login', element: <Login /> }] },

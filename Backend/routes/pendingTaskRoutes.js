@@ -396,7 +396,7 @@ router.route("/updatePoClosure").put(async (req, res) => {
 
 //------------------------------------------ Get All SiteEngineers For PendingTask------------------------------------------------
 
-router.get("/AllSiteEngineersForPendingTask", async (req, res, next) => {
+router.get("/AllSiteEngineersNames", async (req, res, next) => {
   Users.find().exec((err, users) => {
     if (err) {
       return res.status(400).json({

@@ -99,6 +99,45 @@ export default function TransferList() {
     console.log(response);
   };
 
+  const getDataFromProjectOnline = async () => {
+    const res = await axios.post('https://projectonline.mobitel.lk/projonline/login', {
+      username: 'BTS_Project_API',
+      password: 'BTS_Project_API'
+    });
+
+    temp(res.data.accessToken);
+  };
+
+  const temp = async (accessToken) => {
+    const TasksData = await axios.get('https://projectonline.mobitel.lk/projonline/getmpdsystem', {
+      headers: {
+        token: `Bearer ${accessToken}`
+      }
+    });
+
+    sendBackend(TasksData.data);
+  };
+
+  const sendBackend = async (projectOnline) => {
+    // const A = [{ name: 'Harshana' }, { name: 'Manuja' }];
+    const axiosInstance = await axios.create({ baseURL: process.env.REACT_APP_API_URL });
+
+    // console.log(projectOnline);
+
+    const config = {
+      pOnline: projectOnline,
+      headers: {
+        'Content-Type': 'application/json' // set content type to JSON
+      }
+    };
+
+    console.log('Click ok ');
+
+    const response = await axiosInstance.put('/saveProjectOnlineData', config);
+
+    alert(response.data.success);
+  };
+
   React.useEffect(() => {
     setChosen(right);
   }, [right]);
@@ -202,6 +241,10 @@ export default function TransferList() {
 
         <Button onClick={updatePrivilegeLevel} variant="contained" sx={{ mt: 54 }}>
           Save
+        </Button>
+
+        <Button onClick={getDataFromProjectOnline} variant="contained" sx={{ mt: 54 }}>
+          Get Deta From ProjectOnline
         </Button>
       </Grid>
     </>
