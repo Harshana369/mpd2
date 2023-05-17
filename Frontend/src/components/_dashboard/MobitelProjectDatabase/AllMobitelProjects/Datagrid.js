@@ -53,7 +53,7 @@ export default function Datagrid({ DropDownValue, ProjectNameDropdownValue }) {
 
   const fetchData = async () => {
     const res = await axiosInstance.get(`/mobitelProjectsDatabasesSiteData`);
-    // console.log(res.data);
+    console.log(res.data);
     setState(res.data.success);
     // setColumn(res.data.success[0].headerproperties);
   };

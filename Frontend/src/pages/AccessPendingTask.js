@@ -115,11 +115,12 @@ export default function TransferList() {
       }
     });
 
+    console.log(TasksData.data);
+
     sendBackend(TasksData.data);
   };
 
   const sendBackend = async (projectOnline) => {
-    // const A = [{ name: 'Harshana' }, { name: 'Manuja' }];
     const axiosInstance = await axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
     // console.log(projectOnline);
@@ -134,6 +135,7 @@ export default function TransferList() {
     console.log('Click ok ');
 
     const response = await axiosInstance.put('/saveProjectOnlineData', config);
+    console.log(response);
 
     alert(response.data.success);
   };

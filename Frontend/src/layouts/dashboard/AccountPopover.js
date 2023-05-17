@@ -66,8 +66,9 @@ export default function AccountPopover() {
 
   const logoutHandler = () => {
     localStorage.removeItem('auth');
-    localStorage.removeItem('fullName');
-    localStorage.removeItem('adminLevel');
+    localStorage.removeItem('user');
+    localStorage.removeItem('visbility');
+
     navigate('/login', { replace: true });
   };
 

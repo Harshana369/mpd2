@@ -51,6 +51,9 @@ export default function LoginForm() {
       );
 
       localStorage.setItem('auth', data.accessToken);
+      localStorage.setItem('user', data.name);
+      localStorage.setItem('visbility', data.visbilityBasedOn);
+
       console.log(data);
 
       navigate('/dashboard/home');

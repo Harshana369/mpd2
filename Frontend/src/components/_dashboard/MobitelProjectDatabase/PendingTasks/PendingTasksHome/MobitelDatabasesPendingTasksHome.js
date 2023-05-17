@@ -23,12 +23,15 @@ export default function MobitelDatabasesPendingTasksHome() {
 
   const getSiteEngineersNames = async () => {
     const res = await axiosInstance.get(`/AllSiteEngineersNames`);
-    setSiteEngineerName(res.data.AllSiteEngineersNames);
+    setSiteEngineerName(res.data.siteEngineersNamesArray);
   };
 
   const handleSiteEngineersDropdownValue = (event) => {
     setSiteEngineerDropdownValue(event.target.value);
   };
+
+  const temp = localStorage.getItem('visbility');
+  console.log(temp);
 
   const AllSiteEngineersNamesArray = siteEngineersName.concat({
     value: 'All Site Engineers',
@@ -49,30 +52,34 @@ export default function MobitelDatabasesPendingTasksHome() {
         <Typography variant="h6" gutterBottom>
           Mobitel Projects Pending Tasks
         </Typography>
-        <Stack
-          direction="row"
-          flexWrap="wrap-reverse"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ mb: 2 }}
-        >
-          {/* <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel id="demo-simple-select-label">Site Engineers</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={SiteEngineerDropdownValue}
-              label="Age"
-              onChange={handleSiteEngineersDropdownValue}
-            >
-              {AllSiteEngineersNamesArray.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
-        </Stack>
+
+        {temp === 'Admin' ? (
+          <Stack
+            direction="row"
+            flexWrap="wrap-reverse"
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{ mb: 2 }}
+          >
+            <FormControl sx={{ minWidth: 200 }}>
+              <InputLabel id="demo-simple-select-label">Site Engineers</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={SiteEngineerDropdownValue}
+                label="Age"
+                onChange={handleSiteEngineersDropdownValue}
+              >
+                {AllSiteEngineersNamesArray.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Stack>
+        ) : null}
+
         <CardLists />
       </Container>
     </Page>

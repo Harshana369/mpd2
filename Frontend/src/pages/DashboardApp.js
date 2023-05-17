@@ -62,7 +62,7 @@ export default function DashboardApp() {
   // get all site engineers names
   const getSiteEngineersNames = async () => {
     const res = await axiosInstance.get(`/AllSiteEngineersNames`);
-    setSiteEngineersName(res.data.AllSiteEngineersNames);
+    setSiteEngineersName(res.data.siteEngineersNamesArray);
   };
 
   const mobitelTilesDetails = useSelector((state) => state.mobileTilesData);

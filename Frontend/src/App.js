@@ -29,11 +29,17 @@ export default function App() {
           // Token has expired
           setIsTokenExpired(true);
           localStorage.removeItem('auth');
+          localStorage.removeItem('user');
+          localStorage.removeItem('visbility');
+
           navigate('/login'); // Redirect user to login page
         }
       } catch (error) {
         console.error('Invalid Token:', error);
         localStorage.removeItem('auth');
+        localStorage.removeItem('user');
+        localStorage.removeItem('visbility');
+
         navigate('/login'); // Redirect user to login page
       }
     }
