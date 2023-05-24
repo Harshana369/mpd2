@@ -1,9 +1,12 @@
 import { Icon } from '@iconify/react';
-import { useRef, useState, useEffect } from 'react';
+
+import { useRef, useState, useEffect, useContext } from 'react';
+import { useDispatch } from 'react-redux';
+
+// import { useDispatch } from 'react-redux';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import CryptoJS from 'react-native-crypto-js';
 // material
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
@@ -27,35 +30,21 @@ const MENU_OPTIONS = [
 // ---------------------------------------------------------------------
 export default function AccountPopover() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [fullScreenMode, setfullScreenMode] = useState('off');
-
   const [jsonDecInfo, setjsonDecInfo] = useState('');
 
-  const getUserData = () => {
-    const secret = 'AuH8e#?y!E87nyVh';
-    const encryptedData = localStorage.getItem('encInf');
-
-    if (encryptedData && typeof encryptedData !== 'undefined') {
-      const decData = CryptoJS.AES.decrypt(encryptedData, secret);
-      if (decData) {
-        const decInfo = decData.toString(CryptoJS.enc.Utf8);
-        if (decData) {
-          setjsonDecInfo(JSON.parse(decInfo));
-        }
-      }
-    }
-  };
-
   useEffect(() => {
-    getUserData();
+    // getUserData();
     fetchFullScreenStatus();
   }, []);
 
-  const userName = jsonDecInfo.username;
+  const userName = localStorage.getItem('name');
   const userLastName = jsonDecInfo.lastName;
-  const userEmail = jsonDecInfo.email;
+  const userEmail = localStorage.getItem('email');
 
   const handleOpen = () => {
     setOpen(true);
@@ -65,11 +54,12 @@ export default function AccountPopover() {
   };
 
   const logoutHandler = () => {
-    localStorage.removeItem('auth');
-    localStorage.removeItem('user');
-    localStorage.removeItem('visbility');
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('accessprivilege');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
 
-    navigate('/login', { replace: true });
+    navigate('/login');
   };
 
   const FullScreenHandler = () => {
@@ -121,7 +111,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" sx={{ color: 'white' }} noWrap>
-            {userName} {userLastName}
+            {userName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'white' }} noWrap>
             {userEmail}

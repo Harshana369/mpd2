@@ -50,7 +50,7 @@ export default function AppBugReports1({ handoverData }) {
 
   const handleClickOpen = () => {
     const newWindow = window.open(
-      'http://35.78.68.113:80/mpd/DatabasesMobitelProjects/AllMobitelHandoverData',
+      'https://projectonline.mobitel.lk/mpd/DatabasesMobitelProjects/AllMobitelHandoverData',
       'Scope Details',
       'width=1000px,height=400px'
     );

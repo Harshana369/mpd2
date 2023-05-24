@@ -31,7 +31,6 @@ export default function MobitelDatabasesPendingTasksHome() {
   };
 
   const temp = localStorage.getItem('visbility');
-  console.log(temp);
 
   const AllSiteEngineersNamesArray = siteEngineersName.concat({
     value: 'All Site Engineers',

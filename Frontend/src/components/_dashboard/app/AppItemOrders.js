@@ -49,7 +49,7 @@ export default function AppItemOrders({ patData }) {
 
   const handleClickOpen = () => {
     const newWindow = window.open(
-      'http://35.78.68.113:80/mpd/DatabasesMobitelProjects/AllMobitelPatPassData',
+      'https://projectonline.mobitel.lk/mpd/DatabasesMobitelProjects/AllMobitelPatPassData',
       'Scope Details',
       'width=1000px,height=400px'
     );

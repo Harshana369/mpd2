@@ -43,7 +43,7 @@ export default function AppNewUsers({ onAirData }) {
 
   const handleClickOpen = () => {
     const newWindow = window.open(
-      'http://35.78.68.113:80/mpd/DatabasesMobitelProjects/AllMobitelOnAirData',
+      'https://projectonline.mobitel.lk/mpd/DatabasesMobitelProjects/AllMobitelOnAirData',
       'Scope Details',
       'width=1000px,height=400px'
     );

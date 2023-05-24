@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import axios from 'axios';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, json, useLocation, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -23,11 +25,19 @@ import {
   Grid,
   Alert
 } from '@mui/material';
+import { login } from '../../../Redux/Action/userAction';
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
+  /* eslint-disable */
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [username, setUserName] = useState('');
@@ -37,29 +47,35 @@ export default function LoginForm() {
   const loginHandler = async (e) => {
     e.preventDefault();
 
+    // dispatch(login(username, password));
+    // navigate('/dashboard/app');
+
     const config = {
       header: {
         'Content-Type': 'application/json'
       }
     };
-
     try {
-      const { data } = await axios.post(
+      const response = await axios.post(
         'https://projectonline.mobitel.lk/projonline/login',
         { username, password },
         config
       );
 
-      localStorage.setItem('auth', data.accessToken);
-      localStorage.setItem('user', data.name);
-      localStorage.setItem('visbility', data.visbilityBasedOn);
+      console.log(response.data);
+      localStorage.setItem('userToken', JSON.stringify(response.data.accessToken));
+      localStorage.setItem('accessprivilege', response.data.visbilityBasedOn);
+      localStorage.setItem('name', response.data.name);
+      localStorage.setItem('email', response.data.email);
 
-      console.log(data);
-
-      navigate('/dashboard/home');
-    } catch (error) {
-      setError(error.response.data.error);
-      console.log(error.response.data.error);
+      if (response.data.accessToken) {
+        navigate('/dashboard/home');
+      } else {
+        console.log(response.data);
+        setError(response.data);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -76,10 +92,10 @@ export default function LoginForm() {
       password: '',
       remember: true
     },
-    validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/dashboard');
-    }
+    validationSchema: LoginSchema
+    // onSubmit: () => {
+    //   navigate('/dashboard');
+    // }
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
@@ -91,7 +107,7 @@ export default function LoginForm() {
   return (
     <>
       <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate>
+        <Form autoComplete="off" noValidate onSubmit={loginHandler}>
           <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
             {error && (
               <Grid item xs={12} sm={6} md={12}>

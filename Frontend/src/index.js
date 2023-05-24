@@ -1,16 +1,18 @@
 // scroll bar
 import 'simplebar/src/simplebar.css';
 
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// import { StoreProvider } from './Store';
 import store from './Redux/store';
+import * as serviceWorker from './serviceWorker'; // Add this line
+import reportWebVitals from './reportWebVitals'; // Add this line
 
-//
 import App from './App';
-import * as serviceWorker from './serviceWorker';
-import reportWebVitals from './reportWebVitals';
+// import { AuthProvider } from './context/AuthProvider';
 
 // ----------------------------------------------------------------------
 

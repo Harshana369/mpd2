@@ -49,7 +49,7 @@ export default function AppWeeklySales({ scopeData }) {
 
   const handleClickOpen = () => {
     const newWindow = window.open(
-      `http://35.78.68.113:80/mpd/DatabasesMobitelProjects/AllMobitelScopeData`,
+      `https://projectonline.mobitel.lk/mpd/DatabasesMobitelProjects/AllMobitelScopeData`,
       'Scope Details',
       'width=1000px,height=400px'
     );

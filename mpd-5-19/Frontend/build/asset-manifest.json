@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.js": "/mpd/static/js/main.0e7c9b53.chunk.js",
+    "main.js.map": "/mpd/static/js/main.0e7c9b53.chunk.js.map",
+    "runtime-main.js": "/mpd/static/js/runtime-main.096d09b9.js",
+    "runtime-main.js.map": "/mpd/static/js/runtime-main.096d09b9.js.map",
+    "static/css/2.598ea7c3.chunk.css": "/mpd/static/css/2.598ea7c3.chunk.css",
+    "static/js/2.ff622e50.chunk.js": "/mpd/static/js/2.ff622e50.chunk.js",
+    "static/js/2.ff622e50.chunk.js.map": "/mpd/static/js/2.ff622e50.chunk.js.map",
+    "static/js/3.f6259b14.chunk.js": "/mpd/static/js/3.f6259b14.chunk.js",
+    "static/js/3.f6259b14.chunk.js.map": "/mpd/static/js/3.f6259b14.chunk.js.map",
+    "static/js/4.e072af82.chunk.js": "/mpd/static/js/4.e072af82.chunk.js",
+    "static/js/4.e072af82.chunk.js.map": "/mpd/static/js/4.e072af82.chunk.js.map",
+    "static/js/5.47fccc18.chunk.js": "/mpd/static/js/5.47fccc18.chunk.js",
+    "static/js/5.47fccc18.chunk.js.map": "/mpd/static/js/5.47fccc18.chunk.js.map",
+    "static/js/6.c9c5d18c.chunk.js": "/mpd/static/js/6.c9c5d18c.chunk.js",
+    "static/js/6.c9c5d18c.chunk.js.map": "/mpd/static/js/6.c9c5d18c.chunk.js.map",
+    "index.html": "/mpd/index.html",
+    "static/css/2.598ea7c3.chunk.css.map": "/mpd/static/css/2.598ea7c3.chunk.css.map",
+    "static/js/2.ff622e50.chunk.js.LICENSE.txt": "/mpd/static/js/2.ff622e50.chunk.js.LICENSE.txt",
+    "static/js/3.f6259b14.chunk.js.LICENSE.txt": "/mpd/static/js/3.f6259b14.chunk.js.LICENSE.txt",
+    "static/js/4.e072af82.chunk.js.LICENSE.txt": "/mpd/static/js/4.e072af82.chunk.js.LICENSE.txt",
+    "static/js/5.47fccc18.chunk.js.LICENSE.txt": "/mpd/static/js/5.47fccc18.chunk.js.LICENSE.txt",
+    "static/media/SampleExcellTemplate.e7fd9568.xlsx": "/mpd/static/media/SampleExcellTemplate.e7fd9568.xlsx"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.096d09b9.js",
+    "static/css/2.598ea7c3.chunk.css",
+    "static/js/2.ff622e50.chunk.js",
+    "static/js/main.0e7c9b53.chunk.js"
+  ]
+}

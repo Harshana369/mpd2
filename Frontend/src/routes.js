@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 import { useState, useEffect } from 'react';
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, Route, Routes, useRoutes } from 'react-router-dom';
 import CryptoJS from 'react-native-crypto-js';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -175,1349 +177,1354 @@ import Material from './pages/Material';
 import MobitelSiteEngineersDayPlan from './pages/MobitelSiteEngineersDayPlan';
 import store from './Redux/store';
 import GivingAccessPendingTasks from './pages/GivingAccessPendingTasks';
+import PrivateRoute from './PrivateRoute';
+import Layout from './components/Layour';
+import RequireAuth from '../src/components/RequireAuth';
+import { userRoles } from '../src/components/routing/Constants';
 
 export default function Router() {
-  const [userRole, setUserRole] = useState('Admin');
+  /* eslint-disable */
 
-  // useEffect(() => {
-  //   const secret = 'AuH8e#?y!E87nyVh';
-  //   const encryptedData = localStorage.getItem('encInf');
+  //   return (
+  //     <Routes>
+  //       <Route path="/" element={<Layout />}>
+  //         <Route path="login" element={<Login />} />
 
-  //   if (encryptedData && typeof encryptedData !== 'undefined') {
-  //     const decData = CryptoJS.AES.decrypt(encryptedData, secret);
-  //     if (decData) {
-  //       const decInfo = decData.toString(CryptoJS.enc.Utf8);
-  //       if (decData) {
-  //         const jsonDecInfo = JSON.parse(decInfo);
-  //         setUserRole(jsonDecInfo.adminLevel);
-  //       }
-  //     }
-  //   }
-  // }, []);
+  //         <Route element={<RequireAuth />}>
+  //           <Route path="/dashboard" element={<DashboardApp />} />
+  //         </Route>
+  //       </Route>
+  //     </Routes>
+  //   );
+  // }
 
   return useRoutes([
-    { path: '/', element: <Login />, children: [{ path: 'login', element: <Login /> }] },
     {
       path: '/dashboard',
-      element: <DashboardLayout />,
+      element: (
+        <RequireAuth expectedRoles={[userRoles.admin || userRoles.project_Coor]}>
+          <DashboardLayout />
+        </RequireAuth>
+      ),
       children: [
-        { element: <Navigate to="/dashboard/app" replace /> },
-
-        // Admin mod
-        {
-          path: 'app',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DashboardApp />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'databases',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <Databases />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-
-        {
-          path: 'Material',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <Material />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-
-        {
-          path: 'MobitelSiteEngineersDayPlan',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <MobitelSiteEngineersDayPlan />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-
-        // Admin mod vendor
-        {
-          path: 'VendorProjectsOverview',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsOverview />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsOverviewAll',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <AllVendorProjectsOverview />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsOverviewHuawei',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <VendorProjectsOverviewHuawei />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsOverviewZTE',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsOverviewZTE />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsOverview/EditDetails/:id',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <EditDetailsVOT />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsInsights',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsInsightsHome />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsInsightsAll',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <VendorProjectsInsights />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsInsightsHuawei',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <HuaweiProjectsInsights />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsInsightsZTE',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <ZTEProjectsInsights />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsMilestones',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsMilestones />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsMilestonesAll',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <VendorProjectsMilestonesAll />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsMilestonesHuawei',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <VendorProjectsMilestonesHuawei />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'VendorProjectsMilestonesZTE',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsMilestonesZTE />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsDatabase />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <VendorProjectsDatabaseAll />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/ViewOnly',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'View Only' ? (
-              <VendorProjectsDatabaseAllProjectsViewOnly />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Home',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsAllVendorPendingTasks />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Handover',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsHODetails />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/WorkAllocation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsAssign />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/TeamAllocation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsTeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Dependencies',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/PRPOProgress',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsPRPO />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Logistics',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsLogistics />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Implementation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Acceptance',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsAll/PendingTasks/Payment',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <DatabasesVendorProjectsPendingVendorProjectsPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Home',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsHuaweiPendingTasks />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Handover',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsHODetails />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/WorkAllocation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsAssign />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/TeamAllocation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsTeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Dependencies',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/PRPOProgress',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsPRPO />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Logistics',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsLogistics />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Implementation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Acceptance',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei/PendingTasks/Payment',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <DatabasesVendorProjectsPendingHuaweiProjectsPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Home',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsZTEPendingTasks />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Handover',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsHODetails />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/WorkAllocation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsAssign />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/TeamAllocation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsTeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Dependencies',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/PRPOProgress',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsPRPO />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Logistics',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsLogistics />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Implementation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Acceptance',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE/PendingTasks/Payment',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <DatabasesVendorProjectsPendingZTEProjectsPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsHuawei',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <VendorProjectsDatabaseHuawei />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjectsZTE',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsDatabaseZTE />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AddNew',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <AddNewVendorProject />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AddNew/Huawei',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <AddNewHuaweiVendorProject />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AddNew/ZTE',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <AddNewZTEVendorProject />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesUploadProjectFiles',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Editor' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <DatabasesFileUpload />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesUploadProjectFiles/VendorProjects',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsDatabasesFileUpload />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesUploadProjectFiles/VendorProjects/ExcelEdit',
-          element:
-            userRole === 'Admin' ||
-            userRole === 'Moderator' ||
-            userRole === 'Vendor - Huawei' ||
-            userRole === 'Vendor - ZTE' ? (
-              <VendorProjectsDatabasesExcelEdit />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllProjects/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor' ? (
-              <EditAllVendorProjectsDatabase />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllHandover/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditProjectHODetails />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllWorkAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditProjectAssign />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllTeamAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditTeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllDependencies/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditProjectDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllPRPOProgress/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditPRPOProgress />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllLogistics/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditProjectLogistics />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllImplementation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllAcceptance/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditProjectAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/AllPayment/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' ? (
-              <EditProjectPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/HuaweiProjects/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiVendorProjectsDatabase />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/Handover/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiProjectHODetails />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/WorkAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiProjectAssign />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/TeamAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiTeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/Dependencies/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiProjectDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/PRPOProgress/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiPRPOProgress />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/Logistics/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiProjectLogistics />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/Implementation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/Acceptance/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiProjectAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/Huawei/Payment/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
-              <EditHuaweiProjectPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTEProjects/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEVendorProjectsDatabase />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Handover/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEProjectHODetails />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Assign/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEProjectAssign />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/TeamAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTETeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Dependencies/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEProjectDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/PRPOProgress/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEPRPOProgress />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Logistics/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEProjectLogistics />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Implementation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Acceptance/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEProjectAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesVendorProjects/ZTE/Payment/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
-              <EditZTEProjectPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        // Admin mod
-        {
-          path: 'MobitelProjectsOverview',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsOverview />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'MobitelProjectsOverview/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditDetailsMOT />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'MobitelProjectsInsights',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsInsights />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'MobitelProjectsMilestones',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsMilestones />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'MobitelProjectsFinance',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsFinance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'MobitelProjects/SubProjects',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelSubProjects />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'MobitelProjects/SiteEngineers',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsSiteEngineers />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        // Admin mod editor
-        {
-          path: 'DatabasesMobitelProjects',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsDatabase />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/AllMobitelProjects',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsAllMobitelProjects />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjects />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Installation',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsInstallation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Commissioning',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsCommissioning />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Pat',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsPat />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Sar',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsSar />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/OnAir',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsOnAir />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/MaterialReturn',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsMaterialReturn />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Pr',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsPr />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Po',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsPo />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/Invoice',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsInvoice />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-
-        {
-          path: 'DatabasesMobitelProjects/PendingMobitelTasks/PoClosure',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <DatabasesMobitelProjectsPendingMobitelProjectsPoClosure />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-
-        {
-          path: 'DatabasesMobitelProjects/AddNew',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <AddNewMobitelProject />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProject />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Handover/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectHandover />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/WorkAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectWorkAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/TeamAllocation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectTeamAllocation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Dependencies/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectDependencies />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/PRPOProgress/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectPRPOProgress />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Logistic/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectLogistic />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Implementation/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectImplementation />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Acceptance/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectAcceptance />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesMobitelProjects/Payment/Edit/:id',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <EditMobitelProjectPayment />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        // {
-        //   path: 'DatabasesMobitelProjects/AllMobitelProjects/ViewOnly',
-        //   element:
-        //     userRole === 'Admin' ||
-        //     userRole === 'Moderator' ||
-        //     userRole === 'Editor' ||
-        //     userRole === 'View Only' ? (
-        //       <DatabasesMobitelProjectsAllMobit elProjectsViewOnly />
-        //     ) : (
-        //       <Navigate to="/unauthorized" />
-        //     )
-        // },
-        {
-          path: 'DatabasesUploadProjectFiles/MobitelProjects',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsDatabasesFileUpload />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'DatabasesUploadProjectFiles/MobitelProjects/ExcelEdit',
-          element:
-            userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-              <MobitelProjectsDatabasesExcelEdit />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
+        { element: <Navigate to="/dashboard/home" /> },
         { path: 'home', element: <Home /> },
-        { path: 'tasks', element: <Tasks /> },
-        { path: 'userProfile', element: <UserProfile /> },
-        { path: 'TestDb1', element: <TestDb1 /> },
-        { path: 'TestDb1/addpost', element: <TestDb1CreatePost /> },
-        { path: 'TestDb1/post/:id', element: <TestDb1ViewPost /> },
-        { path: 'other', element: <Other /> },
-        { path: 'addnew', element: <Addnew /> },
-        { path: 'user', element: <User /> },
-        { path: 'blog', element: <Blog /> },
-        { path: 'TasksTestDatagrid', element: <TestDatagrid /> },
-        // Admin
-        {
-          path: 'Users/registerUser',
-          element: userRole === 'Admin' ? <RegisterUsers /> : <Navigate to="/unauthorized" />
-        },
-        {
-          path: 'Users/userList',
-          element: userRole === 'Admin' ? <UserList /> : <Navigate to="/unauthorized" />
-        },
+        { path: 'app', element: <DashboardApp /> },
         {
           path: 'settings',
-          element: userRole === 'Admin' ? <Settings /> : <Navigate to="/unauthorized" />
-        },
-        {
-          path: 'settings/Givingaccesstopendingtasks',
-          element:
-            userRole === 'Admin' ? <GivingAccessPendingTasks /> : <Navigate to="/unauthorized" />
-        },
-        {
-          path: 'settings/VendorProjects',
-          element:
-            userRole === 'Admin' ? <SettingsVendorProjectsHome /> : <Navigate to="/unauthorized" />
-        },
-        {
-          path: 'settings/MobitelProjects',
-          element:
-            userRole === 'Admin' ? <SettingsMobitelProjectsHome /> : <Navigate to="/unauthorized" />
-        },
-        {
-          path: 'settings/MobitelProjects/SiteEngineers',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsSiteEngineers />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/SpecialTag',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsSpecialTag />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/Dependency',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsDependency />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/SiteStatus',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsSiteStatus />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/Responsible',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsResponsible />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/Scope',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsScope />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/NewRAT',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsNewRAT />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
-        },
-        {
-          path: 'settings/MobitelProjects/SubCon',
-          element:
-            userRole === 'Admin' ? (
-              <SettingsMobitelProjectsSubContractor />
-            ) : (
-              <Navigate to="/unauthorized" />
-            )
+          element: (
+            <RequireAuth expectedRoles={[userRoles.admin]}>
+              <Settings />
+            </RequireAuth>
+          ),
+          children: [
+            {
+              path: 'Givingaccesstopendingtasks',
+              element: <GivingAccessPendingTasks />
+            }
+          ]
         }
+
+        // { path: 'user', element: <UserPage /> },
+        // { path: 'products', element: <ProductsPage /> },
+        // { path: 'blog', element: <BlogPage /> }
       ]
     },
     {
-      path: '/dashboard',
-      element: <DashboardLayout />,
-      children: [
-        { element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'user', element: <User /> },
-        { path: 'product category', element: <Tasks /> }
-      ]
+      path: 'login',
+      element: <Login />
     },
-    {
-      path: '/',
-      element: <LogoOnlyLayout />,
-      children: [
-        { path: 'login', element: <Login /> },
-        { path: 'register', element: <Register /> },
-        { path: '404', element: <NotFound /> },
-        { path: 'unauthorized', element: <Unauthorized /> },
-        { path: '/', element: <Navigate to="/dashboard" /> },
-        { path: '*', element: <Navigate to="/404" /> }
-      ]
-    },
-    {
-      path: 'DatabasesMobitelProjects/AllMobitelScopeData',
-      element:
-        userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-          <DatabasesMobitelProjectsAllMobitelScopeData />
-        ) : (
-          <Navigate to="/unauthorized" />
-        )
-    },
-    {
-      path: 'DatabasesMobitelProjects/AllMobitelHandoverData',
-      element:
-        userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-          <DatabasesMobitelProjectsAllMobitelHandoverData />
-        ) : (
-          <Navigate to="/unauthorized" />
-        )
-    },
-    {
-      path: 'DatabasesMobitelProjects/AllMobitelPatPassData',
-      element:
-        userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-          <DatabasesMobitelProjectsAllMobitelPatPassData />
-        ) : (
-          <Navigate to="/unauthorized" />
-        )
-    },
-    {
-      path: 'DatabasesMobitelProjects/AllMobitelOnAirData',
-      element:
-        userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-          <DatabasesMobitelProjectsAllMobitelOnAirData />
-        ) : (
-          <Navigate to="/unauthorized" />
-        )
-    },
-    {
-      path: 'DatabasesMobitelProjects/AllMobitelHoldData',
-      element:
-        userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
-          <DatabasesMobitelProjectsAllMobitelHoldData />
-        ) : (
-          <Navigate to="/unauthorized" />
-        )
-    },
-    { path: '*', element: <Navigate to="/404" replace /> }
+    { path: 'unauthorized', element: <Unauthorized /> }
   ]);
 }
+// {
+//         path: 'MobitelSiteEngineersDayPlan',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <MobitelSiteEngineersDayPlan />
+//           </PrivateRoute>
+//         )
+//       },
+//       // Admin mod vendor
+//       {
+//         path: 'VendorProjectsOverview',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator', 'Vendor - Huawei', 'Vendor - ZTE']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <VendorProjectsOverview />
+//           </PrivateRoute>
+//         )
+//       },
+//       {
+//         path: 'VendorProjectsOverviewAll',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <AllVendorProjectsOverview />
+//           </PrivateRoute>
+//         )
+//       },
+//       {
+//         path: 'VendorProjectsOverviewHuawei',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator', 'Vendor - Huawei']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <VendorProjectsOverviewHuawei />
+//           </PrivateRoute>
+//         )
+//       },
+//       {
+//         path: 'VendorProjectsOverviewZTE',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator', 'Vendor - ZTE']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <VendorProjectsOverviewZTE />
+//           </PrivateRoute>
+//         )
+//       },
+//       {
+//         path: 'VendorProjectsOverview/EditDetails/:id',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator', 'Vendor - Huawei', 'Vendor - ZTE']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <EditDetailsVOT />
+//           </PrivateRoute>
+//         )
+//       },
+//       {
+//         path: 'VendorProjectsInsights',
+//         element: (
+//           <PrivateRoute
+//             allowedRoles={['Admin', 'Moderator', 'Vendor - Huawei', 'Vendor - ZTE']}
+//             fallback={<Navigate to="/unauthorized" />}
+//           >
+//             <VendorProjectsInsightsHome />
+//           </PrivateRoute>
+//         )
+//       },
+//       {
+//         path: 'VendorProjectsInsightsAll',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <VendorProjectsInsights />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'VendorProjectsInsightsHuawei',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <HuaweiProjectsInsights />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'VendorProjectsInsightsZTE',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <ZTEProjectsInsights />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'VendorProjectsMilestones',
+//         element:
+//           userRole === 'Admin' ||
+//           userRole === 'Moderator' ||
+//           userRole === 'Vendor - Huawei' ||
+//           userRole === 'Vendor - ZTE' ? (
+//             <VendorProjectsMilestones />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'VendorProjectsMilestonesAll',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <VendorProjectsMilestonesAll />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'VendorProjectsMilestonesHuawei',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <VendorProjectsMilestonesHuawei />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'VendorProjectsMilestonesZTE',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <VendorProjectsMilestonesZTE />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects',
+//         element:
+//           userRole === 'Admin' ||
+//           userRole === 'Moderator' ||
+//           userRole === 'Vendor - Huawei' ||
+//           userRole === 'Vendor - ZTE' ? (
+//             <VendorProjectsDatabase />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <VendorProjectsDatabaseAll />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/ViewOnly',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'View Only' ? (
+//             <VendorProjectsDatabaseAllProjectsViewOnly />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Home',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsAllVendorPendingTasks />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Handover',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsHODetails />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/WorkAllocation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsAssign />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/TeamAllocation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsTeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Dependencies',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/PRPOProgress',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsPRPO />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Logistics',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsLogistics />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Implementation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Acceptance',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsAll/PendingTasks/Payment',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <DatabasesVendorProjectsPendingVendorProjectsPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Home',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsHuaweiPendingTasks />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Handover',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsHODetails />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/WorkAllocation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsAssign />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/TeamAllocation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsTeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Dependencies',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/PRPOProgress',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsPRPO />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Logistics',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsLogistics />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Implementation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Acceptance',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei/PendingTasks/Payment',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <DatabasesVendorProjectsPendingHuaweiProjectsPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Home',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsZTEPendingTasks />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Handover',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsHODetails />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/WorkAllocation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsAssign />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/TeamAllocation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsTeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Dependencies',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/PRPOProgress',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsPRPO />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Logistics',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsLogistics />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Implementation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Acceptance',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE/PendingTasks/Payment',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <DatabasesVendorProjectsPendingZTEProjectsPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsHuawei',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <VendorProjectsDatabaseHuawei />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjectsZTE',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <VendorProjectsDatabaseZTE />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AddNew',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <AddNewVendorProject />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AddNew/Huawei',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <AddNewHuaweiVendorProject />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AddNew/ZTE',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <AddNewZTEVendorProject />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesUploadProjectFiles',
+//         element:
+//           userRole === 'Admin' ||
+//           userRole === 'Moderator' ||
+//           userRole === 'Editor' ||
+//           userRole === 'Vendor - Huawei' ||
+//           userRole === 'Vendor - ZTE' ? (
+//             <DatabasesFileUpload />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesUploadProjectFiles/VendorProjects',
+//         element:
+//           userRole === 'Admin' ||
+//           userRole === 'Moderator' ||
+//           userRole === 'Vendor - Huawei' ||
+//           userRole === 'Vendor - ZTE' ? (
+//             <VendorProjectsDatabasesFileUpload />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesUploadProjectFiles/VendorProjects/ExcelEdit',
+//         element:
+//           userRole === 'Admin' ||
+//           userRole === 'Moderator' ||
+//           userRole === 'Vendor - Huawei' ||
+//           userRole === 'Vendor - ZTE' ? (
+//             <VendorProjectsDatabasesExcelEdit />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllProjects/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor' ? (
+//             <EditAllVendorProjectsDatabase />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllHandover/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditProjectHODetails />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllWorkAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditProjectAssign />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllTeamAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditTeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllDependencies/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditProjectDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllPRPOProgress/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditPRPOProgress />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllLogistics/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditProjectLogistics />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllImplementation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllAcceptance/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditProjectAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/AllPayment/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' ? (
+//             <EditProjectPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/HuaweiProjects/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiVendorProjectsDatabase />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/Handover/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiProjectHODetails />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/WorkAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiProjectAssign />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/TeamAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiTeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/Dependencies/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiProjectDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/PRPOProgress/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiPRPOProgress />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/Logistics/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiProjectLogistics />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/Implementation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/Acceptance/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiProjectAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/Huawei/Payment/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - Huawei' ? (
+//             <EditHuaweiProjectPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTEProjects/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEVendorProjectsDatabase />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Handover/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEProjectHODetails />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Assign/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEProjectAssign />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/TeamAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTETeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Dependencies/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEProjectDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/PRPOProgress/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEPRPOProgress />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Logistics/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEProjectLogistics />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Implementation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Acceptance/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEProjectAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesVendorProjects/ZTE/Payment/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Vendor - ZTE' ? (
+//             <EditZTEProjectPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       // Admin mod
+//       {
+//         path: 'MobitelProjectsOverview',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsOverview />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'MobitelProjectsOverview/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditDetailsMOT />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'MobitelProjectsInsights',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsInsights />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'MobitelProjectsMilestones',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsMilestones />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'MobitelProjectsFinance',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsFinance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'MobitelProjects/SubProjects',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelSubProjects />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'MobitelProjects/SiteEngineers',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsSiteEngineers />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       // Admin mod editor
+//       {
+//         path: 'DatabasesMobitelProjects',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsDatabase />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/AllMobitelProjects',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsAllMobitelProjects />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjects />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Installation',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsInstallation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Commissioning',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsCommissioning />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Pat',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsPat />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Sar',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsSar />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/OnAir',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsOnAir />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/MaterialReturn',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsMaterialReturn />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Pr',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsPr />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Po',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsPo />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/Invoice',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsInvoice />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+
+//       {
+//         path: 'DatabasesMobitelProjects/PendingMobitelTasks/PoClosure',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <DatabasesMobitelProjectsPendingMobitelProjectsPoClosure />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+
+//       {
+//         path: 'DatabasesMobitelProjects/AddNew',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <AddNewMobitelProject />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProject />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Handover/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectHandover />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/WorkAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectWorkAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/TeamAllocation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectTeamAllocation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Dependencies/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectDependencies />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/PRPOProgress/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectPRPOProgress />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Logistic/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectLogistic />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Implementation/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectImplementation />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Acceptance/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectAcceptance />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesMobitelProjects/Payment/Edit/:id',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <EditMobitelProjectPayment />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       // {
+//       //   path: 'DatabasesMobitelProjects/AllMobitelProjects/ViewOnly',
+//       //   element:
+//       //     userRole === 'Admin' ||
+//       //     userRole === 'Moderator' ||
+//       //     userRole === 'Editor' ||
+//       //     userRole === 'View Only' ? (
+//       //       <DatabasesMobitelProjectsAllMobit elProjectsViewOnly />
+//       //     ) : (
+//       //       <Navigate to="/unauthorized" />
+//       //     )
+//       // },
+//       {
+//         path: 'DatabasesUploadProjectFiles/MobitelProjects',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsDatabasesFileUpload />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'DatabasesUploadProjectFiles/MobitelProjects/ExcelEdit',
+//         element:
+//           userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//             <MobitelProjectsDatabasesExcelEdit />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       { path: 'home', element: <Home /> },
+//       { path: 'tasks', element: <Tasks /> },
+//       { path: 'userProfile', element: <UserProfile /> },
+//       { path: 'TestDb1', element: <TestDb1 /> },
+//       { path: 'TestDb1/addpost', element: <TestDb1CreatePost /> },
+//       { path: 'TestDb1/post/:id', element: <TestDb1ViewPost /> },
+//       { path: 'other', element: <Other /> },
+//       { path: 'addnew', element: <Addnew /> },
+//       { path: 'user', element: <User /> },
+//       { path: 'blog', element: <Blog /> },
+//       { path: 'TasksTestDatagrid', element: <TestDatagrid /> },
+//       // Admin
+//       {
+//         path: 'Users/registerUser',
+//         element: userRole === 'Admin' ? <RegisterUsers /> : <Navigate to="/unauthorized" />
+//       },
+//       {
+//         path: 'Users/userList',
+//         element: userRole === 'Admin' ? <UserList /> : <Navigate to="/unauthorized" />
+//       },
+//       {
+//         path: 'settings',
+//         element: userRole === 'Admin' ? <Settings /> : <Navigate to="/unauthorized" />
+//       },
+//       {
+//         path: 'settings/Givingaccesstopendingtasks',
+//         element:
+//           userRole === 'Admin' ? <GivingAccessPendingTasks /> : <Navigate to="/unauthorized" />
+//       },
+//       {
+//         path: 'settings/VendorProjects',
+//         element:
+//           userRole === 'Admin' ? <SettingsVendorProjectsHome /> : <Navigate to="/unauthorized" />
+//       },
+//       {
+//         path: 'settings/MobitelProjects',
+//         element:
+//           userRole === 'Admin' ? <SettingsMobitelProjectsHome /> : <Navigate to="/unauthorized" />
+//       },
+//       {
+//         path: 'settings/MobitelProjects/SiteEngineers',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsSiteEngineers />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/SpecialTag',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsSpecialTag />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/Dependency',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsDependency />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/SiteStatus',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsSiteStatus />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/Responsible',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsResponsible />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/Scope',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsScope />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/NewRAT',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsNewRAT />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       },
+//       {
+//         path: 'settings/MobitelProjects/SubCon',
+//         element:
+//           userRole === 'Admin' ? (
+//             <SettingsMobitelProjectsSubContractor />
+//           ) : (
+//             <Navigate to="/unauthorized" />
+//           )
+//       }
+//     ]
+//   },
+//   {
+//     path: '/dashboard',
+//     element: <DashboardLayout />,
+//     children: [
+//       { element: <Navigate to="/dashboard/app" replace /> },
+//       { path: 'user', element: <User /> },
+//       { path: 'product category', element: <Tasks /> }
+//     ]
+//   },
+//   {
+//     path: '/',
+//     element: <LogoOnlyLayout />,
+//     children: [
+//       { path: 'login', element: <Login /> },
+//       { path: 'register', element: <Register /> },
+//       { path: '404', element: <NotFound /> },
+//       { path: 'unauthorized', element: <Unauthorized /> },
+//       { path: '/', element: <Navigate to="/dashboard" /> },
+//       { path: '*', element: <Navigate to="/404" /> }
+//     ]
+//   },
+//   {
+//     path: 'DatabasesMobitelProjects/AllMobitelScopeData',
+//     element:
+//       userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//         <DatabasesMobitelProjectsAllMobitelScopeData />
+//       ) : (
+//         <Navigate to="/unauthorized" />
+//       )
+//   },
+//   {
+//     path: 'DatabasesMobitelProjects/AllMobitelHandoverData',
+//     element:
+//       userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//         <DatabasesMobitelProjectsAllMobitelHandoverData />
+//       ) : (
+//         <Navigate to="/unauthorized" />
+//       )
+//   },
+//   {
+//     path: 'DatabasesMobitelProjects/AllMobitelPatPassData',
+//     element:
+//       userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//         <DatabasesMobitelProjectsAllMobitelPatPassData />
+//       ) : (
+//         <Navigate to="/unauthorized" />
+//       )
+//   },
+//   {
+//     path: 'DatabasesMobitelProjects/AllMobitelOnAirData',
+//     element:
+//       userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//         <DatabasesMobitelProjectsAllMobitelOnAirData />
+//       ) : (
+//         <Navigate to="/unauthorized" />
+//       )
+//   },
+//   {
+//     path: 'DatabasesMobitelProjects/AllMobitelHoldData',
+//     element:
+//       userRole === 'Admin' || userRole === 'Moderator' || userRole === 'Editor' ? (
+//         <DatabasesMobitelProjectsAllMobitelHoldData />
+//       ) : (
+//         <Navigate to="/unauthorized" />
+//       )
+//   },
+//   { path: '*', element: <Navigate to="/404" replace /> }
+// ]);

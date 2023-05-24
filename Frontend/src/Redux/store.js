@@ -32,6 +32,7 @@ import {
   mobitelPendingTaskDataReducer,
   mobitelTilesReducer
 } from './Reducers/mobitelReduce';
+import { userLoginReducer } from './Reducers/userReducer';
 
 const reducer = combineReducers({
   mobitelSiteEngineerDayPlan: SiteIdReducer,
@@ -39,7 +40,8 @@ const reducer = combineReducers({
   SiteEngineerForAllSite: SiteEngineerForSite,
   mobileTilesData: mobitelTilesReducer,
   mobitelColumnChartData: mobitelChartColumnReducer,
-  mobitelPendingTaskData: mobitelPendingTaskDataReducer
+  mobitelPendingTaskData: mobitelPendingTaskDataReducer,
+  userLogin: userLoginReducer
 });
 
 const initialState = {};
